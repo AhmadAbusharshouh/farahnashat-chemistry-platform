@@ -3,16 +3,10 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
-  FlaskConical, 
-  BookOpen, 
-  GraduationCap, 
-  Sparkles, 
-  HelpCircle, 
-  MessageSquare, 
   Menu, 
   X,
-  PhoneCall,
-  Globe
+  Globe,
+  ArrowUpRight
 } from 'lucide-react';
 import { useState } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
@@ -23,14 +17,14 @@ export function Navbar() {
   const { lang, setLang, t } = useLanguage();
 
   const NAV_LINKS = [
-    { href: '/', label: t('الرئيسية', 'Home'), icon: Sparkles },
-    { href: '/lesson-plan', label: t('الحصة النموذجية (10 د)', 'Demo Lesson (10m)'), icon: BookOpen },
-    { href: '/virtual-lab', label: t('المختبر الافتراضي', 'Virtual Lab'), icon: FlaskConical, badge: t('تفاعلي', 'Live') },
-    { href: '/curriculum-map', label: t('خريطة المنهاج', 'Curriculum Map'), icon: GraduationCap },
-    { href: '/quiz', label: t('التقويم التكويني', 'Quiz'), icon: HelpCircle },
-    { href: '/assistant', label: t('المساعد الذكي (AI)', 'AI Tutor'), icon: MessageSquare },
-    { href: '/about', label: t('الملف التعريفي', 'About Bio'), icon: GraduationCap },
-    { href: '/whatsapp-connect', label: t('تواصل واتساب', 'WhatsApp'), icon: PhoneCall },
+    { href: '/', label: t('الرئيسية', 'Home') },
+    { href: '/lesson-plan', label: t('الحصة النموذجية (10 د)', 'Demo Lesson (10m)') },
+    { href: '/virtual-lab', label: t('المختبر الافتراضي', 'Virtual Lab'), badge: t('تفاعلي', 'Live') },
+    { href: '/curriculum-map', label: t('خريطة المنهاج', 'Curriculum Map') },
+    { href: '/quiz', label: t('التقويم التكويني', 'Quiz') },
+    { href: '/assistant', label: t('المساعد الذكي (AI)', 'AI Tutor') },
+    { href: '/about', label: t('الملف التعريفي', 'About Bio') },
+    { href: '/whatsapp-connect', label: t('تواصل واتساب', 'WhatsApp') },
   ];
 
   const toggleLanguage = () => {
@@ -38,73 +32,76 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full glass-panel border-b border-slate-200">
+    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/90">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo & Teacher Branding */}
+          
+          {/* Refined Minimalist Brand Stamp */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform duration-200">
-              <FlaskConical className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-lg bg-slate-950 text-emerald-400 flex items-center justify-center font-bold text-sm border border-slate-800 tracking-tight transition-transform group-hover:scale-102">
+              <span className="num-en font-black text-xs">FN</span>
             </div>
-            <div>
+            <div className="space-y-0.5">
               <div className="flex items-center gap-2">
-                <span className="font-extrabold text-slate-900 text-base tracking-tight">
+                <span className="font-extrabold text-slate-900 text-sm tracking-tight">
                   {t('أ. فرح نشأت', 'Farah Nashat')}
                 </span>
-                <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded border border-emerald-300">
-                  {t('معلمة كيمياء', 'Chemistry Teacher')}
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
+                  {t('معلمة كيمياء', 'Chemistry')}
                 </span>
               </div>
-              <p className="text-xs text-slate-500 font-medium">
-                {t('المدرسة الإسلامية الحديثة - إربد (حكما)', 'Modern Islamic School - Irbid')}
+              <p className="text-[11px] text-slate-500 font-medium">
+                {t('المدرسة الإسلامية الحديثة - إربد (حكما)', 'Modern Islamic School - Irbid (Hikma)')}
               </p>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - Clean Editorial Tabs */}
           <nav className="hidden lg:flex items-center gap-1">
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.href;
-              const Icon = link.icon;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition-colors duration-150 ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                     isActive
-                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/80 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                      ? 'bg-slate-900 text-white shadow-2xs'
+                      : 'text-slate-600 hover:text-slate-950 hover:bg-slate-100/80'
                   }`}
                 >
-                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-emerald-600' : 'text-slate-400'}`} />
-                  <span>{link.label}</span>
-                  {link.badge && (
-                    <span className="text-[9px] bg-emerald-600 text-white font-bold px-1 py-0.2 rounded-full">
-                      {link.badge}
-                    </span>
-                  )}
+                  <span className="flex items-center gap-1.5">
+                    <span>{link.label}</span>
+                    {link.badge && (
+                      <span className={`text-[9px] px-1.5 py-0.2 rounded font-bold ${
+                        isActive ? 'bg-emerald-500 text-slate-950' : 'bg-emerald-100 text-emerald-800'
+                      }`}>
+                        {link.badge}
+                      </span>
+                    )}
+                  </span>
                 </Link>
               );
             })}
           </nav>
 
-          {/* Language Switcher & Action CTA */}
+          {/* Clean Controls */}
           <div className="flex items-center gap-2">
             <button
               onClick={toggleLanguage}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-bold text-slate-700 transition"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-slate-700 transition"
               title="تغيير اللغة / Switch Language"
             >
-              <Globe className="w-3.5 h-3.5 text-emerald-600" />
-              <span>{lang === 'ar' ? 'English' : 'عربي'}</span>
+              <Globe className="w-3.5 h-3.5 text-slate-500" />
+              <span className="num-en text-[11px] uppercase tracking-wider">{lang === 'ar' ? 'English' : 'عربي'}</span>
             </button>
 
             <Link
               href="/virtual-lab"
-              className="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition-all duration-200 hover:shadow"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition-all shadow-2xs"
             >
-              <FlaskConical className="w-3.5 h-3.5" />
-              <span>{t('دخول المختبر', 'Launch Lab')}</span>
+              <span>{t('المختبر الافتراضي', 'Launch Lab')}</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
 
             <button
@@ -119,29 +116,25 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Dropdown */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 bg-white/95 backdrop-blur px-4 pt-2 pb-4 space-y-1 shadow-lg">
+        <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 space-y-1 shadow-md">
           {NAV_LINKS.map((link) => {
             const isActive = pathname === link.href;
-            const Icon = link.icon;
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition ${
+                className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition ${
                   isActive
-                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                    ? 'bg-slate-900 text-white'
                     : 'text-slate-700 hover:bg-slate-100'
                 }`}
               >
-                <div className="flex items-center gap-2.5">
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-600' : 'text-slate-400'}`} />
-                  <span>{link.label}</span>
-                </div>
+                <span>{link.label}</span>
                 {link.badge && (
-                  <span className="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded-full font-bold">
+                  <span className="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded font-bold">
                     {link.badge}
                   </span>
                 )}
@@ -156,58 +149,86 @@ export function Navbar() {
 
 export function Footer() {
   const { t } = useLanguage();
+
   return (
-    <footer className="bg-white border-t border-slate-200 py-10 mt-20 text-slate-600">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold">
-                <FlaskConical className="w-4 h-4" />
-              </div>
-              <span className="font-extrabold text-slate-900 text-base">
-                {t('منصة الكيمياء التفاعلية', 'Interactive Chemistry Platform')}
-              </span>
+    <footer className="bg-slate-950 text-slate-300 border-t border-slate-900 py-12 mt-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 text-right">
+          
+          {/* Main School & Teacher Profile Section (5 cols) */}
+          <div className="md:col-span-5 space-y-4">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <h3 className="font-extrabold text-white text-base">
+                {t('منصة تدريس الكيمياء التفاعلية', 'Interactive Chemistry Teaching Platform')}
+              </h3>
             </div>
-            <p className="text-xs text-slate-500 leading-relaxed">
+            <p className="text-xs text-slate-400 leading-relaxed max-w-md">
               {t(
-                'منصة تعليمية مهنية متكاملة صُممت خصيصاً لمقابلة شاغر معلمة الكيمياء لدى المدرسة الإسلامية الحديثة - إربد (حكما) التابعة لجمعية المركز الإسلامي الخيرية.',
-                'Professional pedagogical platform designed for the Chemistry Teacher demo lesson at Modern Islamic School - Irbid (Hikma), Islamic Centre Charity Society.'
+                'ملف تحضيري ومهني متكامل للحصة النموذجية (10 دقائق) لدرس الحموض والقواعد من كتاب الكيمياء للصف التاسع (منهاج كولينز ص 43-55)، مُعد لمقابلة شاغر معلمة الكيمياء لدى المدرسة الإسلامية الحديثة - إربد (حكما) التابعة لجمعية المركز الإسلامي الخيرية.',
+                'A comprehensive pedagogical dossier and virtual chemistry laboratory tailored for the 10-minute demo lesson (Acids and Bases, Collins Grade 9 pp. 43-55) at Modern Islamic School - Irbid (Hikma), Islamic Centre Charity Society.'
               )}
             </p>
+            <div className="pt-2 text-xs text-slate-400 space-y-1">
+              <div><strong className="text-slate-200">{t('إعداد وإشراف:', 'Prepared By:')}</strong> {t('أ. فرح نشأت (بكالوريوس كيمياء)', 'Farah Nashat (B.Sc. Chemistry)')}</div>
+              <div><strong className="text-slate-200">{t('المؤسسة المستهدفة:', 'Target Institution:')}</strong> {t('المدرسة الإسلامية الحديثة - إربد (حكما)', 'Modern Islamic School - Irbid (Hikma)')}</div>
+            </div>
           </div>
 
-          <div>
-            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">
-              {t('روابط سريعة', 'Quick Links')}
+          {/* Quick Syllabus & Lab Navigation (3 cols) */}
+          <div className="md:col-span-3 space-y-3">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider">
+              {t('أركان المنهاج والمختبر', 'Syllabus & Lab Modules')}
             </h4>
-            <ul className="space-y-2 text-xs font-medium">
-              <li><Link href="/lesson-plan" className="hover:text-emerald-600 transition">{t('تحضير الحصة النموذجية (10 دقائق)', '10-Minute Demo Lesson Blueprint')}</Link></li>
-              <li><Link href="/virtual-lab" className="hover:text-emerald-600 transition">{t('مختبر الكيمياء الافتراضي (pH & المعايرة)', 'Virtual Lab (pH & Titration)')}</Link></li>
-              <li><Link href="/curriculum-map" className="hover:text-emerald-600 transition">{t('خريطة منهاج كولينز - الحموض والقواعد', 'Collins Grade 9 Concept Map')}</Link></li>
-              <li><Link href="/assistant" className="hover:text-emerald-600 transition">{t('المساعد الكيميائي الذكي (Cloudflare AI)', 'Smart AI Chemistry Assistant')}</Link></li>
+            <ul className="space-y-2 text-xs text-slate-400">
+              <li><Link href="/lesson-plan" className="hover:text-emerald-400 transition">{t('خطة الحصة النموذجية (10 دقائق)', '10-Minute Demo Lesson Plan')}</Link></li>
+              <li><Link href="/virtual-lab" className="hover:text-emerald-400 transition">{t('مقياس الرقم الهيدروجيني pH الرقمي', 'Digital pH Meter Simulator')}</Link></li>
+              <li><Link href="/virtual-lab" className="hover:text-emerald-400 transition">{t('محاكاة تفاعل التعادل والمعايرة', 'Neutralization & Titration Chamber')}</Link></li>
+              <li><Link href="/curriculum-map" className="hover:text-emerald-400 transition">{t('خريطة منهاج كولينز (تاسع)', 'Collins Grade 9 Concept Map')}</Link></li>
+              <li><Link href="/quiz" className="hover:text-emerald-400 transition">{t('التقويم التكويني وبنك الأسئلة', 'Formative Quiz & Assessment')}</Link></li>
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">
-              {t('بيانات المقابلة والحصة', 'Interview & Demo Info')}
+          {/* Interview & Location Details (4 cols) */}
+          <div className="md:col-span-4 space-y-3 bg-slate-900/60 p-5 rounded-2xl border border-slate-800/80">
+            <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
+              {t('بيانات المقابلة والحصة النموذجية', 'Interview & Venue Logistics')}
             </h4>
-            <p className="text-xs text-slate-500 mb-1"><span className="font-semibold text-slate-700">{t('الموعد:', 'Time:')}</span> {t('الأربعاء 2/9/2026 - 8:00 صباحاً', 'Wednesday 2/9/2026 - 08:00 AM')}</p>
-            <p className="text-xs text-slate-500 mb-1"><span className="font-semibold text-slate-700">{t('الموقع:', 'Location:')}</span> {t('إربد - شارع عمان - شمال مخابز السنبلة - بداية حكما', 'Irbid - Amman St. - Hikma')}</p>
-            <p className="text-xs text-slate-500"><span className="font-semibold text-slate-700">{t('المرشحة:', 'Candidate:')}</span> {t('أ. فرح نشأت (معلمة كيمياء وعلوم)', 'Farah Nashat (Chemistry Specialist)')}</p>
+            <div className="space-y-2 text-xs text-slate-300 leading-relaxed">
+              <p>
+                <strong className="text-white">{t('اليوم والتاريخ:', 'Date & Day:')}</strong>{' '}
+                <span>{t('الأربعاء', 'Wednesday')} <span className="num-en font-bold text-white">02 / 09 / 2026</span></span>
+              </p>
+              <p>
+                <strong className="text-white">{t('الوقت المحدد:', 'Time:')}</strong>{' '}
+                <span>{t('الساعة', 'At')} <span className="num-en font-bold text-white">08:00 AM</span> {t('صباحاً', '')}</span>
+              </p>
+              <p>
+                <strong className="text-white">{t('الموقع المعتمد:', 'Venue:')}</strong>{' '}
+                <span>{t('إربد - شارع عمان - شمال مخابز السنبلة - بداية حكما', 'Irbid - Amman Street - North of Al-Sunbula Bakeries - Entrance of Hikma')}</span>
+              </p>
+              <p className="pt-1">
+                <strong className="text-white">{t('الدرس المقرر:', 'Topic:')}</strong>{' '}
+                <span>{t('الحموض والقواعد والكواشف (كتاب الكيمياء ص 43-55)', 'Acids, Bases, Indicators & pH (pp. 43-55)')}</span>
+              </p>
+            </div>
           </div>
+
         </div>
 
-        <div className="border-t border-slate-100 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
-          <p>{t('© 2026 جميع الحقوق محفوظة - أ. فرح نشأت | كيمياء الصف التاسع', '© 2026 Farah Nashat | Grade 9 Chemistry')}</p>
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1 text-emerald-600 font-semibold">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              Cloudflare Edge Architecture
+        {/* Bottom Credits Bar */}
+        <div className="border-t border-slate-900 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+          <p>
+            {t('جميع الحقوق محفوظة للمعلمة أ. فرح نشأت © 2026', 'All rights reserved to Ms. Farah Nashat © 2026')}
+          </p>
+          <div className="flex items-center gap-3">
+            <span className="text-slate-400 font-medium">
+              {t('منهاج كولينز المطور - المملكة الأردنية الهاشمية', 'Collins Chemistry Curriculum - Hashemite Kingdom of Jordan')}
             </span>
           </div>
         </div>
+
       </div>
     </footer>
   );

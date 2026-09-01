@@ -3,43 +3,65 @@
 @tailwind utilities;
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #fcfdfd;
+  --foreground: #090d16;
 }
 
+/* 
+  Number font override: 
+  Arabic text uses AlHurra for Arabic glyphs, but digits (0-9) and Latin punctuation 
+  fallback naturally to Outfit.
+*/
 body {
-  font-family: var(--font-alhurra), var(--font-outfit), sans-serif;
+  font-family: var(--font-outfit), var(--font-alhurra), system-ui, sans-serif;
+  color: var(--foreground);
+  background-color: var(--background);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 html[lang="ar"] body,
 html[dir="rtl"] body {
-  font-family: var(--font-alhurra), sans-serif !important;
+  font-family: var(--font-alhurra), var(--font-outfit), system-ui, sans-serif;
 }
 
-html[lang="en"] body,
-html[dir="ltr"] body {
-  font-family: var(--font-outfit), sans-serif !important;
+/* Explicit class to force crisp Western numbers everywhere needed */
+.num-en {
+  font-family: var(--font-outfit), system-ui, sans-serif !important;
+  font-feature-settings: "tnum" 1, "cv01" 1;
+  letter-spacing: -0.01em;
+  display: inline-block;
+  direction: ltr;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Subtle and minimal */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #f8fafc;
 }
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
 
-.glass-panel {
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 232, 240, 0.85);
+/* High-craft clean surfaces */
+.editorial-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03), 0 1px 2px -1px rgba(15, 23, 42, 0.03);
+}
+
+.editorial-card:hover {
+  border-color: #cbd5e1;
+}
+
+/* Text balance utility */
+.text-wrap-balance {
+  text-wrap: balance;
 }
