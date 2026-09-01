@@ -354,7 +354,7 @@ export default function HomePage() {
 
           {/* Tile 6: Direct Contact */}
           <Link
-            href="/whatsapp-connect"
+            href="/about#contact"
             className="sharp-card p-6 flex flex-col justify-between space-y-4 group bg-white hover:border-emerald-500 transition-all hover:shadow-md"
           >
             <div className="space-y-3">

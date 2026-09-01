@@ -60,8 +60,7 @@ export function Navbar() {
 
   const RIGHT_NAV_LINKS = [
     { href: '/assistant', label: t('المساعد', 'Tutor') },
-    { href: '/about', label: t('المعلمة', 'About') },
-    { href: '/whatsapp-connect', label: t('التواصل', 'Contact') },
+    { href: '/about', label: t('عن المعلمة', 'About') },
   ];
 
   const ALL_MOBILE_LINKS = [
@@ -69,8 +68,7 @@ export function Navbar() {
     { href: '/virtual-lab', label: t('المختبر الافتراضي (3D)', 'Virtual Lab (3D)') },
     { href: '/quiz', label: t('اختبار التقويم والتشخيص', 'Quiz & Assessment') },
     { href: '/assistant', label: t('المساعد التعليمي الذكي', 'AI Study Assistant') },
-    { href: '/about', label: t('عن المعلمة', 'About Teacher') },
-    { href: '/whatsapp-connect', label: t('بوابة التواصل', 'Contact Gateway') },
+    { href: '/about', label: t('عن المعلمة والتواصل', 'About Teacher & Contact') },
   ];
 
   const toggleLanguage = () => {
@@ -654,9 +652,7 @@ export function Footer() {
           <span className="text-slate-300">•</span>
           <Link href="/assistant" className="hover:text-emerald-700 transition">{t('المساعد التعليمي الذكي', 'AI Study Assistant')}</Link>
           <span className="text-slate-300">•</span>
-          <Link href="/about" className="hover:text-emerald-700 transition">{t('عن المعلمة', 'About Teacher')}</Link>
-          <span className="text-slate-300">•</span>
-          <Link href="/whatsapp-connect" className="hover:text-emerald-700 transition">{t('بوابة التواصل', 'Contact Gateway')}</Link>
+          <Link href="/about" className="hover:text-emerald-700 transition">{t('عن المعلمة والتواصل', 'About & Contact')}</Link>
           <span className="text-slate-300">•</span>
           <Link href="/admin" className="text-emerald-800 hover:text-emerald-950 transition font-black">{t('لوحة المعلمة', 'Teacher Admin')}</Link>
         </div>
