@@ -147,7 +147,7 @@ export default function HomePage() {
                 <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-950 leading-tight">
                   {t('الأستاذة فرح نشأت', 'Teacher Farah Nashat')} <br />
                   <span className="text-emerald-700 text-xl sm:text-3xl lg:text-4xl">
-                    {t('كيمياء تفاعلية ومجسمات 3D', 'Interactive Chemistry & 3D')}
+                    {t('كيمياء تفاعلية مدعومة بالذكاء الاصطناعي ومجسّمات 3D', 'AI-Powered Interactive Chemistry & 3D')}
                   </span>
                 </h1>
                 
