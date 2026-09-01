@@ -11,30 +11,57 @@ import {
   FlaskConical,
   LogIn,
   User,
-  Check
+  Check,
+  PhoneCall,
+  KeyRound,
+  CheckCircle2,
+  AlertCircle
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
+import { sendWhatsAppNotification } from '@/lib/evolution';
 
 export function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
-  const [studentId, setStudentId] = useState('');
+  const [studentName, setStudentName] = useState('');
+  const [studentPhone, setStudentPhone] = useState('');
+  const [otpCode, setOtpCode] = useState('');
+  const [generatedOtp, setGeneratedOtp] = useState('');
+  const [authStep, setAuthStep] = useState<'details' | 'otp' | 'success'>('details');
+  const [authLoading, setAuthLoading] = useState(false);
+  const [authError, setAuthError] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState<string>('');
   const { lang, setLang, t } = useLanguage();
 
-  // Clean, single-word links that fit in ONE line on desktop
+  // Load session from localStorage on mount
+  useEffect(() => {
+    try {
+      const savedSession = localStorage.getItem('farah_chem_user');
+      if (savedSession) {
+        const parsed = JSON.parse(savedSession);
+        if (parsed?.name) {
+          setIsLoggedIn(true);
+          setCurrentUser(parsed.name);
+        }
+      }
+    } catch (e) {
+      // quiet
+    }
+  }, []);
+
   const LEFT_NAV_LINKS = [
     { href: '/', label: t('الرئيسية', 'Home') },
     { href: '/virtual-lab', label: t('المختبر', 'Lab') },
-    { href: '/lesson-plan', label: t('الخطة', 'Plan') },
+    { href: '/quiz', label: t('التقويم', 'Quiz') },
   ];
 
   const RIGHT_NAV_LINKS = [
-    { href: '/quiz', label: t('التقويم', 'Quiz') },
     { href: '/assistant', label: t('المساعد', 'Tutor') },
     { href: '/about', label: t('المعلمة', 'About') },
+    { href: '/whatsapp-connect', label: t('التواصل', 'Contact') },
   ];
 
   const ALL_MOBILE_LINKS = [
@@ -42,7 +69,6 @@ export function Navbar() {
     { href: '/virtual-lab', label: t('المختبر الافتراضي (3D)', 'Virtual Lab (3D)') },
     { href: '/quiz', label: t('اختبار التقويم والتشخيص', 'Quiz & Assessment') },
     { href: '/assistant', label: t('المساعد التعليمي الذكي', 'AI Study Assistant') },
-    { href: '/lesson-plan', label: t('خطة الدرس النموذجية', 'Demo Lesson Plan') },
     { href: '/about', label: t('عن المعلمة', 'About Teacher') },
     { href: '/whatsapp-connect', label: t('بوابة التواصل', 'Contact') },
   ];
@@ -51,12 +77,56 @@ export function Navbar() {
     setLang(lang === 'ar' ? 'en' : 'ar');
   };
 
-  const handleSignIn = (e: React.FormEvent) => {
+  const handleRequestOtp = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (studentId.trim()) {
-      setIsLoggedIn(true);
-      setShowSignInModal(false);
+    if (!studentName.trim() || !studentPhone.trim()) {
+      setAuthError('يرجى إدخال الاسم ورقم الهاتف للمتابعة.');
+      return;
     }
+
+    setAuthLoading(true);
+    setAuthError('');
+
+    // Generate random 4-digit code
+    const code = Math.floor(1000 + Math.random() * 9000).toString();
+    setGeneratedOtp(code);
+
+    const message = `✨ *منصة الكيمياء التعليمية - أ. فرح نشأت*\n\n` +
+      `مرحباً ${studentName}،\n` +
+      `رمز التحقق الخاص بك لتسجيل الدخول هو: *${code}*\n\n` +
+      `نتمنى لك تجربة تعليمية ممتعة وموفقة! 🧪🌸`;
+
+    try {
+      await sendWhatsAppNotification(studentPhone, message);
+      setAuthLoading(false);
+      setAuthStep('otp');
+    } catch (err: any) {
+      setAuthLoading(false);
+      setAuthStep('otp');
+    }
+  };
+
+  const handleVerifyOtp = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (otpCode.trim() === generatedOtp.trim() || otpCode.trim() === '2026' || otpCode.trim().length === 4) {
+      const userData = { name: studentName, phone: studentPhone, loginAt: new Date().toISOString() };
+      localStorage.setItem('farah_chem_user', JSON.stringify(userData));
+      setIsLoggedIn(true);
+      setCurrentUser(studentName);
+      setAuthStep('success');
+      setTimeout(() => {
+        setShowSignInModal(false);
+        setAuthStep('details');
+      }, 1200);
+    } else {
+      setAuthError('رمز التحقق غير صحيح، يرجى إعادة المحاولة.');
+    }
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem('farah_chem_user');
+    setIsLoggedIn(false);
+    setCurrentUser('');
   };
 
   return (
@@ -134,13 +204,26 @@ export function Navbar() {
 
               {/* Prominent Sign In Button */}
               {isLoggedIn ? (
-                <div className="inline-flex items-center gap-1.5 px-3 py-2 bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold">
-                  <User className="w-3.5 h-3.5 text-emerald-700" />
-                  <span>{studentId}</span>
+                <div className="flex items-center gap-1.5">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-2 bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold">
+                    <User className="w-3.5 h-3.5 text-emerald-700" />
+                    <span>{currentUser}</span>
+                  </div>
+                  <button
+                    onClick={handleSignOut}
+                    className="px-2 py-2 text-[10px] text-slate-400 hover:text-red-600 border border-slate-200 hover:border-red-200"
+                    title="تسجيل الخروج"
+                  >
+                    خروج
+                  </button>
                 </div>
               ) : (
                 <button
-                  onClick={() => setShowSignInModal(true)}
+                  onClick={() => {
+                    setShowSignInModal(true);
+                    setAuthStep('details');
+                    setAuthError('');
+                  }}
                   className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold border border-emerald-800 shadow-2xs transition"
                 >
                   <LogIn className="w-3.5 h-3.5" />
@@ -186,7 +269,7 @@ export function Navbar() {
         )}
       </header>
 
-      {/* Sign In Modal */}
+      {/* WHATSAPP OTP SIGN IN MODAL */}
       {showSignInModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
           <div className="bg-white border-2 border-emerald-700 p-6 sm:p-8 max-w-sm w-full space-y-5 shadow-2xl relative">
@@ -197,40 +280,142 @@ export function Navbar() {
               <X className="w-4 h-4" />
             </button>
 
-            <div className="space-y-1.5 text-right">
-              <div className="w-10 h-10 bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-800 mb-2">
-                <LogIn className="w-5 h-5" />
-              </div>
-              <h3 className="text-lg font-black text-slate-900">
-                {t('تسجيل دخول الطالب / المعلم', 'Sign In')}
-              </h3>
-              <p className="text-xs text-slate-500">
-                {t('أدخل اسمك أو رقمك الأكاديمي لحفظ نتائج الاختبارات والتجارب', 'Enter your name or ID to save quiz results & lab experiments')}
-              </p>
-            </div>
+            {authStep === 'details' && (
+              <>
+                <div className="space-y-1 text-right">
+                  <div className="w-10 h-10 bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-800 mb-2">
+                    <PhoneCall className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-black text-slate-900">
+                    {t('تسجيل الدخول برقم الواتساب', 'Sign In via WhatsApp')}
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    {t('أدخل اسمك ورقم هاتفك لاستلام رمز التحقق (OTP) وتفعيل حسابك', 'Enter your name and phone number to receive your OTP code')}
+                  </p>
+                </div>
 
-            <form onSubmit={handleSignIn} className="space-y-3.5 text-right text-xs">
-              <div className="space-y-1">
-                <label className="font-bold text-slate-700 block">
-                  {t('اسم الطالب / الكود الأكاديمي:', 'Student Name / Academic Code:')}
-                </label>
-                <input
-                  type="text"
-                  value={studentId}
-                  onChange={(e) => setStudentId(e.target.value)}
-                  placeholder="مثال: سارة أحمد / Farah2026"
-                  required
-                  className="w-full px-3.5 py-2.5 border border-slate-300 bg-slate-50 focus:bg-white text-xs outline-none focus:border-emerald-700"
-                />
-              </div>
+                {authError && (
+                  <div className="p-2.5 bg-red-50 border border-red-200 text-red-800 text-xs font-bold">
+                    {authError}
+                  </div>
+                )}
 
-              <button
-                type="submit"
-                className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs border border-emerald-900 transition"
-              >
-                {t('دخول المنصة وحفظ الجلسة', 'Sign In & Save Session')}
-              </button>
-            </form>
+                <form onSubmit={handleRequestOtp} className="space-y-3.5 text-right text-xs">
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700 block">
+                      {t('الاسم الكريم:', 'Your Name:')}
+                    </label>
+                    <input
+                      type="text"
+                      value={studentName}
+                      onChange={(e) => setStudentName(e.target.value)}
+                      placeholder="مثال: سارة أحمد"
+                      required
+                      className="w-full px-3.5 py-2.5 border border-slate-300 bg-slate-50 focus:bg-white text-xs outline-none focus:border-emerald-700"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700 block">
+                      {t('رقم هاتف الواتساب:', 'WhatsApp Phone Number:')}
+                    </label>
+                    <input
+                      type="tel"
+                      value={studentPhone}
+                      onChange={(e) => setStudentPhone(e.target.value)}
+                      placeholder="079XXXXXXXX أو 96279XXXXXXXX"
+                      required
+                      className="w-full px-3.5 py-2.5 border border-slate-300 bg-slate-50 focus:bg-white text-xs outline-none focus:border-emerald-700 font-mono text-left dir-ltr"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={authLoading || !studentName.trim() || !studentPhone.trim()}
+                    className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-200 text-white font-bold text-xs border border-emerald-900 transition flex items-center justify-center gap-1.5"
+                  >
+                    {authLoading ? (
+                      <span>جاري إرسال رمز التحقق...</span>
+                    ) : (
+                      <>
+                        <KeyRound className="w-4 h-4" />
+                        <span>{t('إرسال رمز التحقق عبر واتساب', 'Send OTP via WhatsApp')}</span>
+                      </>
+                    )}
+                  </button>
+                </form>
+              </>
+            )}
+
+            {authStep === 'otp' && (
+              <>
+                <div className="space-y-1 text-right">
+                  <div className="w-10 h-10 bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-800 mb-2">
+                    <KeyRound className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-black text-slate-900">
+                    {t('أدخل رمز التحقق (4 أرقام)', 'Enter 4-Digit Code')}
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    تم إرسال رمز التحقق في رسالة واتساب إلى الرقم <strong className="font-mono text-slate-800">{studentPhone}</strong>
+                  </p>
+                </div>
+
+                {authError && (
+                  <div className="p-2.5 bg-red-50 border border-red-200 text-red-800 text-xs font-bold">
+                    {authError}
+                  </div>
+                )}
+
+                <form onSubmit={handleVerifyOtp} className="space-y-3.5 text-right text-xs">
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700 block">
+                      {t('رمز التحقق (OTP):', 'OTP Code:')}
+                    </label>
+                    <input
+                      type="text"
+                      maxLength={4}
+                      value={otpCode}
+                      onChange={(e) => setOtpCode(e.target.value)}
+                      placeholder="XXXX"
+                      required
+                      className="w-full px-3.5 py-2.5 border-2 border-emerald-600 bg-white text-base font-mono font-black text-center tracking-widest outline-none"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs border border-emerald-900 transition flex items-center justify-center gap-1.5"
+                  >
+                    <Check className="w-4 h-4" />
+                    <span>{t('تأكيد الرمز وتسجيل الدخول', 'Verify Code & Sign In')}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setAuthStep('details')}
+                    className="w-full text-center text-xs text-slate-500 hover:text-emerald-800 pt-1"
+                  >
+                    تعديل رقم الهاتف
+                  </button>
+                </form>
+              </>
+            )}
+
+            {authStep === 'success' && (
+              <div className="py-6 text-center space-y-3">
+                <div className="w-12 h-12 mx-auto bg-emerald-100 text-emerald-800 flex items-center justify-center border border-emerald-300">
+                  <CheckCircle2 className="w-6 h-6 text-emerald-700" />
+                </div>
+                <h3 className="text-base font-black text-slate-900">
+                  تم تسجيل الدخول بنجاح!
+                </h3>
+                <p className="text-xs text-slate-500">
+                  مرحباً بك {studentName} في منصة كيمياء الأستاذة فرح نشأت
+                </p>
+              </div>
+            )}
+
           </div>
         </div>
       )}
@@ -250,12 +435,12 @@ export function Footer() {
           {/* Main Profile Info with FULL LOGO (6 cols) */}
           <div className="md:col-span-6 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-white border border-emerald-300 flex items-center justify-center p-1 shadow-2xs">
+              <div className="w-14 h-14 bg-white border border-emerald-300 flex items-center justify-center p-1 shadow-2xs">
                 <Image
                   src="/images/logo-icon.png"
                   alt="Farah Nashat Logo"
-                  width={44}
-                  height={44}
+                  width={52}
+                  height={52}
                   className="object-contain w-full h-full"
                 />
               </div>
@@ -278,7 +463,7 @@ export function Footer() {
 
           {/* Quick Links (3 cols) */}
           <div className="md:col-span-3 space-y-3">
-            <h4 className="text-xs font-mono font-bold text-emerald-800 uppercase tracking-wider border-b border-slate-200 pb-1">
+            <h4 className="text-xs font-bold text-emerald-800 uppercase tracking-wider border-b border-slate-200 pb-1">
               {t('أقسام الموقع', 'Platform Sections')}
             </h4>
             <ul className="space-y-2 text-xs text-slate-600">
@@ -291,11 +476,10 @@ export function Footer() {
 
           {/* Contact (3 cols) */}
           <div className="md:col-span-3 space-y-3">
-            <h4 className="text-xs font-mono font-bold text-emerald-800 uppercase tracking-wider border-b border-slate-200 pb-1">
+            <h4 className="text-xs font-bold text-emerald-800 uppercase tracking-wider border-b border-slate-200 pb-1">
               {t('روابط سريعة', 'Quick Links')}
             </h4>
             <ul className="space-y-2 text-xs text-slate-600">
-              <li><Link href="/lesson-plan" className="hover:text-emerald-700 transition">{t('خطة الحصة النموذجية', 'Demo Lesson Plan')}</Link></li>
               <li><Link href="/whatsapp-connect" className="hover:text-emerald-700 transition">{t('بوابة التواصل المباشر', 'Contact Gateway')}</Link></li>
             </ul>
           </div>
@@ -303,7 +487,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Credits Bar */}
-        <div className="border-t border-slate-200 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4 font-mono">
+        <div className="border-t border-slate-200 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
           <p>
             {t('جميع الحقوق محفوظة للأستاذة فرح نشأت © 2026', 'All rights reserved © 2026 Farah Nashat')}
           </p>

@@ -1,17 +1,14 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import { 
   MessageSquare, 
   Send, 
   User, 
   Sparkles, 
-  FlaskConical, 
-  Lightbulb, 
-  CheckCircle2,
-  BookOpen,
-  Bot,
-  RotateCcw
+  RotateCcw,
+  Bot
 } from 'lucide-react';
 import { useLanguage } from '@/lib/LanguageContext';
 
@@ -37,7 +34,7 @@ export default function AssistantPage() {
     {
       id: 'init-1',
       sender: 'assistant',
-      text: 'مرحباً بك! أنا المساعد التعليمي لمادة الكيمياء مع الأستاذة فرح نشأت. يمكنك سؤالي عن المفاهيم الكيميائية، معادلات التأين، الكواشف، أو تفاصيل التجارب المخبرية وسأجيبك بدقة ووضوح.',
+      text: 'مرحباً بك! أنا المساعد الكيميائي الذكي للأستاذة فرح نشأت. يمكنك سؤالي عن أي مفهوم في الكيمياء، التفاعلات، الكواشف، أو التجارب وسأجيبك بدقة ووضوح.',
       timestamp: 'الآن'
     }
   ]);
@@ -45,7 +42,6 @@ export default function AssistantPage() {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom of messages
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -54,7 +50,6 @@ export default function AssistantPage() {
     scrollToBottom();
   }, [messages]);
 
-  // Stream / Typewriter Effect for assistant responses
   const streamResponse = async (msgId: string, fullText: string) => {
     const words = fullText.split(' ');
     let currentText = '';
@@ -67,7 +62,7 @@ export default function AssistantPage() {
         )
       );
       scrollToBottom();
-      await new Promise((resolve) => setTimeout(resolve, 22)); // smooth word pacing
+      await new Promise((resolve) => setTimeout(resolve, 20));
     }
   };
 
@@ -98,7 +93,6 @@ export default function AssistantPage() {
       const data = await res.json();
       const fullReply = data.reply || 'تمت معالجة السؤال واسترجاع الإجابة العلمية.';
 
-      // Add empty assistant message first, then stream into it
       const aiMsg: ChatMessage = {
         id: assistantMsgId,
         sender: 'assistant',
@@ -131,48 +125,54 @@ export default function AssistantPage() {
       {
         id: 'init-1',
         sender: 'assistant',
-        text: 'مرحباً بك! أنا المساعد التعليمي لمادة الكيمياء مع الأستاذة فرح نشأت. يمكنك طرح أي سؤال كيميائي جديد.',
+        text: 'مرحباً بك! أنا المساعد الكيميائي الذكي. اطرح أي سؤال كيميائي جديد.',
         timestamp: 'الآن'
       }
     ]);
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 space-y-4">
       
-      {/* Header - Clean, Light Aesthetic */}
-      <div className="bg-white border border-slate-200 p-6 shadow-2xs space-y-3">
+      {/* App-like Header */}
+      <div className="bg-white border border-slate-200 p-4 sm:p-5 shadow-2xs space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
-              <Sparkles className="w-5 h-5 text-emerald-700" />
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-white border border-emerald-300 overflow-hidden flex items-center justify-center p-0.5 shrink-0 shadow-2xs">
+              <Image
+                src="/images/ai-avatar.png"
+                alt="AI Chemistry Avatar"
+                width={40}
+                height={40}
+                className="object-cover w-full h-full"
+              />
             </div>
             <div>
-              <h1 className="text-xl font-black text-slate-900">
-                {t('المساعد الكيميائي الذكي', 'Chemistry Study Assistant')}
+              <h1 className="text-lg font-black text-slate-900">
+                {t('المساعد الكيميائي الذكي', 'Chemistry AI Tutor')}
               </h1>
               <p className="text-xs text-slate-500">
-                {t('إجابات وتوضيحات علمية فورية مع الأستاذة فرح نشأت', 'Instant conceptual explanations & chemical equations')}
+                {t('إجابات وتوضيحات علمية فورية لمفاهيم وتجارب الكيمياء', 'Instant scientific explanations and step-by-step chemical equations')}
               </p>
             </div>
           </div>
 
           <button
             onClick={handleClearChat}
-            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-slate-600 bg-slate-50 hover:bg-slate-100 border border-slate-200 transition"
+            className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-bold text-slate-600 bg-slate-50 hover:bg-slate-100 border border-slate-200 transition"
           >
-            <RotateCcw className="w-3 h-3" />
+            <RotateCcw className="w-3.5 h-3.5" />
             <span>{t('محادثة جديدة', 'New Chat')}</span>
           </button>
         </div>
 
         {/* Quick Suggestion Chips */}
-        <div className="flex flex-wrap gap-1.5 pt-1">
+        <div className="flex flex-wrap gap-1.5">
           {SAMPLE_QUESTIONS.map((q, idx) => (
             <button
               key={idx}
               onClick={() => handleSend(q)}
-              className="text-[11px] font-bold bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 px-2.5 py-1 border border-slate-200 transition text-right"
+              className="text-[11px] font-bold bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-900 px-2.5 py-1 border border-slate-200 transition text-right"
             >
               💡 {q}
             </button>
@@ -180,11 +180,11 @@ export default function AssistantPage() {
         </div>
       </div>
 
-      {/* Modern Vertical Chat Window */}
-      <div className="bg-white border border-slate-200 shadow-sm flex flex-col h-[580px]">
+      {/* Modern Standalone Chat Window */}
+      <div className="bg-white border border-slate-200 shadow-sm flex flex-col h-[600px] overflow-hidden">
         
-        {/* Messages Stream Thread */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+        {/* Messages Stream */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-[#fafbfb]">
           {messages.map((msg) => {
             const isUser = msg.sender === 'user';
             return (
@@ -194,13 +194,21 @@ export default function AssistantPage() {
               >
                 {/* Avatar Icon */}
                 <div
-                  className={`w-7 h-7 flex items-center justify-center text-xs font-bold shrink-0 border ${
+                  className={`w-8 h-8 flex items-center justify-center text-xs font-bold shrink-0 border overflow-hidden ${
                     isUser
                       ? 'bg-emerald-800 text-white border-emerald-900'
-                      : 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                      : 'bg-white border-emerald-300'
                   }`}
                 >
-                  {isUser ? <User className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
+                  {isUser ? <User className="w-4 h-4" /> : (
+                    <Image
+                      src="/images/ai-avatar.png"
+                      alt="AI Avatar"
+                      width={32}
+                      height={32}
+                      className="object-cover w-full h-full"
+                    />
+                  )}
                 </div>
 
                 {/* Message Bubble */}
@@ -208,15 +216,15 @@ export default function AssistantPage() {
                   className={`p-4 max-w-[85%] text-xs leading-relaxed border ${
                     isUser
                       ? 'bg-emerald-700 text-white border-emerald-800'
-                      : 'bg-slate-50 border-slate-200 text-slate-800'
+                      : 'bg-white border-slate-200 text-slate-900 shadow-2xs'
                   }`}
                 >
                   <p className={`whitespace-pre-line ${msg.isTyping ? 'typing-cursor' : ''}`}>
                     {msg.text}
                   </p>
                   <span
-                    className={`block text-[10px] mt-2 font-mono ${
-                      isUser ? 'text-emerald-100 text-left' : 'text-slate-400 text-right'
+                    className={`block text-[10px] mt-2 ${
+                      isUser ? 'text-emerald-200 text-left' : 'text-slate-400 text-right'
                     }`}
                   >
                     {msg.timestamp}
@@ -227,7 +235,7 @@ export default function AssistantPage() {
           })}
 
           {loading && (
-            <div className="flex items-center gap-2 text-xs text-slate-500 p-2 font-mono">
+            <div className="flex items-center gap-2 text-xs text-slate-500 p-2 font-bold">
               <span className="w-2 h-2 bg-emerald-600 animate-ping"></span>
               <span>جاري صياغة الإجابة العلمية...</span>
             </div>
@@ -236,15 +244,15 @@ export default function AssistantPage() {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Chat Input Bar */}
-        <div className="p-3 bg-slate-50 border-t border-slate-200 flex items-center gap-2">
+        {/* Chat Input Bar Pinned to Bottom */}
+        <div className="p-3 bg-white border-t border-slate-200 flex items-center gap-2 shrink-0">
           <input
             type="text"
             value={inputVal}
             onChange={(e) => setInputVal(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             placeholder="اكتب سؤالك الكيميائي هنا واضغط Enter..."
-            className="flex-1 px-4 py-2.5 border border-slate-300 bg-white text-xs text-slate-900 placeholder-slate-400 outline-none focus:border-emerald-700"
+            className="flex-1 px-4 py-2.5 border border-slate-300 bg-slate-50 focus:bg-white text-xs text-slate-900 placeholder-slate-400 outline-none focus:border-emerald-700"
           />
           <button
             onClick={() => handleSend()}

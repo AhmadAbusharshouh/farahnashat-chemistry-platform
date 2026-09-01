@@ -78,3 +78,85 @@ html[dir="rtl"] body {
   font-size: 0.85em;
   vertical-align: middle;
 }
+
+/* =========================================================================
+   SPLASH SCREEN LIGHT MODE - ANIMATION 3 (Cyber Line-Draw & Emerald Flash)
+   ========================================================================= */
+
+.splash-svg-light-anim path {
+  stroke-dasharray: 2400;
+  stroke-dashoffset: 2400;
+  animation: splashLightLineDraw 1.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.splash-top-arc path {
+  animation-delay: 0s;
+}
+.splash-wings path {
+  animation-delay: 0.15s;
+}
+.splash-helix path {
+  animation-delay: 0.28s;
+}
+.splash-nodes path {
+  animation-delay: 0.4s;
+}
+.splash-core path {
+  animation-delay: 0.2s;
+}
+
+@keyframes splashLightLineDraw {
+  0% {
+    stroke-dashoffset: 2400;
+    stroke: #027555;
+    stroke-width: 8px;
+    fill-opacity: 0;
+    filter: drop-shadow(0 0 10px rgba(2, 117, 85, 0.6));
+  }
+  48% {
+    stroke-dashoffset: 0;
+    stroke: #047857;
+    stroke-width: 3.5px;
+    fill-opacity: 0.2;
+  }
+  65% {
+    stroke-dashoffset: 0;
+    stroke-width: 0px;
+    fill-opacity: 1;
+    filter: drop-shadow(0 0 20px rgba(4, 120, 87, 0.45)) brightness(1.15);
+  }
+  100% {
+    stroke-dashoffset: 0;
+    stroke-width: 0px;
+    fill-opacity: 1;
+    filter: drop-shadow(0 4px 12px rgba(2, 117, 85, 0.15));
+  }
+}
+
+.splash-light-text-anim {
+  animation: splashLightTextFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
+}
+
+@keyframes splashLightTextFade {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.splash-light-progress {
+  animation: splashLightProgressFill 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes splashLightProgressFill {
+  0% { width: 0%; }
+  50% { width: 65%; }
+  85% { width: 92%; }
+  100% { width: 100%; }
+}

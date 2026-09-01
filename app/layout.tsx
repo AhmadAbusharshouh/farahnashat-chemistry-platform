@@ -5,6 +5,7 @@ import "./globals.css";
 import { TopLoadingBar } from "@/components/TopLoadingBar";
 import { Navbar, Footer } from "@/components/Navigation";
 import { SplashScreen } from "@/components/SplashScreen";
+import { AIAssistantWidget } from "@/components/AIAssistantWidget";
 import { LanguageProvider } from "@/lib/LanguageContext";
 import { Suspense } from "react";
 
@@ -37,6 +38,7 @@ export default function RootLayout({
           <main className="flex-grow">
             {children}
           </main>
+          <AIAssistantWidget />
           <Footer />
         </LanguageProvider>
       </body>
