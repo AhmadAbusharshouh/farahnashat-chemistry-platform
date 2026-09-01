@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { sendWhatsAppNotification } from '@/lib/evolution';
 import { generateChemistryAnswer, UserContext } from '@/lib/ai-tutor';
+import { formatForWhatsApp } from '@/lib/format-chemistry';
 
 export async function POST(req: Request) {
   try {
@@ -75,10 +76,12 @@ export async function POST(req: Request) {
     // Generate response using System Prompt & cf/zai-org/glm-5.3-flash
     const aiResult = await generateChemistryAnswer(query, lang, userContext);
 
-    // Format message nicely for WhatsApp
-    const formattedReply = `✨ *المساعد الكيميائي الذكي (أ. فرح نشأت):*\n` +
+    // Format message specifically for WhatsApp (convert LaTeX/hashes to WhatsApp bold & Unicode)
+    const cleanWhatsAppReply = formatForWhatsApp(aiResult.reply);
+
+    const formattedReply = `✨ *المساعد الكيميائي الذكي (أ. فرح نشأت)*\n` +
       `━━━━━━━━━━━━━━━\n\n` +
-      `${aiResult.reply}\n\n` +
+      `${cleanWhatsAppReply}\n\n` +
       `━━━━━━━━━━━━━━━\n` +
       `🧪 *منصة كيمياء أ. فرح نشأت*\n` +
       `🔗 https://farahnashat.com`;

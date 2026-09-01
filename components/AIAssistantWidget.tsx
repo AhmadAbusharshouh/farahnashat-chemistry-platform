@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { 
   MessageSquare, 
   Send, 
@@ -12,6 +13,7 @@ import {
   Bot
 } from 'lucide-react';
 import { useLanguage } from '@/lib/LanguageContext';
+import { FormattedChemistryMessage } from '@/lib/format-chemistry';
 
 interface ChatMessage {
   id: string;
@@ -22,8 +24,14 @@ interface ChatMessage {
 }
 
 export function AIAssistantWidget() {
+  const pathname = usePathname();
   const { t, lang } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
+
+  // Do not render the floating widget on the dedicated full-screen assistant page
+  if (pathname === '/assistant') {
+    return null;
+  }
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'init-1',
@@ -259,9 +267,11 @@ export function AIAssistantWidget() {
                           : 'bg-white border-slate-200 text-slate-900 shadow-2xs'
                       }`}
                     >
-                      <p className={`whitespace-pre-line ${msg.isTyping ? 'typing-cursor' : ''}`}>
-                        {msg.text}
-                      </p>
+                      {isUser ? (
+                        <p className="whitespace-pre-line">{msg.text}</p>
+                      ) : (
+                        <FormattedChemistryMessage text={msg.text} isTyping={msg.isTyping} />
+                      )}
                       <span
                         className={`block text-[9px] mt-1.5 ${
                           isUser ? 'text-emerald-200 text-left' : 'text-slate-400 text-right'

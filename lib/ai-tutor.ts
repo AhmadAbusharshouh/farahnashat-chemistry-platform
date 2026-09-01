@@ -1,5 +1,7 @@
 // Comprehensive Chemistry AI Engine with Cloudflare Workers AI (cf/zai-org/glm-5.3-flash) & Jordanian Chemistry Curriculum
 
+import { sanitizeChemistryText } from './format-chemistry';
+
 export interface UserContext {
   userName?: string;
   whatsappName?: string;
@@ -24,7 +26,17 @@ export const CURRENT_HARNESS_AR = `أنت المساعد الكيميائي ال
 📋 قواعد وتوجيهات الإجابة العلمية:
 1. إجابات علمية دقيقة، واضحة ومباشرة مع تنظيمها في نقاط (Bullet Points) أنيقة وسهلة الفهم وملخصة بسيطة بشكل غير مخل.
 2. كتابة المعادلات الكيميائية موزونة وبخطوات مبسطة مع توضيح الحالة الفيزيائية عند الحاجة.
-3. ربط الكيمياء بالحياة اليومية، الصحة، الصناعة، البيئة والأردن (مثل كيراتين الشعر وpH الشامبو 5.5، حموضة التربة ومعالجتها، الرياضة وحقيقة اللاكتيك، المطر الحمضي، والصناعات الدوائية والغذائية) وهاي مجرد أمثلة لا أكثر.`;
+3. ربط الكيمياء بالحياة اليومية، الصحة، الصناعة، البيئة والأردن (مثل كيراتين الشعر وpH الشامبو 5.5، حموضة التربة ومعالجتها، الرياضة وحقيقة اللاكتيك، المطر الحمضي، والصناعات الدوائية والغذائية) وهاي مجرد أمثلة لا أكثر.
+
+🚫 ضوابط التنسيق الصارمة (Formatting Rules):
+1. يُمنع منعاً باتاً استخدام صيغ LaTeX أو علامات الدولار ($ أو $$) أو أوامر السلاش مثل \\rightarrow أو \\rightleftharpoons أو \\text{} أو _{2} أو ^{2+}.
+2. اكتب المعادلات الكيميائية برموز يونيكود مباشرة واضحة ومقروءة:
+   - سهم التفاعل: →
+   - سهم الاتزان: ⇌
+   - الأرقام السفلية: ₀ ₁ ₂ ₃ ₄ ₅ ₆ ₇ ₈ ₉ (مثل: H₂O, CO₂, H₂SO₄, HNO₃, Ca(OH)₂)
+   - الشحنات العلوية: ⁺ ⁻ ²⁺ ²⁻ ³⁺ ³⁻ (مثل: H⁺, OH⁻, Na⁺, Cl⁻, Ca²⁺, SO₄²⁻)
+   - الحالات الفيزيائية بين قوسين: (aq), (s), (l), (g)
+3. لا تستخدم وسوم الهاش (###) بكثرة ولا النجوم الثلاثية (***). استعض عنها بنقاط مرتبة (•) وعناوين واضحة بخط عريض (**عنوان**).`;
 
 export const CURRENT_HARNESS_EN = `You are the friendly and smart AI Chemistry Tutor for Teacher Farah Nashat (Modern Islamic School - Irbid / Hakama, Jordanian Chemistry Curriculum).
 
@@ -37,7 +49,16 @@ export const CURRENT_HARNESS_EN = `You are the friendly and smart AI Chemistry T
 1. Provide accurate, clear, and structured answers (concise bullet points).
 2. Write balanced chemical equations with state symbols and step-by-step clarity.
 3. Connect chemical concepts to daily life, health, environment, and industry.
-4. Support the complete Jordanian curriculum across all secondary and middle school chemistry levels.`;
+4. Support the complete Jordanian curriculum across all secondary and middle school chemistry levels.
+
+🚫 Formatting Rules:
+1. NEVER use LaTeX syntax, dollar signs ($ or $$), or commands like \\rightarrow, \\rightleftharpoons, \\text{}, _{2}, or ^{2+}.
+2. ALWAYS use direct clean Unicode chemical symbols:
+   - Arrows: → and ⇌
+   - Subscripts: ₀ ₁ ₂ ₃ ₄ ₅ ₆ ₇ ₈ ₉ (e.g. H₂O, CO₂, H₂SO₄, HNO₃, Ca(OH)₂)
+   - Superscripts: ⁺ ⁻ ²⁺ ²⁻ ³⁺ ³⁻ (e.g. H⁺, OH⁻, Na⁺, Cl⁻, Ca²⁺, SO₄²⁻)
+   - State symbols: (aq), (s), (l), (g)
+3. Avoid Markdown header hashes (###) or triple asterisks (***). Use clean bullets (•) and clean bold text (**bold**).`;
 
 export function buildSystemPrompt(lang: 'ar' | 'en', userContext?: UserContext): string {
   const basePrompt = lang === 'ar' ? CURRENT_HARNESS_AR : CURRENT_HARNESS_EN;
@@ -141,7 +162,8 @@ export async function generateChemistryAnswer(
           const cfData = await cfRes.json();
           const text = cfData?.result?.response;
           if (text) {
-            return { reply: text.trim(), source: 'workers-ai', model };
+            const cleanReply = sanitizeChemistryText(text.trim());
+            return { reply: cleanReply, source: 'workers-ai', model };
           }
         }
       } catch (e) {

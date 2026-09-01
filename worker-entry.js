@@ -1,3 +1,88 @@
+const SUB_MAP = {
+  '0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄',
+  '5': '₅', '6': '₆', '7': '₇', '8': '₈', '9': '₉',
+  '+': '₊', '-': '₋', '=': '₌', '(': '₍', ')': '₎'
+};
+
+const SUP_MAP = {
+  '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
+  '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
+  '+': '⁺', '-': '⁻', '=': '⁼', '(': '⁽', ')': '⁾'
+};
+
+function toSubscript(str) {
+  return str.split('').map(c => SUB_MAP[c] || c).join('');
+}
+
+function toSuperscript(str) {
+  return str.split('').map(c => SUP_MAP[c] || c).join('');
+}
+
+function sanitizeChemistryText(rawText) {
+  if (!rawText) return '';
+  let text = rawText;
+
+  // Convert LaTeX arrows & symbols
+  text = text
+    .replace(/\\rightleftharpoons|\\leftrightharpoons|\\leftrightarrow/g, ' ⇌ ')
+    .replace(/\\rightarrow|\\to|\\longrightarrow/g, ' → ')
+    .replace(/\\leftarrow|\\longleftarrow/g, ' ← ')
+    .replace(/\\times/g, ' × ')
+    .replace(/\\cdot/g, ' · ')
+    .replace(/\\pm/g, ' ± ')
+    .replace(/\\approx/g, ' ≈ ')
+    .replace(/\\neq/g, ' ≠ ')
+    .replace(/\\Delta/g, 'Δ')
+    .replace(/\\degree|\\circ/g, '°');
+
+  // Strip LaTeX wrappers
+  text = text
+    .replace(/\\(?:text|mathrm|mathbf|ce|mathit)\{([^}]+)\}/g, '$1')
+    .replace(/\\(?:text|mathrm|mathbf|ce|mathit)\s+/g, '');
+
+  // Convert phase states
+  text = text
+    .replace(/_\{(aq)\}|_\(aq\)/gi, ' (aq)')
+    .replace(/_\{(s)\}|_\(s\)/gi, ' (s)')
+    .replace(/_\{(l)\}|_\(l\)/gi, ' (l)')
+    .replace(/_\{(g)\}|_\(g\)/gi, ' (g)');
+
+  // Convert Superscripts & Subscripts
+  text = text.replace(/\^\{([^}]+)\}/g, (_, content) => toSuperscript(content));
+  text = text.replace(/\^([0-9\+\-]+)/g, (_, content) => toSuperscript(content));
+  text = text.replace(/_\{([^}]+)\}/g, (_, content) => toSubscript(content));
+  text = text.replace(/_([0-9]+)/g, (_, content) => toSubscript(content));
+
+  // Clean dollar signs and escapes
+  text = text
+    .replace(/\$\$/g, '')
+    .replace(/\$/g, '')
+    .replace(/\\\[/g, '')
+    .replace(/\\\]/g, '')
+    .replace(/\\\(/g, '(')
+    .replace(/\\\)/g, ')');
+
+  // Clean triple asterisks
+  text = text
+    .replace(/\*\*\*([^*]+)\*\*\*/g, '**$1**')
+    .replace(/\*\*\*([^*]+)\*\*/g, '**$1**')
+    .replace(/\*\*([^*]+)\*\*\*/g, '**$1**');
+
+  text = text.replace(/\\/g, '');
+  text = text.replace(/\s*→\s*/g, ' → ').replace(/\s*⇌\s*/g, ' ⇌ ');
+
+  return text.trim();
+}
+
+function formatForWhatsApp(rawText) {
+  let text = sanitizeChemistryText(rawText);
+  text = text.replace(/^(?:#{1,6})\s*(.+)$/gm, '\n*$1*');
+  text = text.replace(/\*\*([^*]+)\*\*/g, '*$1*');
+  text = text.replace(/^(?:---+|\*\*\*+|___+)\s*$/gm, '───────────────');
+  text = text.replace(/\n{3,}/g, '\n\n');
+  return text.trim();
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -62,7 +147,16 @@ export default {
 1. Provide accurate, clear, and structured answers (concise bullet points).
 2. Write balanced chemical equations with state symbols and step-by-step clarity.
 3. Connect chemical concepts to daily life, health, environment, and industry.
-4. Support the complete Jordanian curriculum across all secondary and middle school chemistry levels.`
+4. Support the complete Jordanian curriculum across all secondary and middle school chemistry levels.
+
+🚫 Formatting Rules:
+1. NEVER use LaTeX syntax, dollar signs ($ or $$), or commands like \\rightarrow, \\rightleftharpoons, \\text{}, _{2}, or ^{2+}.
+2. ALWAYS use direct clean Unicode chemical symbols:
+   - Arrows: → and ⇌
+   - Subscripts: ₀ ₁ ₂ ₃ ₄ ₅ ₆ ₇ ₈ ₉ (e.g. H₂O, CO₂, H₂SO₄, HNO₃, Ca(OH)₂)
+   - Superscripts: ⁺ ⁻ ²⁺ ²⁻ ³⁺ ³⁻ (e.g. H⁺, OH⁻, Na⁺, Cl⁻, Ca²⁺, SO₄²⁻)
+   - State symbols: (aq), (s), (l), (g)
+3. Avoid Markdown header hashes (###) or triple asterisks (***). Use clean bullets (•) and clean bold text (**bold**).`
           : `أنت المساعد الكيميائي الذكي واللطيف للأستاذة فرح نشأت (معلمة الكيمياء في المدرسة الإسلامية الحديثة - إربد / حكما).
 منهاج الكيمياء هو المنهاج الأردني هنا.
 
@@ -74,7 +168,17 @@ export default {
 📋 قواعد وتوجيهات الإجابة العلمية:
 1. إجابات علمية دقيقة، واضحة ومباشرة مع تنظيمها في نقاط (Bullet Points) أنيقة وسهلة الفهم وملخصة بسيطة بشكل غير مخل.
 2. كتابة المعادلات الكيميائية موزونة وبخطوات مبسطة مع توضيح الحالة الفيزيائية عند الحاجة.
-3. ربط الكيمياء بالحياة اليومية، الصحة، الصناعة، البيئة والأردن (مثل كيراتين الشعر وpH الشامبو 5.5، حموضة التربة ومعالجتها، الرياضة وحقيقة اللاكتيك، المطر الحمضي، والصناعات الدوائية والغذائية) وهاي مجرد أمثلة لا أكثر.`;
+3. ربط الكيمياء بالحياة اليومية، الصحة، الصناعة، البيئة والأردن (مثل كيراتين الشعر وpH الشامبو 5.5، حموضة التربة ومعالجتها، الرياضة وحقيقة اللاكتيك، المطر الحمضي، والصناعات الدوائية والغذائية) وهاي مجرد أمثلة لا أكثر.
+
+🚫 ضوابط التنسيق الصارمة (Formatting Rules):
+1. يُمنع منعاً باتاً استخدام صيغ LaTeX أو علامات الدولار ($ أو $$) أو أوامر السلاش مثل \\rightarrow أو \\rightleftharpoons أو \\text{} أو _{2} أو ^{2+}.
+2. اكتب المعادلات الكيميائية برموز يونيكود مباشرة واضحة ومقروءة:
+   - سهم التفاعل: →
+   - سهم الاتزان: ⇌
+   - الأرقام السفلية: ₀ ₁ ₂ ₃ ₄ ₅ ₆ ₇ ₈ ₉ (مثل: H₂O, CO₂, H₂SO₄, HNO₃, Ca(OH)₂)
+   - الشحنات العلوية: ⁺ ⁻ ²⁺ ²⁻ ³⁺ ³⁻ (مثل: H⁺, OH⁻, Na⁺, Cl⁻, Ca²⁺, SO₄²⁻)
+   - الحالات الفيزيائية بين قوسين: (aq), (s), (l), (g)
+3. لا تستخدم وسوم الهاش (###) بكثرة ولا النجوم الثلاثية (***). استعض عنها بنقاط مرتبة (•) وعناوين واضحة بخط عريض (**عنوان**).`;
 
         // Inject personalized user context
         if (activeName) {
@@ -138,9 +242,11 @@ export default {
             : (greetingName ? `أهلاً وسهلاً بك يا ${greetingName} في منصة كيمياء الأستاذة فرح نشأت! 🌸🧪 تفضل بسؤالي عن أي شيء في الكيمياء وسأجيبك فوراً! ✨` : 'أهلاً وسهلاً بك في منصة كيمياء الأستاذة فرح نشأت! 🌸🧪 تفضل بسؤالي عن أي شيء في الكيمياء وسأجيبك فوراً! ✨');
         }
 
+        const cleanWebReply = sanitizeChemistryText(reply);
+
         return new Response(JSON.stringify({
           success: true,
-          reply: reply.trim(),
+          reply: cleanWebReply,
           model: modelUsed,
           timestamp: new Date().toISOString()
         }), {
@@ -358,7 +464,16 @@ export default {
 1. Provide accurate, clear, and structured answers (concise bullet points).
 2. Write balanced chemical equations with state symbols and step-by-step clarity.
 3. Connect chemical concepts to daily life, health, environment, and industry.
-4. Support the complete Jordanian curriculum across all secondary and middle school chemistry levels.`
+4. Support the complete Jordanian curriculum across all secondary and middle school chemistry levels.
+
+🚫 Formatting Rules:
+1. NEVER use LaTeX syntax, dollar signs ($ or $$), or commands like \\rightarrow, \\rightleftharpoons, \\text{}, _{2}, or ^{2+}.
+2. ALWAYS use direct clean Unicode chemical symbols:
+   - Arrows: → and ⇌
+   - Subscripts: ₀ ₁ ₂ ₃ ₄ ₅ ₆ ₇ ₈ ₉ (e.g. H₂O, CO₂, H₂SO₄, HNO₃, Ca(OH)₂)
+   - Superscripts: ⁺ ⁻ ²⁺ ²⁻ ³⁺ ³⁻ (e.g. H⁺, OH⁻, Na⁺, Cl⁻, Ca²⁺, SO₄²⁻)
+   - State symbols: (aq), (s), (l), (g)
+3. Avoid Markdown header hashes (###) or triple asterisks (***). Use clean bullets (•) and clean bold text (**bold**).`
           : `أنت المساعد الكيميائي الذكي واللطيف للأستاذة فرح نشأت (معلمة الكيمياء في المدرسة الإسلامية الحديثة - إربد / حكما).
 منهاج الكيمياء هو المنهاج الأردني هنا.
 
@@ -370,7 +485,17 @@ export default {
 📋 قواعد وتوجيهات الإجابة العلمية:
 1. إجابات علمية دقيقة، واضحة ومباشرة مع تنظيمها في نقاط (Bullet Points) أنيقة وسهلة الفهم وملخصة بسيطة بشكل غير مخل.
 2. كتابة المعادلات الكيميائية موزونة وبخطوات مبسطة مع توضيح الحالة الفيزيائية عند الحاجة.
-3. ربط الكيمياء بالحياة اليومية، الصحة، الصناعة، البيئة والأردن (مثل كيراتين الشعر وpH الشامبو 5.5، حموضة التربة ومعالجتها، الرياضة وحقيقة اللاكتيك، المطر الحمضي، والصناعات الدوائية والغذائية) وهاي مجرد أمثلة لا أكثر.`;
+3. ربط الكيمياء بالحياة اليومية، الصحة، الصناعة، البيئة والأردن (مثل كيراتين الشعر وpH الشامبو 5.5، حموضة التربة ومعالجتها، الرياضة وحقيقة اللاكتيك، المطر الحمضي، والصناعات الدوائية والغذائية) وهاي مجرد أمثلة لا أكثر.
+
+🚫 ضوابط التنسيق الصارمة (Formatting Rules):
+1. يُمنع منعاً باتاً استخدام صيغ LaTeX أو علامات الدولار ($ أو $$) أو أوامر السلاش مثل \\rightarrow أو \\rightleftharpoons أو \\text{} أو _{2} أو ^{2+}.
+2. اكتب المعادلات الكيميائية برموز يونيكود مباشرة واضحة ومقروءة:
+   - سهم التفاعل: →
+   - سهم الاتزان: ⇌
+   - الأرقام السفلية: ₀ ₁ ₂ ₃ ₄ ₅ ₆ ₇ ₈ ₉ (مثل: H₂O, CO₂, H₂SO₄, HNO₃, Ca(OH)₂)
+   - الشحنات العلوية: ⁺ ⁻ ²⁺ ²⁻ ³⁺ ³⁻ (مثل: H⁺, OH⁻, Na⁺, Cl⁻, Ca²⁺, SO₄²⁻)
+   - الحالات الفيزيائية بين قوسين: (aq), (s), (l), (g)
+3. لا تستخدم وسوم الهاش (###) بكثرة ولا النجوم الثلاثية (***). استعض عنها بنقاط مرتبة (•) وعناوين واضحة بخط عريض (**عنوان**).`;
 
         // Inject WhatsApp sender name & linked account registered name
         if (registeredName && whatsappName && registeredName !== whatsappName) {
@@ -431,9 +556,11 @@ export default {
             : (greetingName ? `أهلاً وسهلاً بك يا ${greetingName} في منصة كيمياء الأستاذة فرح نشأت! 🌸🧪 تفضل بسؤالي عن أي شيء في الكيمياء وسأجيبك فوراً! ✨` : 'أهلاً وسهلاً بك في منصة كيمياء الأستاذة فرح نشأت! 🌸🧪 تفضل بسؤالي عن أي شيء في الكيمياء وسأجيبك فوراً! ✨');
         }
 
-        const formattedReply = `✨ *المساعد الكيميائي الذكي (أ. فرح نشأت):*\n` +
+        const cleanWhatsAppReply = formatForWhatsApp(reply);
+
+        const formattedReply = `✨ *المساعد الكيميائي الذكي (أ. فرح نشأت)*\n` +
           `━━━━━━━━━━━━━━━\n\n` +
-          `${reply.trim()}\n\n` +
+          `${cleanWhatsAppReply}\n\n` +
           `━━━━━━━━━━━━━━━\n` +
           `🧪 *منصة كيمياء أ. فرح نشأت*\n` +
           `🔗 https://farahnashat.com`;
