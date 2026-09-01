@@ -164,12 +164,6 @@ export default function HomePage() {
             {/* Left Column: Teacher Identity & Concise Action Buttons */}
             <div className="lg:col-span-6 space-y-5 text-right">
               
-              {/* Teacher Brand Badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold shadow-2xs">
-                <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
-                <span>{t('منصة الكيمياء التفاعلية • الأستاذة فرح نشأت', 'Interactive Chemistry Platform • Teacher Farah Nashat')}</span>
-              </div>
-
               {/* Main Headline */}
               <div className="space-y-2">
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 leading-[1.2] tracking-tight">

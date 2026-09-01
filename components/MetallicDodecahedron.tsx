@@ -76,12 +76,12 @@ const DEFAULTS: Config = {
     delay: 0.55,
     ease: "easeOut",
   },
-  rotation: { x: 2, y: 5, z: 0 },
-  dragSensitivity: 10,
-  sizePercent: 100,
-  showChemicalLabels: true,
-  selectedFormula: null,
-}
+    rotation: { x: 1.5, y: 3.5, z: 0 },
+    dragSensitivity: 3,
+    sizePercent: 100,
+    showChemicalLabels: true,
+    selectedFormula: null,
+  }
 
 const NAMED_EASES: Record<string, number[]> = {
   linear: [0, 0, 1, 1],
@@ -510,7 +510,7 @@ class SolidScene {
       this.lastX = e.clientX
       this.lastY = e.clientY
       this.travelled += Math.hypot(dx, dy)
-      const s = clamp(this.cfg.dragSensitivity, 0, 10, 3) * 0.008
+      const s = clamp(this.cfg.dragSensitivity, 0.5, 6, 3) * 0.0022
       this.ay += dx * s
       this.ax += dy * s
     }

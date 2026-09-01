@@ -26,10 +26,11 @@ import { SUBSTANCES_DATA, ChemicalSubstance, INDICATORS_DATA, IndicatorData } fr
 import { useLanguage } from '@/lib/LanguageContext';
 import { Molecule3DViewer } from '@/components/Molecule3DViewer';
 import { Ionization3DChamber } from '@/components/Ionization3DChamber';
+import { Indicators3DLab } from '@/components/Indicators3DLab';
 
 export default function VirtualLabPage() {
   const { t, dir } = useLanguage();
-  const [activeTab, setActiveTab] = useState<'ph_meter' | '3d_molecules' | 'conductivity' | 'metal_reaction' | 'indicators' | 'agriculture' | 'titration'>('ph_meter');
+  const [activeTab, setActiveTab] = useState<'indicators' | 'ph_meter' | '3d_molecules' | 'conductivity' | 'metal_reaction' | 'agriculture' | 'titration'>('indicators');
 
   // TAB 1: pH Meter State
   const [selectedSubstance, setSelectedSubstance] = useState<ChemicalSubstance>(SUBSTANCES_DATA[1]);
@@ -83,8 +84,17 @@ export default function VirtualLabPage() {
           {/* Clean Sharp Tabs */}
           <div className="flex flex-wrap items-center gap-1 bg-slate-50 p-1 border border-slate-200 text-xs font-bold">
             <button
+              onClick={() => setActiveTab('indicators')}
+              className={`px-3.5 py-2 transition flex items-center gap-1.5 ${
+                activeTab === 'indicators' ? 'bg-emerald-700 text-white shadow-2xs font-black' : 'text-slate-700 hover:bg-slate-200'
+              }`}
+            >
+              <FlaskConical className="w-3.5 h-3.5 text-emerald-300" />
+              <span>{t('الكواشف الخمسة (3D)', '5 Indicators (3D)')}</span>
+            </button>
+            <button
               onClick={() => setActiveTab('ph_meter')}
-              className={`px-3 py-1.5 transition ${
+              className={`px-3 py-2 transition ${
                 activeTab === 'ph_meter' ? 'bg-emerald-700 text-white shadow-2xs' : 'text-slate-700 hover:bg-slate-200'
               }`}
             >
@@ -92,7 +102,7 @@ export default function VirtualLabPage() {
             </button>
             <button
               onClick={() => setActiveTab('3d_molecules')}
-              className={`px-3 py-1.5 transition ${
+              className={`px-3 py-2 transition ${
                 activeTab === '3d_molecules' ? 'bg-emerald-700 text-white shadow-2xs' : 'text-slate-700 hover:bg-slate-200'
               }`}
             >
@@ -100,7 +110,7 @@ export default function VirtualLabPage() {
             </button>
             <button
               onClick={() => setActiveTab('conductivity')}
-              className={`px-3 py-1.5 transition ${
+              className={`px-3 py-2 transition ${
                 activeTab === 'conductivity' ? 'bg-emerald-700 text-white shadow-2xs' : 'text-slate-700 hover:bg-slate-200'
               }`}
             >
@@ -108,23 +118,15 @@ export default function VirtualLabPage() {
             </button>
             <button
               onClick={() => setActiveTab('metal_reaction')}
-              className={`px-3 py-1.5 transition ${
+              className={`px-3 py-2 transition ${
                 activeTab === 'metal_reaction' ? 'bg-emerald-700 text-white shadow-2xs' : 'text-slate-700 hover:bg-slate-200'
               }`}
             >
               {t('تفاعل الفلزات (H₂)', 'Metals + Acids')}
             </button>
             <button
-              onClick={() => setActiveTab('indicators')}
-              className={`px-3 py-1.5 transition ${
-                activeTab === 'indicators' ? 'bg-emerald-700 text-white shadow-2xs' : 'text-slate-700 hover:bg-slate-200'
-              }`}
-            >
-              {t('الكواشف الخمسة', '5 Indicators')}
-            </button>
-            <button
               onClick={() => setActiveTab('agriculture')}
-              className={`px-3 py-1.5 transition ${
+              className={`px-3 py-2 transition ${
                 activeTab === 'agriculture' ? 'bg-emerald-700 text-white shadow-2xs' : 'text-slate-700 hover:bg-slate-200'
               }`}
             >
@@ -132,11 +134,11 @@ export default function VirtualLabPage() {
             </button>
             <button
               onClick={() => setActiveTab('titration')}
-              className={`px-3 py-1.5 transition ${
+              className={`px-3 py-2 transition ${
                 activeTab === 'titration' ? 'bg-emerald-700 text-white shadow-2xs' : 'text-slate-700 hover:bg-slate-200'
               }`}
             >
-              {t('المعايرة والتعادل', 'Titration')}
+              {t('المعايرة', 'Titration')}
             </button>
           </div>
         </div>
@@ -446,114 +448,9 @@ export default function VirtualLabPage() {
         </div>
       )}
 
-      {/* TAB 5: 5 Indicators */}
+      {/* TAB: 5 Indicators (Primary 3D Interactive Lab) */}
       {activeTab === 'indicators' && (
-        <div className="bg-white border border-slate-200 p-6 space-y-5 shadow-2xs">
-          <div className="border-b border-slate-100 pb-3">
-            <h2 className="text-lg font-black text-slate-900">
-              محطة الكواشف الكيميائية الخمسة الشاملة
-            </h2>
-            <p className="text-xs text-slate-500">
-              استكشف تباع الشمس، الملفوف الأحمر، الفينولفثالين، أزرق البروموثيمول، والكاشف العام.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div className="lg:col-span-4 space-y-1.5">
-              <h3 className="text-xs font-bold text-slate-600 px-1">اختر الكاشف:</h3>
-              {INDICATORS_DATA.map((ind) => {
-                const isSelected = selectedIndicator.id === ind.id;
-                return (
-                  <button
-                    key={ind.id}
-                    onClick={() => {
-                      setSelectedIndicator(ind);
-                      setIndicatorTested(false);
-                    }}
-                    className={`w-full text-right p-3 border transition ${
-                      isSelected
-                        ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold'
-                        : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'
-                    }`}
-                  >
-                    <div className="text-xs">{ind.name}</div>
-                    <div className="text-[10px] text-slate-400">{ind.curriculumReference} • {ind.phTransitionRange}</div>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="lg:col-span-8 bg-slate-50 p-5 border border-slate-200 space-y-4">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <div>
-                  <h4 className="font-bold text-sm text-slate-900">{selectedIndicator.name}</h4>
-                  <p className="text-xs text-slate-500">{selectedIndicator.description}</p>
-                </div>
-                <button
-                  onClick={() => setIndicatorTested(true)}
-                  className="px-3.5 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs border border-emerald-800 transition"
-                >
-                  إضافة قطرات الكاشف
-                </button>
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-700">اختر العينة:</label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
-                  {SUBSTANCES_DATA.slice(0, 8).map((sub) => (
-                    <button
-                      key={sub.id}
-                      onClick={() => {
-                        setIndicatorTestSubstance(sub);
-                        setIndicatorTested(false);
-                      }}
-                      className={`p-2 border text-xs font-bold transition text-right truncate ${
-                        indicatorTestSubstance.id === sub.id ? 'bg-emerald-700 text-white border-emerald-700' : 'bg-white border-slate-200 text-slate-700'
-                      }`}
-                    >
-                      {sub.name.split('(')[0]}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2.5 text-center pt-2">
-                <div className="p-3 bg-red-50 border border-red-200">
-                  <div className="text-[10px] text-red-700 font-bold mb-1">في الوسط الحمضي</div>
-                  <div className="text-xs font-black text-red-900">
-                    {selectedIndicator.id === 'litmus' && 'أحمر'}
-                    {selectedIndicator.id === 'cabbage' && 'أحمر فاقع / وردي'}
-                    {selectedIndicator.id === 'phenolphthalein' && 'عديم اللون (شفاف)'}
-                    {selectedIndicator.id === 'bromothymol' && 'أصفر'}
-                    {selectedIndicator.id === 'universal' && 'أحمر إلى برتقالي'}
-                  </div>
-                </div>
-
-                <div className="p-3 bg-emerald-50 border border-emerald-200">
-                  <div className="text-[10px] text-emerald-700 font-bold mb-1">في الوسط المتعادل (pH 7)</div>
-                  <div className="text-xs font-black text-emerald-900">
-                    {selectedIndicator.id === 'litmus' && 'لا يتغير'}
-                    {selectedIndicator.id === 'cabbage' && 'بنفسجي طبيعي'}
-                    {selectedIndicator.id === 'phenolphthalein' && 'عديم اللون'}
-                    {selectedIndicator.id === 'bromothymol' && 'أخضر عشبي'}
-                    {selectedIndicator.id === 'universal' && 'أخضر زمردي'}
-                  </div>
-                </div>
-
-                <div className="p-3 bg-purple-50 border border-purple-200">
-                  <div className="text-[10px] text-purple-700 font-bold mb-1">في الوسط القاعدي</div>
-                  <div className="text-xs font-black text-purple-900">
-                    {selectedIndicator.id === 'litmus' && 'أزرق'}
-                    {selectedIndicator.id === 'cabbage' && 'أزرق ثم أخضر ثم أصفر'}
-                    {selectedIndicator.id === 'phenolphthalein' && 'زهري فاقع (Pink)'}
-                    {selectedIndicator.id === 'bromothymol' && 'أزرق صريح'}
-                    {selectedIndicator.id === 'universal' && 'أزرق إلى بنفسجي'}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Indicators3DLab />
       )}
 
       {/* TAB 6: Agricultural Soil */}
