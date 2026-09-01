@@ -8,10 +8,8 @@ import {
   User, 
   X, 
   Sparkles, 
-  RotateCcw, 
-  Maximize2,
-  Minimize2,
-  ChevronDown
+  RotateCcw,
+  Bot
 } from 'lucide-react';
 import { useLanguage } from '@/lib/LanguageContext';
 
@@ -23,15 +21,8 @@ interface ChatMessage {
   isTyping?: boolean;
 }
 
-const QUICK_PROMPTS = [
-  'ما الفرق بين الحمض القوي والحمض الضعيف؟',
-  'كيف يتغير لون مستخلص الملفوف الأحمر؟',
-  'لماذا يُعد غاز CO₂ أكسيداً حمضياً؟',
-  'ما علاقة درجة حموضة الشامبو بكيراتين الشعر؟'
-];
-
 export function AIAssistantWidget() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -44,6 +35,13 @@ export function AIAssistantWidget() {
   const [inputVal, setInputVal] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const QUICK_PROMPTS = [
+    { ar: 'ما الفرق بين الحمض القوي والحمض الضعيف؟', en: 'Difference between strong and weak acids?' },
+    { ar: 'كيف يتغير لون مستخلص الملفوف الأحمر؟', en: 'How does red cabbage indicator change color?' },
+    { ar: 'لماذا يُعد غاز CO₂ أكسيداً حمضياً؟', en: 'Why is CO₂ considered an acidic oxide?' },
+    { ar: 'ما علاقة درجة حموضة الشامبو بكيراتين الشعر؟', en: 'How does shampoo pH affect hair keratin?' }
+  ];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -82,7 +80,7 @@ export function AIAssistantWidget() {
       id: userMsgId,
       sender: 'user',
       text,
-      timestamp: new Date().toLocaleTimeString('ar-JO', { hour: '2-digit', minute: '2-digit' })
+      timestamp: new Date().toLocaleTimeString(lang === 'ar' ? 'ar-JO' : 'en-US', { hour: '2-digit', minute: '2-digit' })
     };
 
     setMessages((prev) => [...prev, userMsg]);
@@ -96,7 +94,7 @@ export function AIAssistantWidget() {
         body: JSON.stringify({ message: text })
       });
       const data = await res.json();
-      const reply = data.reply || 'تمت معالجة السؤال الكيميائي بنجاح.';
+      const reply = data.reply || (lang === 'ar' ? 'تمت معالجة السؤال الكيميائي بنجاح.' : 'Chemistry question processed successfully.');
 
       setMessages((prev) => [
         ...prev,
@@ -104,17 +102,19 @@ export function AIAssistantWidget() {
           id: assistantMsgId,
           sender: 'assistant',
           text: '',
-          timestamp: new Date().toLocaleTimeString('ar-JO', { hour: '2-digit', minute: '2-digit' }),
+          timestamp: new Date().toLocaleTimeString(lang === 'ar' ? 'ar-JO' : 'en-US', { hour: '2-digit', minute: '2-digit' }),
           isTyping: true
         }
       ]);
       setLoading(false);
       await streamResponse(assistantMsgId, reply);
     } catch (err) {
-      const fallbackText = 'تتأين الحموض في الماء مطلقة أيونات H⁺ بينما تطلق القواعد أيونات OH⁻، ومقياس pH يحدد درجة الحموضة بدقة.';
+      const fallbackText = lang === 'ar'
+        ? 'تتأين الحموض في الماء مطلقة أيونات H⁺ بينما تطلق القواعد أيونات OH⁻، ومقياس pH يحدد درجة الحموضة بدقة.'
+        : 'Acids ionize in water releasing H⁺ ions while bases release OH⁻ ions. The pH scale accurately measures acidity.';
       setMessages((prev) => [
         ...prev,
-        { id: assistantMsgId, sender: 'assistant', text: '', timestamp: 'الآن', isTyping: true }
+        { id: assistantMsgId, sender: 'assistant', text: '', timestamp: lang === 'ar' ? 'الآن' : 'Now', isTyping: true }
       ]);
       setLoading(false);
       await streamResponse(assistantMsgId, fallbackText);
@@ -123,15 +123,15 @@ export function AIAssistantWidget() {
 
   return (
     <>
-      {/* FLOATING ACTION LAUNCHER BUTTON */}
+      {/* FLOATING ACTION LAUNCHER BUTTON WITH SMOOTH BOUNCE / GLOW ANIMATION */}
       {!isOpen && (
-        <div className="fixed bottom-5 left-5 sm:bottom-6 sm:left-6 z-50">
+        <div className="fixed bottom-5 left-5 sm:bottom-6 sm:left-6 z-50 animate-in fade-in zoom-in-75 duration-300">
           <button
             onClick={() => setIsOpen(true)}
-            className="group relative flex items-center gap-3 bg-white hover:bg-emerald-50 border-2 border-emerald-600 p-2 sm:p-2.5 shadow-xl transition-all hover:scale-105"
-            title="المساعد الكيميائي الذكي"
+            className="group relative flex items-center gap-3 bg-white hover:bg-emerald-50 border-2 border-emerald-600 p-2 sm:p-2.5 shadow-xl transition-all duration-300 hover:scale-108 hover:shadow-2xl active:scale-95"
+            title={t('المساعد الكيميائي الذكي', 'AI Chemistry Tutor')}
           >
-            <div className="relative w-11 h-11 sm:w-12 sm:h-12 bg-emerald-100 border border-emerald-300 overflow-hidden flex items-center justify-center shrink-0">
+            <div className="relative w-11 h-11 sm:w-12 sm:h-12 bg-white border border-emerald-300 overflow-hidden flex items-center justify-center shrink-0 p-0.5 shadow-2xs">
               <Image
                 src="/images/ai-avatar.svg"
                 alt="AI Chemistry Avatar"
@@ -143,19 +143,19 @@ export function AIAssistantWidget() {
 
             <div className="hidden sm:block text-right pr-1">
               <div className="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                <span>المساعد الذكي</span>
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>{t('المساعد الذكي', 'AI Tutor')}</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
               </div>
-              <div className="text-[10px] text-emerald-800 font-bold">اسأل عن الكيمياء</div>
+              <div className="text-[10px] text-emerald-800 font-bold">{t('اسأل عن الكيمياء', 'Ask Chemistry')}</div>
             </div>
           </button>
         </div>
       )}
 
-      {/* CHAT MODAL / FULLSCREEN ON MOBILE */}
+      {/* CHAT MODAL / FULLSCREEN ON MOBILE WITH SMOOTH SPRING ENTRANCE */}
       {isOpen && (
-        <div className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:left-6 z-50 flex items-end sm:items-center justify-center">
-          <div className="w-full h-full sm:h-[580px] sm:w-[420px] bg-white border-2 border-emerald-700 shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:left-6 z-50 flex items-end sm:items-center justify-center animate-in fade-in duration-200">
+          <div className="w-full h-full sm:h-[580px] sm:w-[420px] bg-white border-2 border-emerald-700 shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 slide-in-from-bottom-5 duration-300">
             
             {/* Widget Top Header */}
             <div className="bg-emerald-800 text-white p-3.5 flex items-center justify-between border-b border-emerald-900 shrink-0">
@@ -170,8 +170,8 @@ export function AIAssistantWidget() {
                   />
                 </div>
                 <div>
-                  <h3 className="text-xs font-black">المساعد الكيميائي الذكي</h3>
-                  <p className="text-[10px] text-emerald-200">منصة كيمياء أ. فرح نشأت</p>
+                  <h3 className="text-xs font-black">{t('المساعد الكيميائي الذكي', 'AI Chemistry Tutor')}</h3>
+                  <p className="text-[10px] text-emerald-200">{t('منصة كيمياء أ. فرح نشأت', 'Farah Nashat Platform')}</p>
                 </div>
               </div>
 
@@ -180,18 +180,20 @@ export function AIAssistantWidget() {
                   onClick={() => setMessages([{
                     id: 'init-1',
                     sender: 'assistant',
-                    text: 'مرحباً بك! أنا المساعد الكيميائي الذكي. اطرح أي سؤال كيميائي جديد.',
-                    timestamp: 'الآن'
+                    text: lang === 'ar' 
+                      ? 'مرحباً بك! أنا المساعد الكيميائي الذكي. اطرح أي سؤال كيميائي جديد.'
+                      : 'Welcome! I am your AI Chemistry Tutor. Feel free to ask any question.',
+                    timestamp: lang === 'ar' ? 'الآن' : 'Now'
                   }])}
-                  className="p-1.5 text-emerald-200 hover:text-white hover:bg-emerald-700 border border-emerald-700"
-                  title="محادثة جديدة"
+                  className="p-1.5 text-emerald-200 hover:text-white hover:bg-emerald-700 border border-emerald-700 transition"
+                  title={t('محادثة جديدة', 'New Chat')}
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-1.5 text-emerald-200 hover:text-white hover:bg-emerald-700 border border-emerald-700"
-                  title="إغلاق"
+                  className="p-1.5 text-emerald-200 hover:text-white hover:bg-emerald-700 border border-emerald-700 transition"
+                  title={t('إغلاق', 'Close')}
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -203,10 +205,10 @@ export function AIAssistantWidget() {
               {QUICK_PROMPTS.map((q, idx) => (
                 <button
                   key={idx}
-                  onClick={() => handleSend(q)}
-                  className="text-[10px] font-bold bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-900 px-2 py-1 border border-slate-200 shrink-0"
+                  onClick={() => handleSend(lang === 'ar' ? q.ar : q.en)}
+                  className="text-[10px] font-bold bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-900 px-2.5 py-1 border border-slate-200 shrink-0 transition"
                 >
-                  💡 {q}
+                  💡 {lang === 'ar' ? q.ar : q.en}
                 </button>
               ))}
             </div>
@@ -218,13 +220,13 @@ export function AIAssistantWidget() {
                 return (
                   <div
                     key={msg.id}
-                    className={`flex items-start gap-2 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
+                    className={`flex items-start gap-2 ${isUser ? 'flex-row-reverse' : 'flex-row'} animate-in fade-in duration-200`}
                   >
                     <div
-                      className={`w-6 h-6 flex items-center justify-center text-[10px] font-bold shrink-0 border ${
+                      className={`w-6 h-6 flex items-center justify-center text-[10px] font-bold shrink-0 border overflow-hidden ${
                         isUser
                           ? 'bg-emerald-800 text-white border-emerald-900'
-                          : 'bg-white text-emerald-800 border-emerald-300'
+                          : 'bg-white border-emerald-300'
                       }`}
                     >
                       {isUser ? <User className="w-3 h-3" /> : (
@@ -263,7 +265,7 @@ export function AIAssistantWidget() {
               {loading && (
                 <div className="flex items-center gap-2 text-xs text-slate-500 p-1 font-bold">
                   <span className="w-2 h-2 bg-emerald-600 animate-ping"></span>
-                  <span>جاري صياغة الإجابة العلمية...</span>
+                  <span>{t('جاري صياغة الإجابة العلمية...', 'Synthesizing scientific answer...')}</span>
                 </div>
               )}
 
@@ -277,7 +279,7 @@ export function AIAssistantWidget() {
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="اكتب سؤالك الكيميائي هنا..."
+                placeholder={t('اكتب سؤالك الكيميائي هنا...', 'Ask your chemistry question here...')}
                 className="flex-1 px-3 py-2 border border-slate-300 bg-slate-50 focus:bg-white text-xs outline-none focus:border-emerald-700"
               />
               <button
@@ -285,7 +287,7 @@ export function AIAssistantWidget() {
                 disabled={!inputVal.trim() || loading}
                 className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-200 text-white font-bold text-xs border border-emerald-800 transition flex items-center gap-1"
               >
-                <span>إرسال</span>
+                <span>{t('إرسال', 'Send')}</span>
                 <Send className="w-3 h-3 rotate-180" />
               </button>
             </div>

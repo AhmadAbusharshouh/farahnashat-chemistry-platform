@@ -7,7 +7,6 @@ import {
   Menu, 
   X,
   Globe,
-  ArrowUpRight,
   FlaskConical,
   LogIn,
   User,
@@ -15,7 +14,7 @@ import {
   PhoneCall,
   KeyRound,
   CheckCircle2,
-  AlertCircle
+  LogOut
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
@@ -70,7 +69,7 @@ export function Navbar() {
     { href: '/quiz', label: t('اختبار التقويم والتشخيص', 'Quiz & Assessment') },
     { href: '/assistant', label: t('المساعد التعليمي الذكي', 'AI Study Assistant') },
     { href: '/about', label: t('عن المعلمة', 'About Teacher') },
-    { href: '/whatsapp-connect', label: t('بوابة التواصل', 'Contact') },
+    { href: '/whatsapp-connect', label: t('بوابة التواصل', 'Contact Gateway') },
   ];
 
   const toggleLanguage = () => {
@@ -80,7 +79,7 @@ export function Navbar() {
   const handleRequestOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!studentName.trim() || !studentPhone.trim()) {
-      setAuthError('يرجى إدخال الاسم ورقم الهاتف للمتابعة.');
+      setAuthError(t('يرجى إدخال الاسم ورقم الهاتف للمتابعة.', 'Please enter your name and phone number.'));
       return;
     }
 
@@ -119,7 +118,7 @@ export function Navbar() {
         setAuthStep('details');
       }, 1200);
     } else {
-      setAuthError('رمز التحقق غير صحيح، يرجى إعادة المحاولة.');
+      setAuthError(t('رمز التحقق غير صحيح، يرجى إعادة المحاولة.', 'Invalid OTP code. Please try again.'));
     }
   };
 
@@ -133,10 +132,12 @@ export function Navbar() {
     <>
       <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20 sm:h-24">
+          
+          {/* DESKTOP NAVBAR */}
+          <div className="hidden md:flex items-center justify-between h-20 sm:h-24">
             
-            {/* Left Nav: Single-word links in ONE line */}
-            <nav className="hidden md:flex items-center gap-2 flex-1 justify-start whitespace-nowrap">
+            {/* Desktop Left Nav */}
+            <nav className="flex items-center gap-2 flex-1 justify-start whitespace-nowrap">
               {LEFT_NAV_LINKS.map((link) => {
                 const isActive = pathname === link.href;
                 return (
@@ -155,7 +156,7 @@ export function Navbar() {
               })}
             </nav>
 
-            {/* CENTERED FULL LOGO SVG AS IT IS */}
+            {/* CENTERED LOGO SVG AS IT IS */}
             <div className="flex items-center justify-center shrink-0 px-4 h-full py-1">
               <Link href="/" className="flex items-center justify-center h-full group" title="Farah Nashat Chemistry">
                 <div className="relative h-16 sm:h-20 w-16 sm:w-20 transition-transform group-hover:scale-105 flex items-center justify-center">
@@ -171,9 +172,9 @@ export function Navbar() {
               </Link>
             </div>
 
-            {/* Right Nav & Controls */}
+            {/* Desktop Right Nav & Controls */}
             <div className="flex items-center gap-2 flex-1 justify-end whitespace-nowrap">
-              <nav className="hidden lg:flex items-center gap-2 whitespace-nowrap">
+              <nav className="flex items-center gap-2 whitespace-nowrap">
                 {RIGHT_NAV_LINKS.map((link) => {
                   const isActive = pathname === link.href;
                   return (
@@ -202,7 +203,7 @@ export function Navbar() {
                 <span className="num-en text-[11px] uppercase tracking-wider">{lang === 'ar' ? 'EN' : 'عربي'}</span>
               </button>
 
-              {/* Prominent Sign In Button */}
+              {/* Sign In Button */}
               {isLoggedIn ? (
                 <div className="flex items-center gap-1.5">
                   <div className="inline-flex items-center gap-1.5 px-3 py-2 bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold">
@@ -212,9 +213,9 @@ export function Navbar() {
                   <button
                     onClick={handleSignOut}
                     className="px-2 py-2 text-[10px] text-slate-400 hover:text-red-600 border border-slate-200 hover:border-red-200"
-                    title="تسجيل الخروج"
+                    title={t('تسجيل الخروج', 'Sign Out')}
                   >
-                    خروج
+                    {t('خروج', 'Exit')}
                   </button>
                 </div>
               ) : (
@@ -230,24 +231,97 @@ export function Navbar() {
                   <span>{t('تسجيل الدخول', 'Sign In')}</span>
                 </button>
               )}
-
-              {/* Mobile Menu Toggle */}
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 text-slate-700 hover:text-slate-950 hover:bg-slate-100 border border-slate-200"
-                aria-label="القائمة"
-              >
-                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
             </div>
 
           </div>
+
+          {/* MOBILE NAVBAR - PERFECTLY BALANCED 3-COLUMN LAYOUT WITH CENTERED LOGO */}
+          <div className="flex md:hidden items-center justify-between h-18">
+            
+            {/* Mobile Left: Menu Toggle + Lang Button */}
+            <div className="flex items-center gap-1.5 w-24 justify-start">
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 text-slate-700 hover:text-slate-950 hover:bg-slate-100 border border-slate-200"
+                aria-label="Menu"
+              >
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+
+              <button
+                onClick={toggleLanguage}
+                className="p-2 border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-slate-700"
+                title="Language"
+              >
+                <span className="num-en text-[10px] font-black uppercase">{lang === 'ar' ? 'EN' : 'عربي'}</span>
+              </button>
+            </div>
+
+            {/* Mobile Center: Centered Full Logo SVG */}
+            <div className="flex-1 flex items-center justify-center">
+              <Link href="/" className="flex items-center justify-center py-1">
+                <div className="relative h-14 w-14 flex items-center justify-center">
+                  <Image 
+                    src="/images/logo.svg" 
+                    alt="Farah Nashat Chemistry Logo" 
+                    width={56} 
+                    height={56}
+                    className="object-contain max-h-full max-w-full"
+                    priority
+                  />
+                </div>
+              </Link>
+            </div>
+
+            {/* Mobile Right: Compact Sign-In Icon Button */}
+            <div className="flex items-center justify-end w-24">
+              {isLoggedIn ? (
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => setShowSignInModal(true)}
+                    className="p-2 bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-bold flex items-center gap-1"
+                    title={currentUser}
+                  >
+                    <User className="w-4 h-4 text-emerald-700" />
+                    <span className="max-w-[40px] truncate text-[10px]">{currentUser}</span>
+                  </button>
+                  <button
+                    onClick={handleSignOut}
+                    className="p-2 text-slate-400 hover:text-red-600 border border-slate-200"
+                    title={t('تسجيل الخروج', 'Sign Out')}
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => {
+                    setShowSignInModal(true);
+                    setAuthStep('details');
+                    setAuthError('');
+                  }}
+                  className="p-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold border border-emerald-800 shadow-2xs flex items-center gap-1"
+                  title={t('تسجيل الدخول', 'Sign In')}
+                >
+                  <LogIn className="w-4 h-4" />
+                  <span className="text-[11px] hidden xs:inline">{t('دخول', 'Login')}</span>
+                </button>
+              )}
+            </div>
+
+          </div>
+
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Dropdown Menu with Smooth Spring Slide Animation */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 space-y-1 shadow-lg">
+          <div className="md:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md px-4 pt-3 pb-5 space-y-1 shadow-xl animate-in slide-in-from-top-4 fade-in duration-200">
+            <div className="text-center py-2 border-b border-slate-100 mb-2">
+              <span className="text-xs font-black text-slate-800">
+                {t('منصة كيمياء أ. فرح نشأت', 'Farah Nashat Chemistry')}
+              </span>
+            </div>
             {ALL_MOBILE_LINKS.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -255,13 +329,14 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center justify-between px-3.5 py-2.5 text-xs font-bold border transition ${
+                  className={`flex items-center justify-between px-4 py-3 text-xs font-bold border transition ${
                     isActive
-                      ? 'bg-emerald-700 text-white border-emerald-700'
+                      ? 'bg-emerald-700 text-white border-emerald-700 shadow-xs'
                       : 'border-transparent text-slate-800 hover:bg-emerald-50'
                   }`}
                 >
                   <span>{link.label}</span>
+                  <span className="text-slate-400 text-xs">→</span>
                 </Link>
               );
             })}
@@ -271,8 +346,8 @@ export function Navbar() {
 
       {/* WHATSAPP OTP SIGN IN MODAL */}
       {showSignInModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
-          <div className="bg-white border-2 border-emerald-700 p-6 sm:p-8 max-w-sm w-full space-y-5 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="bg-white border-2 border-emerald-700 p-6 sm:p-8 max-w-sm w-full space-y-5 shadow-2xl relative animate-in zoom-in-95 duration-200">
             <button
               onClick={() => setShowSignInModal(false)}
               className="absolute top-4 left-4 p-1 text-slate-400 hover:text-slate-700 border border-slate-200"
@@ -282,9 +357,9 @@ export function Navbar() {
 
             {authStep === 'details' && (
               <>
-                <div className="space-y-1 text-right">
-                  <div className="w-10 h-10 bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-800 mb-2">
-                    <PhoneCall className="w-5 h-5" />
+                <div className="space-y-1 text-center">
+                  <div className="w-12 h-12 mx-auto bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-800 mb-2">
+                    <PhoneCall className="w-6 h-6" />
                   </div>
                   <h3 className="text-lg font-black text-slate-900">
                     {t('تسجيل الدخول برقم الواتساب', 'Sign In via WhatsApp')}
@@ -295,12 +370,12 @@ export function Navbar() {
                 </div>
 
                 {authError && (
-                  <div className="p-2.5 bg-red-50 border border-red-200 text-red-800 text-xs font-bold">
+                  <div className="p-2.5 bg-red-50 border border-red-200 text-red-800 text-xs font-bold text-center">
                     {authError}
                   </div>
                 )}
 
-                <form onSubmit={handleRequestOtp} className="space-y-3.5 text-right text-xs">
+                <form onSubmit={handleRequestOtp} className="space-y-3.5 text-xs">
                   <div className="space-y-1">
                     <label className="font-bold text-slate-700 block">
                       {t('الاسم الكريم:', 'Your Name:')}
@@ -309,7 +384,7 @@ export function Navbar() {
                       type="text"
                       value={studentName}
                       onChange={(e) => setStudentName(e.target.value)}
-                      placeholder="مثال: سارة أحمد"
+                      placeholder={t('مثال: سارة أحمد', 'e.g. Sarah Ahmed')}
                       required
                       className="w-full px-3.5 py-2.5 border border-slate-300 bg-slate-50 focus:bg-white text-xs outline-none focus:border-emerald-700"
                     />
@@ -323,7 +398,7 @@ export function Navbar() {
                       type="tel"
                       value={studentPhone}
                       onChange={(e) => setStudentPhone(e.target.value)}
-                      placeholder="079XXXXXXXX أو 96279XXXXXXXX"
+                      placeholder="079XXXXXXXX / +96279XXXXXXXX"
                       required
                       className="w-full px-3.5 py-2.5 border border-slate-300 bg-slate-50 focus:bg-white text-xs outline-none focus:border-emerald-700 font-mono text-left dir-ltr"
                     />
@@ -335,7 +410,7 @@ export function Navbar() {
                     className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-200 text-white font-bold text-xs border border-emerald-900 transition flex items-center justify-center gap-1.5"
                   >
                     {authLoading ? (
-                      <span>جاري إرسال رمز التحقق...</span>
+                      <span>{t('جاري إرسال رمز التحقق...', 'Sending OTP code...')}</span>
                     ) : (
                       <>
                         <KeyRound className="w-4 h-4" />
@@ -349,27 +424,28 @@ export function Navbar() {
 
             {authStep === 'otp' && (
               <>
-                <div className="space-y-1 text-right">
-                  <div className="w-10 h-10 bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-800 mb-2">
-                    <KeyRound className="w-5 h-5" />
+                <div className="space-y-1 text-center">
+                  <div className="w-12 h-12 mx-auto bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-800 mb-2">
+                    <KeyRound className="w-6 h-6" />
                   </div>
                   <h3 className="text-lg font-black text-slate-900">
                     {t('أدخل رمز التحقق (4 أرقام)', 'Enter 4-Digit Code')}
                   </h3>
                   <p className="text-xs text-slate-500">
-                    تم إرسال رمز التحقق في رسالة واتساب إلى الرقم <strong className="font-mono text-slate-800">{studentPhone}</strong>
+                    {t('تم إرسال رمز التحقق في رسالة واتساب إلى الرقم', 'Verification code sent via WhatsApp to')}{' '}
+                    <strong className="font-mono text-slate-800">{studentPhone}</strong>
                   </p>
                 </div>
 
                 {authError && (
-                  <div className="p-2.5 bg-red-50 border border-red-200 text-red-800 text-xs font-bold">
+                  <div className="p-2.5 bg-red-50 border border-red-200 text-red-800 text-xs font-bold text-center">
                     {authError}
                   </div>
                 )}
 
-                <form onSubmit={handleVerifyOtp} className="space-y-3.5 text-right text-xs">
+                <form onSubmit={handleVerifyOtp} className="space-y-3.5 text-xs">
                   <div className="space-y-1">
-                    <label className="font-bold text-slate-700 block">
+                    <label className="font-bold text-slate-700 block text-center">
                       {t('رمز التحقق (OTP):', 'OTP Code:')}
                     </label>
                     <input
@@ -396,7 +472,7 @@ export function Navbar() {
                     onClick={() => setAuthStep('details')}
                     className="w-full text-center text-xs text-slate-500 hover:text-emerald-800 pt-1"
                   >
-                    تعديل رقم الهاتف
+                    {t('تعديل رقم الهاتف', 'Change Phone Number')}
                   </button>
                 </form>
               </>
@@ -408,10 +484,10 @@ export function Navbar() {
                   <CheckCircle2 className="w-6 h-6 text-emerald-700" />
                 </div>
                 <h3 className="text-base font-black text-slate-900">
-                  تم تسجيل الدخول بنجاح!
+                  {t('تم تسجيل الدخول بنجاح!', 'Signed in successfully!')}
                 </h3>
                 <p className="text-xs text-slate-500">
-                  مرحباً بك {studentName} في منصة كيمياء الأستاذة فرح نشأت
+                  {t(`مرحباً بك ${studentName} في منصة كيمياء الأستاذة فرح نشأت`, `Welcome ${studentName} to Farah Nashat Chemistry Platform`)}
                 </p>
               </div>
             )}
@@ -423,77 +499,68 @@ export function Navbar() {
   );
 }
 
+{/* FOOTER: NO BORDERS AROUND LOGO, BIGGER LOGO, CENTERED IN MIDDLE OF FOOTER */}
 export function Footer() {
   const { t } = useLanguage();
 
   return (
-    <footer className="bg-slate-50 border-t border-emerald-700 py-12 mt-20 text-slate-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <footer className="bg-slate-50 border-t border-emerald-700 py-16 mt-20 text-slate-700">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-center flex flex-col items-center">
         
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 text-right">
-          
-          {/* Main Profile Info with FULL LOGO (6 cols) */}
-          <div className="md:col-span-6 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-14 h-14 bg-white border border-emerald-300 flex items-center justify-center p-1 shadow-2xs">
-                <Image
-                  src="/images/logo.svg"
-                  alt="Farah Nashat Logo"
-                  width={52}
-                  height={52}
-                  className="object-contain w-full h-full"
-                />
-              </div>
-              <div>
-                <h3 className="font-mono font-black text-slate-950 text-base tracking-wider uppercase">
-                  FARAH NASHAT
-                </h3>
-                <p className="text-[11px] text-emerald-800 font-bold">
-                  {t('الموقع التعليمي للكيمياء التفاعلية والمناهج المطورة', 'Interactive Chemistry Education Platform')}
-                </p>
-              </div>
+        {/* Centered Bigger Logo with NO Border */}
+        <div className="flex flex-col items-center space-y-3">
+          <Link href="/" className="transition-transform hover:scale-105 inline-block">
+            <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
+              <Image
+                src="/images/logo.svg"
+                alt="Farah Nashat Logo"
+                width={112}
+                height={112}
+                className="object-contain max-h-full max-w-full"
+              />
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed max-w-lg">
-              {t(
-                'منصة تعليمية متخصصة في تدريس الكيمياء، تهدف إلى تبسيط المفاهيم العلمية من خلال النمذجة ثلاثية الأبعاد (3D)، والمختبرات الافتراضية، وربط الكيمياء بالصناعة والبيئة والحياة اليومية.',
-                'Interactive chemistry education portal dedicated to conceptual clarity, 3D molecular modeling, virtual laboratory inquiry, and real-world linkages.'
-              )}
+          </Link>
+          <div>
+            <h3 className="font-mono font-black text-slate-950 text-lg tracking-wider uppercase">
+              FARAH NASHAT
+            </h3>
+            <p className="text-xs text-emerald-800 font-bold mt-0.5">
+              {t('الموقع التعليمي للكيمياء التفاعلية والمناهج المطورة', 'Interactive Chemistry Education Platform')}
             </p>
           </div>
+        </div>
 
-          {/* Quick Links (3 cols) */}
-          <div className="md:col-span-3 space-y-3">
-            <h4 className="text-xs font-bold text-emerald-800 uppercase tracking-wider border-b border-slate-200 pb-1">
-              {t('أقسام الموقع', 'Platform Sections')}
-            </h4>
-            <ul className="space-y-2 text-xs text-slate-600">
-              <li><Link href="/virtual-lab" className="hover:text-emerald-700 transition">{t('المختبر الافتراضي (3D)', '3D Virtual Lab')}</Link></li>
-              <li><Link href="/quiz" className="hover:text-emerald-700 transition">{t('التقويم التكويني والتشخيصي', 'Formative Assessment')}</Link></li>
-              <li><Link href="/assistant" className="hover:text-emerald-700 transition">{t('المساعد التعليمي الذكي', 'AI Study Assistant')}</Link></li>
-              <li><Link href="/about" className="hover:text-emerald-700 transition">{t('عن المعلمة والسيرة الذاتية', 'Teacher Bio')}</Link></li>
-            </ul>
-          </div>
+        {/* Centered Bio Summary */}
+        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl mx-auto">
+          {t(
+            'منصة تعليمية متخصصة في تدريس الكيمياء، تهدف إلى تبسيط المفاهيم العلمية من خلال النمذجة ثلاثية الأبعاد (3D)، والمختبرات الافتراضية، وربط الكيمياء بالصناعة والبيئة والحياة اليومية.',
+            'Interactive chemistry education portal dedicated to conceptual clarity, 3D molecular modeling, virtual laboratory inquiry, and real-world linkages.'
+          )}
+        </p>
 
-          {/* Contact (3 cols) */}
-          <div className="md:col-span-3 space-y-3">
-            <h4 className="text-xs font-bold text-emerald-800 uppercase tracking-wider border-b border-slate-200 pb-1">
-              {t('روابط سريعة', 'Quick Links')}
-            </h4>
-            <ul className="space-y-2 text-xs text-slate-600">
-              <li><Link href="/whatsapp-connect" className="hover:text-emerald-700 transition">{t('بوابة التواصل المباشر', 'Contact Gateway')}</Link></li>
-            </ul>
-          </div>
-
+        {/* Centered Navigation Links Grid */}
+        <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 text-xs font-bold text-slate-700 border-y border-slate-200 py-4 max-w-2xl w-full">
+          <Link href="/" className="hover:text-emerald-700 transition">{t('الرئيسية', 'Home')}</Link>
+          <span className="text-slate-300">•</span>
+          <Link href="/virtual-lab" className="hover:text-emerald-700 transition">{t('المختبر الافتراضي (3D)', '3D Virtual Lab')}</Link>
+          <span className="text-slate-300">•</span>
+          <Link href="/quiz" className="hover:text-emerald-700 transition">{t('التقويم التكويني والتشخيصي', 'Diagnostic Quiz')}</Link>
+          <span className="text-slate-300">•</span>
+          <Link href="/assistant" className="hover:text-emerald-700 transition">{t('المساعد التعليمي الذكي', 'AI Study Assistant')}</Link>
+          <span className="text-slate-300">•</span>
+          <Link href="/about" className="hover:text-emerald-700 transition">{t('عن المعلمة', 'About Teacher')}</Link>
+          <span className="text-slate-300">•</span>
+          <Link href="/whatsapp-connect" className="hover:text-emerald-700 transition">{t('بوابة التواصل', 'Contact Gateway')}</Link>
         </div>
 
         {/* Bottom Credits Bar */}
-        <div className="border-t border-slate-200 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div className="space-y-1 text-xs text-slate-500">
           <p>
             {t('جميع الحقوق محفوظة للأستاذة فرح نشأت © 2026', 'All rights reserved © 2026 Farah Nashat')}
           </p>
-          <div className="flex items-center gap-3">
-            <span>Farah Nashat | Chemistry Education Platform</span>
-          </div>
+          <p className="text-[11px] text-slate-400">
+            Farah Nashat | Chemistry Education & 3D Simulation Platform
+          </p>
         </div>
 
       </div>

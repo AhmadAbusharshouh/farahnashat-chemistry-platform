@@ -33,7 +33,7 @@ export default function WhatsAppConnectPage() {
       `أهلاً بك أ. ${name || 'الكريم'}،\n` +
       `يسعدنا إرسال روابط المختبر الافتراضي 3D وخطة الدرس النموذجية:\n` +
       `🧪 المختبر الرقمي 3D: https://farahnashat-chemistry.pages.dev/virtual-lab/\n` +
-      `📋 خطة الدرس: https://farahnashat-chemistry.pages.dev/lesson-plan/\n\n` +
+      `📋 اختبار التقويم والتشخيص: https://farahnashat-chemistry.pages.dev/quiz/\n\n` +
       (feedback ? `📝 رسالتكم: "${feedback}"\n\n` : '') +
       `شاكرين اهتمامكم وتواصلكم الطيب! 🌸`;
 
