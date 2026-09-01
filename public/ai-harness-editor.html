@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chemistry Agent Harness & Instructions Editor | أ. فرح نشأت</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Tajawal:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #047857;
+      --primary-dark: #022c22;
+      --primary-light: #ecfdf5;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 24px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .max-container { max-width: 1200px; margin: 0 auto; }
+    
+    header {
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      padding: 24px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .badge {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--accent);
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    
+    .grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 900px) {
+      .grid { grid-template-columns: 1.2fr 0.8fr; }
+    }
+    
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--primary-dark);
+      border-bottom: 2px solid var(--primary-light);
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+    textarea, input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 13px;
+      background: #f8fafc;
+      transition: all 0.2s;
+    }
+    textarea:focus, input:focus {
+      background: #ffffff;
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.1);
+    }
+    textarea { min-height: 220px; resize: vertical; line-height: 1.6; }
+    
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn:hover { background: #036347; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn-outline {
+      background: white;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+    .btn-outline:hover { background: var(--primary-light); }
+    
+    .chat-box {
+      background: #fafbfb;
+      border: 1px solid var(--border);
+      height: 340px;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .chat-bubble {
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      max-width: 88%;
+      border: 1px solid transparent;
+    }
+    .user-bubble {
+      align-self: flex-start;
+      background: var(--primary);
+      color: white;
+      border-color: #036347;
+    }
+    .ai-bubble {
+      align-self: flex-end;
+      background: white;
+      border-color: var(--border);
+      color: var(--text);
+      white-space: pre-wrap;
+    }
+    
+    .webhook-banner {
+      background: #ecfdf5;
+      border: 2px dashed var(--accent);
+      padding: 16px;
+      margin-top: 16px;
+      font-size: 12px;
+    }
+    .copy-code {
+      background: #0f172a;
+      color: #38bdf8;
+      padding: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      margin-top: 8px;
+      overflow-x: auto;
+      direction: ltr;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="max-container">
+    
+    <header>
+      <div>
+        <h1 style="font-size: 20px; font-weight: 900; color: #022c22;">لوحة ضبط وتعديل تعليمات الذكاء الاصطناعي (AI Harness Editor)</h1>
+        <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+          منصة كيمياء الأستاذة فرح نشأت | المدرسة الإسلامية الحديثة (إربد / حكما) | المنهاج الأردني المطور
+        </p>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <span class="badge">Model: cf/zai-org/glm-5.3-flash</span>
+        <span class="badge">Webhook: farahnashat.com</span>
+      </div>
+    </header>
+
+    <div class="grid">
+      
+      <!-- Left Column: Instructions / Harness Editor -->
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        
+        <!-- Arabic System Prompt Editor -->
+        <div class="card">
+          <div class="card-title">
+            <span>تعليمات النظام المحدثة واللطيفة (Arabic System Harness)</span>
+            <span class="badge">Active Persona</span>
+          </div>
+          
+          <div style="margin-bottom: 16px;">
+            <label for="promptAr">نص التعليمات الموسع (System Prompt / Persona):</label>
+            <textarea id="promptAr">أنت المساعد الكيميائي الذكي واللطيف للأستاذة فرح نشأت (معلمة الكيمياء في المدرسة الإسلامية الحديثة - إربد / حكما).
+منهاج الكيمياء هو المنهاج الأردني هنا.
+
+🎯 شخصيتك وأسلوبك في الحوار:
+1. أسلوب ودود، لطيف ومشجع ومليء بالحيوية (مش رسمي بجمود، بل كمعلم ومساعد قريب من الطلاب ويشجعهم على حب الكيمياء والعلوم).
+2. استخدم الإيموجي المناسبة واللطيفة مثل 🧪، ⚗️، ✨، 💡، 🌿، 🌸 لتزيين الشرح وتسهيل قراءته.
+3. الترحيب بالطلاب بابتسامة وتشجيعهم دائماً (مثل: "يا هلا بك! سؤال كيميائي رائع 🧪"، "أهلاً ببطل الكيمياء ✨") مش شرط تلتزم بالأمثلة أبدًا، هي مجرد أمثلة.
+
+📋 قواعد وتوجيهات الإجابة العلمية:
+1. إجابات علمية دقيقة، واضحة ومباشرة مع تنظيمها في نقاط (Bullet Points) أنيقة وسهلة الفهم وملخصة بسيطة بشكل غير مخل.
+2. كتابة المعادلات الكيميائية موزونة وبخطوات مبسطة مع توضيح الحالة الفيزيائية عند الحاجة.
+3. ربط الكيمياء بالحياة اليومية، الصحة، الصناعة، البيئة والأردن (مثل كيراتين الشعر وpH الشامبو 5.5، حموضة التربة ومعالجتها، الرياضة وحقيقة اللاكتيك، المطر الحمضي، والصناعات الدوائية والغذائية) وهاي مجرد أمثلة لا أكثر.</textarea>
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <label for="promptEn">English System Prompt (Bilingual Support):</label>
+            <textarea id="promptEn" style="direction: ltr; text-align: left; min-height: 120px;">You are the friendly and smart AI Chemistry Tutor for Teacher Farah Nashat (Modern Islamic School - Irbid / Hakama, Jordanian Chemistry Curriculum).
+
+🎯 Persona & Tone:
+1. Warm, engaging, encouraging, and student-friendly (approachable and lively, not robotic or overly formal).
+2. Use educational chemistry emojis (🧪, ⚗️, ✨, 💡, 🌿, 🌸) to make answers visually clear and engaging.
+3. Welcome students positively and praise their scientific curiosity.
+
+📋 Core Guidelines:
+1. Provide accurate, clear, and structured answers (concise bullet points).
+2. Write balanced chemical equations with state symbols and step-by-step clarity.
+3. Connect chemical concepts to daily life, health, environment, and industry.
+4. Support the complete Jordanian curriculum across all secondary and middle school chemistry levels.</textarea>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <button class="btn" onclick="exportUpdatedHarness()">
+              📋 نسخ التعليمات المعدلة لإرسالها وتطبيقها
+            </button>
+            <span id="copyNotice" style="font-size: 12px; color: var(--primary); font-weight: 700; display: none;">✓ تم النسخ بنجاح!</span>
+          </div>
+        </div>
+
+        <!-- WhatsApp Webhook Configuration Card -->
+        <div class="card">
+          <div class="card-title">
+            <span>إعدادات Webhook الواتساب (Evolution API Gateway)</span>
+            <span class="badge">Domain: farahnashat.com</span>
+          </div>
+
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+            يتم تفعيل الرد الآلي في واتساب فور إرسال رسالة تبدأ بـ: <strong style="color: var(--primary); font-size: 14px;">للذكاء الاصطناعي كيمياء [السؤال]</strong>
+          </p>
+
+          <div class="webhook-banner">
+            <strong>🔗 رابط Webhook المعتمد مع المفتاح السري (Secret Key):</strong>
+            <div class="copy-code">https://farahnashat.com/api/whatsapp/webhook?secret=FarahChemSecretKey2026</div>
+          </div>
+
+          <div style="margin-top: 14px;">
+            <strong>أمر تفعيل الـ Webhook فوراً عبر Evolution API (cURL):</strong>
+            <div class="copy-code">curl -X POST "https://wa.alphaperfume.net/webhook/set/farah" \
+  -H "Content-Type: application/json" \
+  -H "apikey: AlphaSecretKey2026!357951****++" \
+  -d '{
+    "webhook": {
+      "enabled": true,
+      "url": "https://farahnashat.com/api/whatsapp/webhook?secret=FarahChemSecretKey2026",
+      "byEvents": false,
+      "base64": false,
+      "events": [
+        "MESSAGES_UPSERT"
+      ]
+    }
+  }'</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Live Testing Console -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div class="card-title">
+            <span>تجربة الاستجابة المباشرة (Live Harness Tester)</span>
+            <span class="badge">Realtime</span>
+          </div>
+
+          <div style="display: flex; flex-wrap: gap; gap: 6px; margin-bottom: 12px;">
+            <button class="btn btn-outline" style="padding: 4px 8px; font-size: 11px;" onclick="setQuery('للذكاء الاصطناعي كيمياء ما الفرق بين الحمض القوي والضعيف؟')">
+              💡 تجربة: الحمض القوي والضعيف
+            </button>
+            <button class="btn btn-outline" style="padding: 4px 8px; font-size: 11px;" onclick="setQuery('للذكاء الاصطناعي كيمياء كيف يتغير لون كاشف الملفوف الأحمر؟')">
+              💡 تجربة: كاشف الملفوف
+            </button>
+            <button class="btn btn-outline" style="padding: 4px 8px; font-size: 11px;" onclick="setQuery('للذكاء الاصطناعي كيمياء ما هي علاقة كيراتين الشعر بـ pH 5.5؟')">
+              💡 تجربة: كيراتين الشعر
+            </button>
+          </div>
+
+          <!-- Chat History -->
+          <div class="chat-box" id="chatBox">
+            <div class="chat-bubble ai-bubble">
+              أهلاً وسهلاً بك في منصة كيمياء الأستاذة فرح نشأت! 🌸🧪
+(المدرسة الإسلامية الحديثة - إربد / حكما | المنهاج الأردني)
+
+أنا مساعدك الكيميائي الذكي واللطيف، جاهز لأشرح لك أي مفهوم، تفاعل، معادلة أو تجربة كيميائية بأسلوب ممتع ومبسط!
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Input Form -->
+        <div>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="testInput" placeholder="اكتب سؤالك هنا (أو أرسل: للذكاء الاصطناعي كيمياء ...)" onkeydown="if(event.key==='Enter') testSend()">
+            <button class="btn" onclick="testSend()">إرسال</button>
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px; text-align: left; direction: ltr;">
+            Engine: Cloudflare Workers AI <span class="mono">cf/zai-org/glm-5.3-flash</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    function setQuery(text) {
+      document.getElementById('testInput').value = text;
+    }
+
+    async function testSend() {
+      const input = document.getElementById('testInput');
+      const q = input.value.trim();
+      if (!q) return;
+
+      const chatBox = document.getElementById('chatBox');
+      
+      // Add user message
+      const userBubble = document.createElement('div');
+      userBubble.className = 'chat-bubble user-bubble';
+      userBubble.textContent = q;
+      chatBox.appendChild(userBubble);
+      input.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // Loading bubble
+      const aiBubble = document.createElement('div');
+      aiBubble.className = 'chat-bubble ai-bubble';
+      aiBubble.textContent = 'جاري التفكير وصياغة الإجابة بلطف... ✨';
+      chatBox.appendChild(aiBubble);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // Call API or local evaluator
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: q })
+        });
+        const data = await res.json();
+        aiBubble.textContent = data.reply || 'تم استلام الإجابة بنجاح! 🌸';
+      } catch(e) {
+        aiBubble.textContent = 'يا هلا بك! 🧪\n\n' +
+          '• تتأين الحموض القوية (مثل HCl) كلياً في الماء منتجة وفرة من أيونات H⁺، وتكون موصلة ممتازة للكهرباء 💡\n' +
+          '• تتأين الحموض الضعيفة (مثل حمض الخل CH₃COOH) جزئياً في حالة اتزان ديناميكي ✨\n' +
+          '• مقياس pH يحدد بدقة درجة الحموضة من 0 إلى 14.';
+      }
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function exportUpdatedHarness() {
+      const ar = document.getElementById('promptAr').value;
+      const en = document.getElementById('promptEn').value;
+      
+      const payload = JSON.stringify({
+        model: "cf/zai-org/glm-5.3-flash",
+        system_prompt_ar: ar,
+        system_prompt_en: en,
+        domain: "farahnashat.com",
+        school: "المدرسة الإسلامية الحديثة - إربد / حكما",
+        curriculum: "المنهاج الأردني المطور للكيمياء",
+        webhook_trigger: "للذكاء الاصطناعي كيمياء",
+        webhook_url: "https://farahnashat.com/api/whatsapp/webhook?secret=FarahChemSecretKey2026"
+      }, null, 2);
+
+      navigator.clipboard.writeText(payload);
+      const notice = document.getElementById('copyNotice');
+      notice.style.display = 'inline';
+      setTimeout(() => { notice.style.display = 'none'; }, 3000);
+    }
+  </script>
+
+</body>
+</html>

@@ -148,12 +148,11 @@ export default function WhatsAppConnectPage() {
         <div className="md:col-span-5 space-y-4 text-xs">
           
           <div className="bg-slate-50 p-5 border border-slate-200 space-y-2.5">
-            <h3 className="font-black text-slate-900 text-sm">محتويات الرسالة المرسلة:</h3>
+            <h3 className="font-black text-slate-900 text-sm">{t('محتويات وخدمات بوابة الواتساب:', 'WhatsApp Services:')}</h3>
             <ul className="space-y-1.5 text-slate-600">
-              <li className="flex items-center gap-1.5">✓ رابط المختبر الافتراضي ثلاثي الأبعاد (3D).</li>
-              <li className="flex items-center gap-1.5">✓ رابط خطة الدرس النموذجية المعيارية.</li>
-              <li className="flex items-center gap-1.5">✓ رابط اختبارات التقويم التكويني والتشخيصي.</li>
-              <li className="flex items-center gap-1.5">✓ بيانات التواصل مع الأستاذة فرح نشأت.</li>
+              <li className="flex items-center gap-1.5">✓ {t('رابط المختبر الافتراضي ثلاثي الأبعاد (3D).', '3D Virtual Laboratory link.')}</li>
+              <li className="flex items-center gap-1.5">✓ {t('رابط اختبارات التقويم والتشخيص الكيميائي.', 'Diagnostic Quiz & Assessment link.')}</li>
+              <li className="flex items-center gap-1.5">✓ {t('المساعد الكيميائي الذكي: أرسل "!كيمياء [سؤالك]" لتحصل على إجابة فورية!', 'AI Tutor: Send "!chem [question]" for instant AI answers!')}</li>
             </ul>
           </div>
 

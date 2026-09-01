@@ -1,4 +1,15 @@
-<!DOCTYPE html>
+import os
+import re
+
+# Read all 5 SVGs
+svgs = {}
+for i in range(1, 6):
+    path = f'public/images/smil/native-anim-{i}.svg'
+    with open(path, 'r', encoding='utf-8') as f:
+        svgs[i] = f.read()
+
+# Build direct-embed viewer HTML
+viewer_html = f"""<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -8,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800;900&family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
+    * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+    body {{
       font-family: 'Tajawal', 'Outfit', sans-serif;
       background: #fafbfb;
       color: #0f172a;
@@ -17,13 +28,13 @@
       line-height: 1.6;
       background-image: radial-gradient(rgba(4, 120, 87, 0.08) 1.5px, transparent 1.5px);
       background-size: 24px 24px;
-    }
-    .header {
+    }}
+    .header {{
       text-align: center;
       max-width: 800px;
       margin: 0 auto 3.5rem;
-    }
-    .badge {
+    }}
+    .badge {{
       display: inline-block;
       background: #ecfdf5;
       color: #047857;
@@ -33,25 +44,25 @@
       font-weight: 800;
       font-size: 0.85rem;
       margin-bottom: 1rem;
-    }
-    h1 {
+    }}
+    h1 {{
       font-size: 2.4rem;
       font-weight: 900;
       color: #0f172a;
       margin-bottom: 0.75rem;
-    }
-    p.lead {
+    }}
+    p.lead {{
       color: #64748b;
       font-size: 1.05rem;
-    }
-    .grid {
+    }}
+    .grid {{
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
       gap: 2rem;
       max-width: 1300px;
       margin: 0 auto;
-    }
-    .card {
+    }}
+    .card {{
       background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 20px;
@@ -60,31 +71,31 @@
       flex-direction: column;
       box-shadow: 0 4px 16px -2px rgba(0,0,0,0.04);
       transition: all 0.3s ease;
-    }
-    .card:hover {
+    }}
+    .card:hover {{
       border-color: #10b981;
       transform: translateY(-4px);
       box-shadow: 0 16px 32px -8px rgba(4,120,87,0.15);
-    }
-    .card-top {
+    }}
+    .card-top {{
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 0.75rem;
-    }
-    .card-title {
+    }}
+    .card-title {{
       font-size: 1.2rem;
       font-weight: 900;
       color: #0f172a;
       margin-bottom: 0.4rem;
-    }
-    .card-desc {
+    }}
+    .card-desc {{
       font-size: 0.85rem;
       color: #64748b;
       margin-bottom: 1.25rem;
       min-height: 2.6rem;
-    }
-    .svg-viewer {
+    }}
+    .svg-viewer {{
       height: 260px;
       background: radial-gradient(circle at center, #ffffff 0%, #f8fafc 100%);
       border: 1px dashed #cbd5e1;
@@ -95,20 +106,20 @@
       padding: 1rem;
       margin-bottom: 1.25rem;
       overflow: hidden;
-    }
-    .svg-viewer object, .svg-viewer img, .svg-viewer svg {
+    }}
+    .svg-viewer object, .svg-viewer img, .svg-viewer svg {{
       max-width: 180px;
       max-height: 180px;
       width: 100%;
       height: 100%;
       object-fit: contain;
-    }
-    .actions {
+    }}
+    .actions {{
       display: flex;
       gap: 0.5rem;
       margin-top: auto;
-    }
-    .btn {
+    }}
+    .btn {{
       flex: 1;
       text-align: center;
       padding: 0.65rem;
@@ -123,24 +134,24 @@
       align-items: center;
       justify-content: center;
       gap: 0.35rem;
-    }
-    .btn-primary {
+    }}
+    .btn-primary {{
       background: #047857;
       color: #ffffff;
       border: 1px solid #047857;
-    }
-    .btn-primary:hover {
+    }}
+    .btn-primary:hover {{
       background: #065f46;
-    }
-    .btn-secondary {
+    }}
+    .btn-secondary {{
       background: #f1f5f9;
       color: #334155;
       border: 1px solid #cbd5e1;
-    }
-    .btn-secondary:hover {
+    }}
+    .btn-secondary:hover {{
       background: #e2e8f0;
       color: #0f172a;
-    }
+    }}
   </style>
 </head>
 <body>
@@ -243,4 +254,12 @@
   </div>
 
 </body>
-</html>
+</html>"""
+
+with open('logo-loading-animations.html', 'w', encoding='utf-8') as f:
+    f.write(viewer_html)
+
+with open('public/logo-loading-animations.html', 'w', encoding='utf-8') as f:
+    f.write(viewer_html)
+
+print("Updated HTML viewer to use pure native SVG files directly via <object>!")

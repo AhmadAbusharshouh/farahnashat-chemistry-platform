@@ -24,6 +24,7 @@ export function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [studentName, setStudentName] = useState('');
   const [studentPhone, setStudentPhone] = useState('');
   const [otpCode, setOtpCode] = useState('');
@@ -126,6 +127,7 @@ export function Navbar() {
     localStorage.removeItem('farah_chem_user');
     setIsLoggedIn(false);
     setCurrentUser('');
+    setUserMenuOpen(false);
   };
 
   return (
@@ -133,18 +135,18 @@ export function Navbar() {
       <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* DESKTOP NAVBAR */}
-          <div className="hidden md:flex items-center justify-between h-20 sm:h-24">
+          {/* DESKTOP NAVBAR (HEIGHT ENLARGED TO h-24 sm:h-28, ABSOLUTE DEAD-CENTER LOGO) */}
+          <div className="hidden md:flex items-center justify-between h-24 sm:h-28 relative">
             
             {/* Desktop Left Nav */}
-            <nav className="flex items-center gap-2 flex-1 justify-start whitespace-nowrap">
+            <nav className="flex items-center gap-2 justify-start whitespace-nowrap z-10 relative">
               {LEFT_NAV_LINKS.map((link) => {
                 const isActive = pathname === link.href;
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`px-3.5 py-2 text-xs font-bold transition-all border whitespace-nowrap ${
+                    className={`px-3.5 py-2.5 text-xs font-bold transition-all border whitespace-nowrap ${
                       isActive
                         ? 'bg-emerald-700 text-white border-emerald-700 shadow-2xs'
                         : 'border-transparent text-slate-700 hover:text-emerald-800 hover:bg-emerald-50 hover:border-emerald-200'
@@ -156,15 +158,19 @@ export function Navbar() {
               })}
             </nav>
 
-            {/* CENTERED LOGO SVG AS IT IS */}
-            <div className="flex items-center justify-center shrink-0 px-4 h-full py-1">
-              <Link href="/" className="flex items-center justify-center h-full group" title="Farah Nashat Chemistry">
-                <div className="relative h-16 sm:h-20 w-16 sm:w-20 transition-transform group-hover:scale-105 flex items-center justify-center">
+            {/* 100% ABSOLUTE DEAD-CENTER LARGE LOGO (NO OFFSETS, NO WASTED VERTICAL BLANKS) */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <Link 
+                href="/" 
+                className="pointer-events-auto flex items-center justify-center group h-full py-1.5 transition-transform hover:scale-105" 
+                title="Farah Nashat Chemistry"
+              >
+                <div className="relative h-20 sm:h-24 w-36 sm:w-44 flex items-center justify-center">
                   <Image 
                     src="/images/logo.svg" 
                     alt="Farah Nashat Chemistry Logo" 
-                    width={80} 
-                    height={80}
+                    width={180} 
+                    height={110}
                     className="object-contain max-h-full max-w-full"
                     priority
                   />
@@ -173,7 +179,7 @@ export function Navbar() {
             </div>
 
             {/* Desktop Right Nav & Controls */}
-            <div className="flex items-center gap-2 flex-1 justify-end whitespace-nowrap">
+            <div className="flex items-center gap-2 justify-end whitespace-nowrap z-10 relative">
               <nav className="flex items-center gap-2 whitespace-nowrap">
                 {RIGHT_NAV_LINKS.map((link) => {
                   const isActive = pathname === link.href;
@@ -181,7 +187,7 @@ export function Navbar() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className={`px-3.5 py-2 text-xs font-bold transition-all border whitespace-nowrap ${
+                      className={`px-3.5 py-2.5 text-xs font-bold transition-all border whitespace-nowrap ${
                         isActive
                           ? 'bg-emerald-700 text-white border-emerald-700 shadow-2xs'
                           : 'border-transparent text-slate-700 hover:text-emerald-800 hover:bg-emerald-50 hover:border-emerald-200'
@@ -196,7 +202,7 @@ export function Navbar() {
               {/* Language Switcher */}
               <button
                 onClick={toggleLanguage}
-                className="inline-flex items-center gap-1 px-2.5 py-2 border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-slate-700 transition ml-1"
+                className="inline-flex items-center gap-1 px-3 py-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-slate-700 transition ml-1"
                 title="Language / اللغة"
               >
                 <Globe className="w-3.5 h-3.5 text-slate-500" />
@@ -206,16 +212,23 @@ export function Navbar() {
               {/* Sign In Button */}
               {isLoggedIn ? (
                 <div className="flex items-center gap-1.5">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-2 bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold">
-                    <User className="w-3.5 h-3.5 text-emerald-700" />
-                    <span>{currentUser}</span>
-                  </div>
+                  <button
+                    onClick={() => setUserMenuOpen(true)}
+                    className="inline-flex items-center gap-2 px-3 py-2 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-950 text-xs font-bold transition"
+                    title={currentUser}
+                  >
+                    <div className="w-5 h-5 rounded-full bg-emerald-700 text-white flex items-center justify-center text-[10px]">
+                      <User className="w-3 h-3" />
+                    </div>
+                    <span className="max-w-[130px] truncate">{currentUser}</span>
+                  </button>
                   <button
                     onClick={handleSignOut}
-                    className="px-2 py-2 text-[10px] text-slate-400 hover:text-red-600 border border-slate-200 hover:border-red-200"
-                    title={t('تسجيل الخروج', 'Sign Out')}
+                    className="px-2.5 py-2 text-xs font-bold text-red-600 hover:text-white hover:bg-red-600 border border-red-200 hover:border-red-600 transition flex items-center gap-1"
+                    title={t('تسجيل الخروج', 'Log Out')}
                   >
-                    {t('خروج', 'Exit')}
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>{t('خروج', 'Exit')}</span>
                   </button>
                 </div>
               ) : (
@@ -225,7 +238,7 @@ export function Navbar() {
                     setAuthStep('details');
                     setAuthError('');
                   }}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold border border-emerald-800 shadow-2xs transition"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold border border-emerald-800 shadow-2xs transition"
                 >
                   <LogIn className="w-3.5 h-3.5" />
                   <span>{t('تسجيل الدخول', 'Sign In')}</span>
@@ -235,15 +248,15 @@ export function Navbar() {
 
           </div>
 
-          {/* MOBILE NAVBAR - PERFECTLY BALANCED 3-COLUMN LAYOUT WITH CENTERED LOGO */}
-          <div className="flex md:hidden items-center justify-between h-18">
+          {/* MOBILE NAVBAR - ABSOLUTE DEAD-CENTER LARGE LOGO */}
+          <div className="flex md:hidden items-center justify-between h-20 sm:h-22 relative">
             
             {/* Mobile Left: Menu Toggle + Lang Button */}
-            <div className="flex items-center gap-1.5 w-24 justify-start">
+            <div className="flex items-center gap-1.5 z-10 relative">
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-slate-700 hover:text-slate-950 hover:bg-slate-100 border border-slate-200"
+                className="p-2.5 text-slate-700 hover:text-slate-950 hover:bg-slate-100 border border-slate-200"
                 aria-label="Menu"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -251,22 +264,25 @@ export function Navbar() {
 
               <button
                 onClick={toggleLanguage}
-                className="p-2 border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-slate-700"
+                className="p-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-slate-700"
                 title="Language"
               >
-                <span className="num-en text-[10px] font-black uppercase">{lang === 'ar' ? 'EN' : 'عربي'}</span>
+                <span className="num-en text-[11px] font-black uppercase">{lang === 'ar' ? 'EN' : 'عربي'}</span>
               </button>
             </div>
 
-            {/* Mobile Center: Centered Full Logo SVG */}
-            <div className="flex-1 flex items-center justify-center">
-              <Link href="/" className="flex items-center justify-center py-1">
-                <div className="relative h-14 w-14 flex items-center justify-center">
+            {/* 100% ABSOLUTE DEAD-CENTER LARGE MOBILE LOGO */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <Link 
+                href="/" 
+                className="pointer-events-auto flex items-center justify-center py-1 transition-transform active:scale-95"
+              >
+                <div className="relative h-16 sm:h-18 w-28 sm:w-32 flex items-center justify-center">
                   <Image 
                     src="/images/logo.svg" 
                     alt="Farah Nashat Chemistry Logo" 
-                    width={56} 
-                    height={56}
+                    width={130} 
+                    height={80}
                     className="object-contain max-h-full max-w-full"
                     priority
                   />
@@ -274,24 +290,27 @@ export function Navbar() {
               </Link>
             </div>
 
-            {/* Mobile Right: Compact Sign-In Icon Button */}
-            <div className="flex items-center justify-end w-24">
+            {/* Mobile Right: Compact User Profile / Sign-In Button */}
+            <div className="flex items-center justify-end z-10 relative">
               {isLoggedIn ? (
                 <div className="flex items-center gap-1">
                   <button
-                    onClick={() => setShowSignInModal(true)}
-                    className="p-2 bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-bold flex items-center gap-1"
+                    onClick={() => setUserMenuOpen(true)}
+                    className="p-2 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs font-bold flex items-center gap-1.5 active:scale-95 transition"
                     title={currentUser}
+                    aria-label="User Account"
                   >
-                    <User className="w-4 h-4 text-emerald-700" />
-                    <span className="max-w-[40px] truncate text-[10px]">{currentUser}</span>
+                    <div className="w-5 h-5 rounded-full bg-emerald-700 text-white flex items-center justify-center text-[10px]">
+                      <User className="w-3 h-3" />
+                    </div>
+                    <span className="hidden xs:inline max-w-[65px] truncate text-[11px] font-bold">{currentUser}</span>
                   </button>
                   <button
                     onClick={handleSignOut}
-                    className="p-2 text-slate-400 hover:text-red-600 border border-slate-200"
-                    title={t('تسجيل الخروج', 'Sign Out')}
+                    className="p-2 text-red-600 hover:bg-red-50 border border-red-200 active:scale-95 transition"
+                    title={t('تسجيل الخروج', 'Log Out')}
                   >
-                    <LogOut className="w-3.5 h-3.5" />
+                    <LogOut className="w-4 h-4" />
                   </button>
                 </div>
               ) : (
@@ -301,11 +320,10 @@ export function Navbar() {
                     setAuthStep('details');
                     setAuthError('');
                   }}
-                  className="p-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold border border-emerald-800 shadow-2xs flex items-center gap-1"
+                  className="p-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold border border-emerald-800 shadow-2xs flex items-center gap-1"
                   title={t('تسجيل الدخول', 'Sign In')}
                 >
                   <LogIn className="w-4 h-4" />
-                  <span className="text-[11px] hidden xs:inline">{t('دخول', 'Login')}</span>
                 </button>
               )}
             </div>
@@ -316,9 +334,47 @@ export function Navbar() {
 
         {/* Mobile Dropdown Menu with Smooth Spring Slide Animation */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md px-4 pt-3 pb-5 space-y-1 shadow-xl animate-in slide-in-from-top-4 fade-in duration-200">
-            <div className="text-center py-2 border-b border-slate-100 mb-2">
-              <span className="text-xs font-black text-slate-800">
+          <div className="md:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md px-4 pt-3 pb-5 space-y-2 shadow-xl animate-in slide-in-from-top-4 fade-in duration-200">
+            {/* If Logged In, display user info box directly inside drawer */}
+            {isLoggedIn ? (
+              <div className="p-3 bg-emerald-50 border border-emerald-300 flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                    <User className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-black text-emerald-950">{currentUser}</div>
+                    <div className="text-[10px] text-emerald-700 font-bold">{t('حساب مفعل ومسجل', 'Active Account')}</div>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    handleSignOut();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="px-2.5 py-1.5 bg-white border border-red-300 text-red-600 hover:bg-red-50 text-[11px] font-bold flex items-center gap-1 shadow-2xs"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>{t('خروج', 'Sign Out')}</span>
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setShowSignInModal(true);
+                  setAuthStep('details');
+                  setAuthError('');
+                }}
+                className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs flex items-center justify-center gap-2 border border-emerald-900 shadow-xs"
+              >
+                <LogIn className="w-4 h-4" />
+                <span>{t('تسجيل الدخول برقم الواتساب', 'Sign In via WhatsApp')}</span>
+              </button>
+            )}
+
+            <div className="text-center py-1 border-b border-slate-100">
+              <span className="text-[11px] font-bold text-slate-500">
                 {t('منصة كيمياء أ. فرح نشأت', 'Farah Nashat Chemistry')}
               </span>
             </div>
@@ -343,6 +399,56 @@ export function Navbar() {
           </div>
         )}
       </header>
+
+      {/* USER PROFILE MODAL (WHEN USER CLICKS ON THEIR USER PROFILE) */}
+      {userMenuOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="bg-white border-2 border-emerald-700 p-6 max-w-xs sm:max-w-sm w-full space-y-5 shadow-2xl relative animate-in zoom-in-95 duration-200 text-center">
+            <button
+              onClick={() => setUserMenuOpen(false)}
+              className="absolute top-3 left-3 p-1.5 text-slate-400 hover:text-slate-700 border border-slate-200"
+              aria-label="Close"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="w-16 h-16 mx-auto rounded-full bg-emerald-50 border-2 border-emerald-600 flex items-center justify-center text-emerald-800 shadow-inner mt-2">
+              <User className="w-8 h-8 text-emerald-700" />
+            </div>
+
+            <div className="space-y-1">
+              <span className="inline-block px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold tracking-wider uppercase mb-1">
+                {t('تم تسجيل الدخول', 'Signed In')}
+              </span>
+              <h3 className="text-base sm:text-lg font-black text-slate-900 break-words px-2">
+                {currentUser}
+              </h3>
+              <p className="text-xs text-slate-500">
+                {t('أهلاً بك في منصة الكيمياء للأستاذة فرح نشأت', 'Welcome to Farah Nashat Chemistry Platform')}
+              </p>
+            </div>
+
+            <div className="pt-2 border-t border-slate-100 space-y-2">
+              <button
+                onClick={() => {
+                  handleSignOut();
+                  setUserMenuOpen(false);
+                }}
+                className="w-full py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center justify-center gap-2 border border-red-800 shadow-xs transition"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>{t('تسجيل الخروج', 'Log Out')}</span>
+              </button>
+              <button
+                onClick={() => setUserMenuOpen(false)}
+                className="w-full py-2 text-slate-500 hover:text-slate-800 font-bold text-xs border border-slate-200 bg-slate-50 transition"
+              >
+                {t('إغلاق', 'Close')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* WHATSAPP OTP SIGN IN MODAL */}
       {showSignInModal && (
@@ -510,12 +616,12 @@ export function Footer() {
         {/* Centered Bigger Logo with NO Border */}
         <div className="flex flex-col items-center space-y-3">
           <Link href="/" className="transition-transform hover:scale-105 inline-block">
-            <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
+            <div className="relative w-28 h-28 sm:w-36 sm:h-36 flex items-center justify-center">
               <Image
                 src="/images/logo.svg"
                 alt="Farah Nashat Logo"
-                width={112}
-                height={112}
+                width={144}
+                height={144}
                 className="object-contain max-h-full max-w-full"
               />
             </div>

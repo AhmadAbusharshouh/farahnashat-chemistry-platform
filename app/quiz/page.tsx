@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   HelpCircle, 
   CheckCircle2, 
@@ -254,6 +254,19 @@ export default function QuizPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [studentName, setStudentName] = useState('');
   const [studentPhone, setStudentPhone] = useState('');
+
+  useEffect(() => {
+    try {
+      const savedSession = localStorage.getItem('farah_chem_user');
+      if (savedSession) {
+        const parsed = JSON.parse(savedSession);
+        if (parsed?.name) setStudentName(parsed.name);
+        if (parsed?.phone) setStudentPhone(parsed.phone);
+      }
+    } catch (e) {
+      // quiet
+    }
+  }, []);
 
   const currentQ = QUIZ_QUESTIONS[currentIdx];
   const isSelected = selectedAnswers[currentIdx] !== undefined;
