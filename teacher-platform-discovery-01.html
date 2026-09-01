@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>استبيان المعلمة المتميز - منصة الكيمياء التفاعلية</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+    .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+
+  <!-- Header & Progress Bar -->
+  <header class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+    <div class="h-1.5 w-full bg-slate-100">
+      <div id="progressBar" class="h-full bg-emerald-600 transition-all duration-300 ease-out" style="width: 8%;"></div>
+    </div>
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div>
+        <h1 class="text-lg font-bold text-slate-900">منصة معلمة الكيمياء المتميزة</h1>
+        <p class="text-xs text-slate-500">جمع متطلبات المقابلة والحصة النموذجية (10 دقائق)</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="stepCounter" class="text-xs font-bold px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200">الخطوة 1 من 12</span>
+        <button onclick="exportData('json')" class="text-xs font-bold px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition">تصدير JSON</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wizard -->
+  <main class="max-w-4xl mx-auto px-4 py-8 w-full flex-grow">
+    <form id="discoveryForm" class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+      
+      <!-- Step 1: Teacher Identity -->
+      <div class="step-card" data-step="1">
+        <div class="mb-6">
+          <span class="text-emerald-600 font-bold text-sm tracking-wide">القسم 01</span>
+          <h2 class="text-xl font-bold text-slate-900 mt-1">الهوية الشخصية والمهنية</h2>
+          <p class="text-sm text-slate-500 mt-1">البيانات الأساسية التي ستظهر في الترويسة والبطاقة المهنية للمعلمة.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">الاسم الثلاثي / الرباعي *</label>
+            <input type="text" name="teacher_name" required placeholder="أ. فرح نشأت ..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none text-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">المسمى الوظيفي المفضل *</label>
+            <input type="text" name="job_title" required value="معلمة كيمياء وعلوم عامة للمرحلتين الأساسية والثانوية" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none text-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">البريد الإلكتروني المهني</label>
+            <input type="email" name="email" placeholder="teacher@example.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none text-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">رقم الهاتف / واتساب</label>
+            <input type="tel" name="phone" placeholder="079XXXXXXXX" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none text-sm">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Education & Experience -->
+      <div class="step-card hidden" data-step="2">
+        <div class="mb-6">
+          <span class="text-emerald-600 font-bold text-sm tracking-wide">القسم 02</span>
+          <h2 class="text-xl font-bold text-slate-900 mt-1">المؤهلات الأكاديمية والخبرات</h2>
+          <p class="text-sm text-slate-500 mt-1">إبراز التميز الأكاديمي وسنوات الخبرة والتدريب المعتمد.</p>
+        </div>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">المؤهل العلمي والجامعة</label>
+            <input type="text" name="degree" placeholder="بكالوريوس كيمياء - جامعة اليرموك (تقدير ممتاز)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none text-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">سنوات ومجالات الخبرة التعليمية</label>
+            <textarea name="experience_details" rows="3" placeholder="خبرة في تدريس منهاج كولينز الأردني للمرحلة الأساسية العليا والمرحلة الثانوية..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none text-sm"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">الدورات التدريبية والشهادات المهنية</label>
+            <input type="text" name="certifications" placeholder="استراتيجيات التدريس الحديثة، دمج التكنولوجيا بالتعليم، السلامة في المختبرات" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none text-sm">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: School Context & Interview Details -->
+      <div class="step-card hidden" data-step="3">
+        <div class="mb-6">
+          <span class="text-emerald-600 font-bold text-sm tracking-wide">القسم 03</span>
+          <h2 class="text-xl font-bold text-slate-900 mt-1">سياق المدرسة والمقابلة</h2>
+          <p class="text-sm text-slate-500 mt-1">مواءمة المنصة مع قيم ورؤية المدرسة الإسلامية الحديثة.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">اسم المؤسسة / المدرسة</label>
+            <input type="text" name="school_name" value="المدرسة الإسلامية الحديثة - إربد (حكما)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 outline-none text-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">الجهة التابعة لها</label>
+            <input type="text" name="school_org" value="جمعية المركز الإسلامي الخيرية" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 outline-none text-sm">
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-semibold text-slate-700 mb-1">القيم التربوية الواجب إبرازها</label>
+            <input type="text" name="core_values" value="القيم الإسلامية النبيلة، الانضباط الإيجابي، التفكير العلمي الرصين، روح الابتكار والمواطنة الصالحة" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-emerald-500 outline-none text-sm">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: 10-Minute Lesson Plan (Acids & Bases) -->
+      <div class="step-card hidden" data-step="4">
+        <div class="mb-6">
+          <span class="text-emerald-600 font-bold text-sm tracking-wide">القسم 04</span>
+          <h2 class="text-xl font-bold text-slate-900 mt-1">خطة الحصة النموذجية (10 دقائق) - منهاج كولينز</h2>
+          <p class="text-sm text-slate-500 mt-1">التوزيع الزمني الدقيق ومحطات الحصة بناءً على كتاب الكيمياء للصف التاسع (ص 43-55).</p>
+        </div>
+        <div class="space-y-4">
+          <div class="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl">
+            <h4 class="font-bold text-emerald-900 text-sm mb-1">عنوان الدرس: الحموض والقواعد والكواشف والرقم الهيدروجيني (pH)</h4>
+            <p class="text-xs text-emerald-700">الصف التاسع الأساسي - الفصل الدراسي الثاني</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+            <div class="p-3 border border-slate-200 rounded-xl bg-white">
+              <span class="font-bold text-emerald-700 block text-xs">الدقيقة 0 - 2 (التهيئة الحافزة)</span>
+              <p class="text-slate-600 text-xs mt-1">تذوق الليمون vs الصابون، سؤال مثير: لماذا نشعر بالحموضة؟ وكيف نفرق دون تذوق خطر؟</p>
+            </div>
+            <div class="p-3 border border-slate-200 rounded-xl bg-white">
+              <span class="font-bold text-emerald-700 block text-xs">الدقيقة 2 - 5 (بناء المفهوم والتجربة)</span>
+              <p class="text-slate-600 text-xs mt-1">مفهوم أيونات H+ و OH-، تجربة ورقة تباع الشمس ومحلول الكاشف الطبيعي (الملفوف الأحمر).</p>
+            </div>
+            <div class="p-3 border border-slate-200 rounded-xl bg-white">
+              <span class="font-bold text-emerald-700 block text-xs">الدقيقة 5 - 8 (التطبيق والمحاكاة الرقمية)</span>
+              <p class="text-slate-600 text-xs mt-1">تدريج الرقم الهيدروجيني (0-14) وتفاعل التعادل في الحياة اليومية (مضادات الحموضة).</p>
+            </div>
+            <div class="p-3 border border-slate-200 rounded-xl bg-white">
+              <span class="font-bold text-emerald-700 block text-xs">الدقيقة 8 - 10 (التقويم التكويني والختام)</span>
+              <p class="text-slate-600 text-xs mt-1">سؤال تحدي تفاعلي سريع عبر المنصة + ربط الدرس بالإعجاز العلمي في توازن سوائل الجسم.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5: Active Learning & Teaching Strategies -->
+      <div class="step-card hidden" data-step="5">
+        <div class="mb-6">
+          <span class="text-emerald-600 font-bold text-sm tracking-wide">القسم 05</span>
+          <h2 class="text-xl font-bold text-slate-900 mt-1">استراتيجيات التدريس والتعلم النشط</h2>
+          <p class="text-sm text-slate-500 mt-1">حدد الاستراتيجيات التي تفضلين استعراضها في المنصة أمام لجنة المقابلة.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+            <input type="checkbox" name="strategy" value="الاستقصاء العلمي الموجه" checked class="w-4 h-4 text-emerald-600 rounded">
+            <span class="text-sm font-medium text-slate-800">الاستقصاء العلمي الموجه</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+            <input type="checkbox" name="strategy" value="التلعيب التعليمي (Gamification)" checked class="w-4 h-4 text-emerald-600 rounded">
+            <span class="text-sm font-medium text-slate-800">التلعيب والمسابقات التفاعلية</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+            <input type="checkbox" name="strategy" value="التعلم التعاوني والمجموعات المرنة" checked class="w-4 h-4 text-emerald-600 rounded">
+            <span class="text-sm font-medium text-slate-800">التعلم التعاوني وفرق العمل</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+            <input type="checkbox" name="strategy" value="المختبرات الافتراضية والمحاكاة (PhET)" checked class="w-4 h-4 text-emerald-600 rounded">
+            <span class="text-sm font-medium text-slate-800">المختبر الافتراضي ومحاكاة PhET</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+            <input type="checkbox" name="strategy" value="التفكير الناقد وحل المشكلات الحياتية" checked class="w-4 h-4 text-emerald-600 rounded">
+            <span class="text-sm font-medium text-slate-800">ربط الكيمياء بالبيئة والحياة اليومية</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+            <input type="checkbox" name="strategy" value="التعليم المتمايز (Differentiated Learning)" checked class="w-4 h-4 text-emerald-600 rounded">
+            <span class="text-sm font-medium text-slate-800">التعليم المتمايز ومراعاة الفروق الفردية</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Step 6: Virtual Chemistry Lab & Interactive Widgets -->
+      <div class="step-card hidden" data-step="6">
+        <div class="mb-6">
+          <span class="text-emerald-600 font-bold text-sm tracking-wide">القسم 06</span>
+          <h2 class="text-xl font-bold text-slate-900 mt-1">المختبر التفاعلي والمحاكاة الرقمية</h2>
+          <p class="text-sm text-slate-500 mt-1">تحديد التجارب الرقمية المدمجة في الموقع لتبهر لجنة التحكيم.</p>
+        </div>
+        <div class="space-y-3">
+          <div class="p-3 border border-slate-200 rounded-xl flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-bold text-slate-900">محاكي مقياس الرقم الهيدروجيني (pH Meter Simulator)</h4>
+              <p class="text-xs text-slate-500">أداة تسحب قطارة المحلول وتقيس الحموضة وتغير لون الكاشف فورياً.</p>
+            </div>
+            <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded font-bold">موصى به</span>
+          </div>
+          <div class="p-3 border border-slate-200 rounded-xl flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-bold text-slate-900">معمل تفاعل التعادل الافتراضي (Neutralization Titration)</h4>
+              <p class="text-xs text-slate-500">معايرة حمض HCl وقاعدة NaOH وملاحظة تولد الماء وملح الطعام وتغير الحرارة.</p>
+            </div>
+            <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded font-bold">موصى به</span>
+          </div>
+          <div class="p-3 border border-slate-200 rounded-xl flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-bold text-slate-900">بنك الاختبارات والألعاب السريعة للتقييم الختامي</h4>
+              <p class="text-xs text-slate-500">أسئلة تصنيف تفاعلية فورية مجهزة للمقابلة.</p>
+            </div>
+            <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded font-bold">موصى به</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 7: AI Assistant (Workers AI) -->
+      <div class="step-card hidden" data-step="7">
+        <div class="mb-6">
+          <span class="text-emerald-600 font-bold text-sm tracking-wide">القسم 07</span>
+          <h2 class="text-xl font-bold text-slate-900 mt-1">المساعد الذكي للطلاب (Chemistry AI Tutor)</h2>
+          <p class="text-sm text-slate-500 mt-1">مساعد ذكي مدرب على منهاج الكيمياء الأردني يعمل عبر Cloudflare Workers AI.</p>
+        </div>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">شخصية المساعد الذكي وصوته</label>
+            <input type="text" name="ai_persona" value="مساعد كيميائي ودي وصبور يشرح بأسلوب مبسط ويضرب أمثلة واقعية ومحفزة" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 outline-none text-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">حدود وضوابط المساعد</label>
+            <input type="text" name="ai_guardrails" value="الإجابة بدقة حسب منهاج وزارة التربية والتعليم الأردني، تشجيع الطالب على التفكير، منع تقديم الإجابات المباشرة للامتحانات دون شرح خطوات الحل" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 outline-none text-sm">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 8: WhatsApp & Communication (Evolution API) -->
+      <div class="step-card hidden" data-step="8">
+        <div class="mb-6">
+          <span class="text-emerald-600 font-bold text-sm tracking-wide">القسم 08</span>
+          <h2 class="text-xl font-bold text-slate-900 mt-1">بوابة التواصل والإشعارات (WhatsApp)</h2>
+          <p class="text-sm text-slate-500 mt-1">قناة تواصل رقمية مع أولياء الأمور والطلبة عبر واتساب و Evolution API.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="p-3.5 border border-slate-200 rounded-xl bg-slate-50">
+            <h4 class="text-sm font-bold text-slate-900">إشعارات التقدم والواجبات</h4>
+            <p class="text-xs text-slate-500 mt-1">إرسال تقرير فوري لولي الأمر عند إنجاز الطالب للمحاكاة بنجاح.</p>
+          </div>
+          <div class="p-3.5 border border-slate-200 rounded-xl bg-slate-50">
+            <h4 class="text-sm font-bold text-slate-900">تسجيل الدخول الآمن OTP</h4>
+            <p class="text-xs text-slate-500 mt-1">تسجيل دخول سهل وسريع للطلبة برقم الهاتف وبدون كلمات مرور معقدة.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 9: Design Aesthetic & Theme (Impeccable Light) -->
+      <div class="step-card hidden" data-step="9">
+        <div class="mb-6">
+          <span class="text-emerald-600 font-bold text-sm tracking-wide">القسم 09</span>
+          <h2 class="text-xl font-bold text-slate-900 mt-1">الهوية البصرية وتجربة المستخدم (UI/UX)</h2>
+          <p class="text-sm text-slate-500 mt-1">وفق معايير Impeccable Design: تصميم مضيء، راقٍ، احترافي وخالٍ من بهرجة الذكاء الاصطناعي الاصطناعية.</p>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div class="p-4 border-2 border-emerald-500 bg-emerald-50/50 rounded-xl text-center cursor-pointer">
+            <div class="w-8 h-8 mx-auto rounded-full bg-emerald-600 mb-2"></div>
+            <span class="text-xs font-bold text-emerald-900 block">Emerald Chemistry</span>
+            <span class="text-[10px] text-emerald-700">زمردي كيميائي نقي ووقور</span>
+          </div>
+          <div class="p-4 border border-slate-200 bg-white rounded-xl text-center opacity-60">
+            <div class="w-8 h-8 mx-auto rounded-full bg-cyan-600 mb-2"></div>
+            <span class="text-xs font-bold text-slate-700 block">Cyan Lab</span>
+            <span class="text-[10px] text-slate-500">أزرق مخبري حداثي</span>
+          </div>
+          <div class="p-4 border border-slate-200 bg-white rounded-xl text-center opacity-60">
+            <div class="w-8 h-8 mx-auto rounded-full bg-indigo-600 mb-2"></div>
+            <span class="text-xs font-bold text-slate-700 block">Royal Indigo</span>
+            <span class="text-[10px] text-slate-500">نيلي أكاديمي رصين</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 10: Technical Stack & Architecture -->
+      <div class="step-card hidden" data-step="10">
+        <div class="mb-6">
+          <span class="text-emerald-600 font-bold text-sm tracking-wide">القسم 10</span>
+          <h2 class="text-xl font-bold text-slate-900 mt-1">المعمارية التقنية السحابية (Cloudflare Edge)</h2>
+          <p class="text-sm text-slate-500 mt-1">استعراض البنية التحتية الفائقة السرعة والمجانية بالكامل.</p>
+        </div>
+        <div class="space-y-2 text-xs">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+            <span class="font-bold text-slate-800">Framework</span>
+            <span class="text-slate-600 font-mono">Next.js 15 (App Router) + OpenNext</span>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+            <span class="font-bold text-slate-800">Hosting & Edge Compute</span>
+            <span class="text-slate-600 font-mono">Cloudflare Workers</span>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+            <span class="font-bold text-slate-800">Database & Storage</span>
+            <span class="text-slate-600 font-mono">Cloudflare D1 (SQL) + Cloudflare R2 (Media)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 11: Security & Ethics -->
+      <div class="step-card hidden" data-step="11">
+        <div class="mb-6">
+          <span class="text-emerald-600 font-bold text-sm tracking-wide">القسم 11</span>
+          <h2 class="text-xl font-bold text-slate-900 mt-1">الأمان والخصوصية والمواطنة الرقمية</h2>
+          <p class="text-sm text-slate-500 mt-1">حماية بيانات الطالبات والالتزام بالضوابط الأخلاقية المدرسية.</p>
+        </div>
+        <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs space-y-2 text-emerald-900">
+          <p>✔ حماية كاملة لخصوصية الطلاب وعدم مشاركة أي بيانات مع أطراف خارجية.</p>
+          <p>✔ بيئة تعليمية آمنة خالية تماماً من الإعلانات أو الروابط المشتتة.</p>
+          <p>✔ تسجيل دخول مشفر وسجلات نشاط مؤمنة على Cloudflare D1.</p>
+        </div>
+      </div>
+
+      <!-- Step 12: Final Review & Master Prompt Generation -->
+      <div class="step-card hidden" data-step="12">
+        <div class="mb-6">
+          <span class="text-emerald-600 font-bold text-sm tracking-wide">القسم 12</span>
+          <h2 class="text-xl font-bold text-slate-900 mt-1">المراجعة النهائية وتوليد الماستر برومبت</h2>
+          <p class="text-sm text-slate-500 mt-1">تم تجميع كافة المتطلبات بنجاح. يمكنك الآن نسخ أو تصدير خطة العمل والماستر برومبت لبدء تشغيل الـ Subagents فوراً.</p>
+        </div>
+        <div class="space-y-4">
+          <div class="p-4 bg-slate-900 text-slate-100 rounded-xl font-mono text-xs overflow-x-auto max-h-60" id="promptPreview">
+            <!-- Dynamically populated -->
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <button type="button" onclick="copyMasterPrompt()" class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition text-sm flex items-center justify-center gap-2">
+              <span>📋 نسخ الماستر برومبت الكامل</span>
+            </button>
+            <button type="button" onclick="exportData('markdown')" class="px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl transition text-sm">
+              تحميل Markdown
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between">
+        <button type="button" id="prevBtn" onclick="changeStep(-1)" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-bold transition invisible">
+          السابق
+        </button>
+        <button type="button" id="nextBtn" onclick="changeStep(1)" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold transition shadow-sm">
+          التالي
+        </button>
+      </div>
+
+    </form>
+  </main>
+
+  <footer class="py-4 text-center text-xs text-slate-400 border-t border-slate-200 bg-white">
+    منصة الأستاذة المتميزة - جاهز للمقابلة والحصة النموذجية 2026
+  </footer>
+
+  <script>
+    let currentStep = 1;
+    const totalSteps = 12;
+
+    function updateWizard() {
+      document.querySelectorAll('.step-card').forEach(card => card.classList.add('hidden'));
+      const activeCard = document.querySelector(`.step-card[data-step="${currentStep}"]`);
+      if (activeCard) activeCard.classList.remove('hidden');
+
+      document.getElementById('progressBar').style.width = `${(currentStep / totalSteps) * 100}%`;
+      document.getElementById('stepCounter').innerText = `الخطوة ${currentStep} من ${totalSteps}`;
+
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      prevBtn.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+      
+      if (currentStep === totalSteps) {
+        nextBtn.style.display = 'none';
+        buildMasterPrompt();
+      } else {
+        nextBtn.style.display = 'block';
+        nextBtn.innerText = currentStep === totalSteps - 1 ? 'إتمام ومراجعة الماستر برومبت' : 'التالي';
+      }
+    }
+
+    function changeStep(delta) {
+      if (delta > 0 && currentStep < totalSteps) {
+        currentStep++;
+      } else if (delta < 0 && currentStep > 1) {
+        currentStep--;
+      }
+      updateWizard();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function getFormData() {
+      const form = document.getElementById('discoveryForm');
+      const data = new FormData(form);
+      const obj = {};
+      data.forEach((value, key) => {
+        if (obj[key]) {
+          if (!Array.isArray(obj[key])) obj[key] = [obj[key]];
+          obj[key].push(value);
+        } else {
+          obj[key] = value;
+        }
+      });
+      return obj;
+    }
+
+    function buildMasterPrompt() {
+      const data = getFormData();
+      const prompt = `# MASTER ORCHESTRATION PROMPT: TEACHER PLATFORM & VIRTUAL CHEMISTRY LAB
+## School Target: Islamic Modern School - Irbid (Hikma) - Islamic Centre Charity Society
+## Interview & Demo Lesson: Wednesday 2/9/2026 at 08:00 AM
+## Subject & Lesson: Chemistry Grade 9 - Acids and Bases (Collins Curriculum pp. 43-55)
+
+### System Mandate:
+You are the Master Orchestrator Agent. You do not write code directly. You dispatch and coordinate specialized subagents (architect, coder, reviewer, general, explore) with ultra-detailed execution prompts.
+Enforce maximum available skills usage across all subagents.
+
+### Target Architecture:
+1. Multi-page SPA (Next.js 15 App Router + OpenNext) deployed on Cloudflare Workers.
+2. Cloudflare D1 for student progress & quiz metrics.
+3. Cloudflare Workers AI for chemistry chatbot assistant.
+4. Interactive Virtual Lab: pH Meter Simulator & Titration Reaction.
+5. Impeccable Light Editorial UI with clean Emerald accents, top YouTube-style progress bar, zero AI fluff.
+6. WhatsApp Gateway with OTP student login via Evolution API.
+
+### 10-Minute Demo Lesson Timeline:
+- 00:00 - 02:00: Engaging Hook (Real-world taste vs danger, curiosity trigger).
+- 02:00 - 05:00: Concept Build (H+/OH- ions, litmus test, cabbage natural indicator).
+- 05:00 - 08:00: Interactive Simulation (Digital pH meter & neutralization).
+- 08:00 - 10:00: Formative Assessment & Islamic scientific equilibrium tie-in.`;
+
+      document.getElementById('promptPreview').innerText = prompt;
+      return prompt;
+    }
+
+    function copyMasterPrompt() {
+      const prompt = buildMasterPrompt();
+      navigator.clipboard.writeText(prompt).then(() => {
+        alert('تم نسخ الماستر برومبت بنجاح! جاهز للتنفيذ الفوري.');
+      });
+    }
+
+    function exportData(format) {
+      const data = getFormData();
+      let content = '', mimeType = '', filename = '';
+      if (format === 'json') {
+        content = JSON.stringify(data, null, 2);
+        mimeType = 'application/json';
+        filename = 'teacher_platform_discovery.json';
+      } else {
+        content = buildMasterPrompt();
+        mimeType = 'text/markdown';
+        filename = 'MASTER_PROMPT.md';
+      }
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Initialize
+    updateWizard();
+  </script>
+</body>
+</html>

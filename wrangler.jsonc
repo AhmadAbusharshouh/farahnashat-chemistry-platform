@@ -1,0 +1,34 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "farahnashat-chemistry-platform",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2024-12-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "chemistry_platform_d1",
+      "database_id": "local-chemistry-db"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "STORAGE",
+      "bucket_name": "chemistry-assets-r2"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  },
+  "vars": {
+    "NEXT_PUBLIC_SCHOOL_NAME": "المدرسة الإسلامية الحديثة - إربد (حكما)",
+    "NEXT_PUBLIC_TEACHER_NAME": "أ. فرح نشأت",
+    "EVOLUTION_API_URL": "http://localhost:8080",
+    "EVOLUTION_INSTANCE_NAME": "chemistry-demo",
+    "EVOLUTION_API_KEY": "demo-evolution-key"
+  }
+}
