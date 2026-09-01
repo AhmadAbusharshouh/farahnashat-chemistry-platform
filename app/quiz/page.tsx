@@ -9,83 +9,246 @@ import {
   RotateCcw, 
   Clock, 
   Share2, 
-  Phone,
-  Sparkles
+  Phone, 
+  Sparkles,
+  BookOpen,
+  ArrowRight,
+  ArrowLeft,
+  Filter,
+  FlaskConical
 } from 'lucide-react';
 import Link from 'next/link';
+import { useLanguage } from '@/lib/LanguageContext';
 
 interface Question {
   id: number;
   question: string;
+  questionEn: string;
   options: string[];
+  optionsEn: string[];
   correctIndex: number;
+  curriculumRef: string;
+  category: 'Acids' | 'Bases' | 'pH' | 'Indicators' | 'Strength' | 'RealWorld';
   explanation: string;
 }
 
 const QUIZ_QUESTIONS: Question[] = [
   {
     id: 1,
-    question: 'ما هو الأيون المشترك المسؤول عن الخصائص الحمضية في جميع المحاليل الحمضية؟',
+    question: 'ما هو الأيون المشترك المسؤول عن الخصائص الحمضية في جميع المحاليل الحمضية المائية؟',
+    questionEn: 'What is the common ion responsible for acidic properties in all aqueous acid solutions?',
     options: [
       'أيون الهيدروكسيد السالب (OH⁻)',
       'أيون الهيدروجين الموجب (H⁺ / H₃O⁺)',
       'أيون الكلوريد السالب (Cl⁻)',
       'أيون الصوديوم الموجب (Na⁺)'
     ],
+    optionsEn: [
+      'Hydroxide ion (OH⁻)',
+      'Hydrogen ion (H⁺ / H₃O⁺)',
+      'Chloride ion (Cl⁻)',
+      'Sodium ion (Na⁺)'
+    ],
     correctIndex: 1,
-    explanation: 'تطلق الحموض عند ذوبانها في الماء أيون الهيدروجين H⁺ الذي يرتبط بالماء مكوناً أيون الهيدرونيوم H₃O⁺.'
+    curriculumRef: 'كتاب كولينز: ص 46 - 47',
+    category: 'Acids',
+    explanation: 'تطلق جميع الحموض عند ذوبانها في الماء أيون الهيدروجين الموجب H⁺ الذي يرتبط بجزيء الماء مكوناً أيون الهيدرونيوم H₃O⁺.'
   },
   {
     id: 2,
-    question: 'عند إضافة محلول مجهول إلى مستخلص الملفوف الأحمر فتحول لونه إلى الأخضر المزرق، ماذا نستنتج عن هذا المحلول؟',
+    question: 'لماذا يُعد غاز ثاني أكسيد الكربون CO₂ أكسيداً حمضياً (Acidic Oxide)؟',
+    questionEn: 'Why is carbon dioxide CO₂ classified as an acidic oxide?',
     options: [
-      'المحلول حمضي قوي',
-      'المحلول متعادل تماماً (pH = 7)',
-      'المحلول قاعدي',
-      'المحلول غير قابل للتأين'
+      'لأنه يحتوي على ذرات هيدروجين في تركيبه البلوري',
+      'لأنه يذوب في الماء مكوناً حمض الكربونيك H₂CO₃ الذي يتأين منتجاً أيونات H⁺',
+      'لأنه يتفاعل مع الحموض لإنتاج قواعد قوية',
+      'لأنه يغير لون تباع الشمس الأحمر إلى الأزرق'
     ],
-    correctIndex: 2,
-    explanation: 'يتحول كاشف الملفوف الأحمر الطبيعي إلى اللون الأخضر أو الأزرق عند وضعه في الأوساط القاعدية.'
+    optionsEn: [
+      'Because it contains hydrogen atoms in its crystal structure',
+      'Because it dissolves in water forming carbonic acid H₂CO₃ which releases H⁺',
+      'Because it reacts with acids to produce strong bases',
+      'Because it turns red litmus blue'
+    ],
+    correctIndex: 1,
+    curriculumRef: 'كتاب كولينز: ص 47',
+    category: 'Acids',
+    explanation: 'أكاسيد اللافلزات مثل CO₂ و NO₂ تذوب في الماء مكونة محاليل حمضية تطلق أيونات الهيدروجين: CO₂ + H₂O → H₂CO₃ → H⁺ + HCO₃⁻.'
   },
   {
     id: 3,
-    question: 'ما هي قيمة الرقم الهيدروجيني (pH) للماء المقطر النقي عند درجة حرارة الغرفة؟',
+    question: 'ما هو السبب العلمي الحقيقي لآلام العضلات التي يشعر بها الشخص بعد 24 ساعة من التمارين الشاقة؟',
+    questionEn: 'What is the scientifically proven cause of muscle soreness 24 hours after intense exercise?',
     options: [
-      'pH = 1.0',
-      'pH = 7.0',
-      'pH = 14.0',
-      'pH = 4.5'
+      'تراكم دائم لحمض اللاكتيك داخل الألياف العضلية لعدة أيام',
+      'تمزقات عضلية دقيقة والتهاب هذه التمزقات، بينما يختفي حمض اللاكتيك بعد ساعة تقريباً',
+      'تحول الوسط العضلي إلى وسط قاعدي شديد القلوية',
+      'نقص إفراز حمض الهيدروكلوريك في المعدة'
+    ],
+    optionsEn: [
+      'Permanent accumulation of lactic acid for several days',
+      'Microscopic muscle tears and inflammation; lactic acid clears within ~1 hour',
+      'Muscle cells becoming overly alkaline',
+      'Deficiency of hydrochloric acid in the stomach'
     ],
     correctIndex: 1,
-    explanation: 'الماء المقطر نقي ومتعادل كيميائياً بحيث يتساوى فيه تركيز أيونات H⁺ مع أيونات OH⁻ وقيمة pH له تساوي 7.'
+    curriculumRef: 'كتاب كولينز: ص 47 (الربط بالرياضة)',
+    category: 'RealWorld',
+    explanation: 'أثبتت الدراسات الحديثة (ص 47) أن ألم العضلات يحدث بعد 24 ساعة بسبب تمزقات مجهرية والتهابها، بينما يزول حمض اللاكتيك بعد ساعة من التمارين.'
   },
   {
     id: 4,
-    question: 'أي المواد التالية يُعد مثالاً على قاعدة تُستخدم في صناعة الصابون وإذابة الدهون؟',
+    question: 'لماذا يُصنف أكسيد الليثيوم Li₂O كقلوي (Alkali)؟',
+    questionEn: 'Why is lithium oxide Li₂O classified as an alkali?',
     options: [
-      'حمض الكبريتيك (H₂SO₄)',
-      'حمض الستريك (C₆H₈O₇)',
-      'هيدروكسيد الصوديوم (NaOH)',
-      'حمض الهيدروكلوريك (HCl)'
+      'لأنه أكسيد لا فلزي يذوب في الماء لإنتاج حمض',
+      'لأنه أكسيد فلزي يذوب في الماء مكوناً هيدروكسيد الليثيوم LiOH الذي يتأين كلياً منتجاً OH⁻',
+      'لأنه مادة غير قابلة للذوبان في الماء وتتفاعل مع القواعد',
+      'لأنه يحتوي على مجموعة هيدروكسيد صلبة في بنيته الجافة'
     ],
-    correctIndex: 2,
-    explanation: 'هيدروكسيد الصوديوم (الصودا الكاوية) قاعدة قوية تُستخدم بشكل رئيسي في تصبين الزيوت وصناعة المنظفات.'
+    optionsEn: [
+      'Because it is a non-metal oxide producing an acid',
+      'Because it is a soluble metal oxide forming LiOH which fully ionizes to release OH⁻',
+      'Because it is insoluble and reacts with bases',
+      'Because it contains dry solid hydroxide groups'
+    ],
+    correctIndex: 1,
+    curriculumRef: 'كتاب كولينز: ص 50',
+    category: 'Bases',
+    explanation: 'القلويات (ص 50) هي أكاسيد وهيدروكسيدات الفلزات الذائبة في الماء؛ حيث يذوب Li₂O مكوناً LiOH الذي يتأين كلياً: Li₂O + H₂O → 2LiOH → 2Li⁺ + 2OH⁻.'
   },
   {
     id: 5,
-    question: 'ما هما الناتجان الرئيسيان لأي تفاعل تعادل بين حمض وقاعدة؟',
+    question: 'عند مقارنة شدة إضاءة المصباح في دارتين متساويتين في التركيز (0.1 M) لحمض HCl وحمض CH₃COOH، ماذا نلاحظ؟',
+    questionEn: 'Comparing lamp brightness in 0.1 M HCl vs 0.1 M CH₃COOH circuits, what do we observe?',
     options: [
-      'غاز الهيدروجين وغاز الأكسجين',
-      'الملح والماء مع انطلاق حرارة',
-      'حمض قوي وأكسيد فلز',
-      'قاعدة قوية وماء مقطر'
+      'إضاءة المصباح في حمض HCl أقوى بكثير لأن تأينه كلي منتجاً وفرة من الأيونات الحرة',
+      'إضاءة المصباح في حمض CH₃COOH أقوى لأن وزنه الجزيئي أكبر',
+      'شدة الإضاءة متطابقة تماماً لأن التركيز الابتدائي متساوٍ',
+      'المصباح لا يضيء في أي من المحلولين'
+    ],
+    optionsEn: [
+      'HCl bulb glows much brighter due to complete ionization releasing abundant free ions',
+      'CH₃COOH bulb glows brighter due to larger molecular weight',
+      'Brightness is completely identical since initial concentrations are equal',
+      'Bulbs remain off in both solutions'
+    ],
+    correctIndex: 0,
+    curriculumRef: 'كتاب كولينز: ص 52',
+    category: 'Strength',
+    explanation: 'حمض HCl قوي يتأين كلياً (→) منتجاً نسبة عالية من الأيونات الحرة الموصلة للتيار، بينما CH₃COOH حمض ضعيف يتأين جزئياً (⇌).'
+  },
+  {
+    id: 6,
+    question: 'ما هو الناتج الغازي المتصاعد عند وضع شريط من فلز المغنيسيوم Mg في أنبوب يحتوي على حمض الهيدروكلوريك HCl؟',
+    questionEn: 'What gas evolves when magnesium ribbon is placed into hydrochloric acid?',
+    options: [
+      'غاز الأكسجين (O₂)',
+      'غاز الكلور السام (Cl₂)',
+      'غاز الهيدروجين (H₂) الذي يشتعل بفرقعة مع الشظية',
+      'غاز ثاني أكسيد الكربون (CO₂)'
+    ],
+    optionsEn: [
+      'Oxygen gas (O₂)',
+      'Toxic chlorine gas (Cl₂)',
+      'Hydrogen gas (H₂) which ignites with a pop sound',
+      'Carbon dioxide gas (CO₂)'
+    ],
+    correctIndex: 2,
+    curriculumRef: 'كتاب كولينز: ص 48',
+    category: 'Acids',
+    explanation: 'يحل المغنيسيوم محل الهيدروجين: Mg + 2HCl → MgCl₂ + H₂ ↑ ويتصاعد غاز الهيدروجين سريع الاشتعال.'
+  },
+  {
+    id: 7,
+    question: 'لماذا يُحافظ صانعو منظفات الشعر (الشامبو) على درجة حموضة له ضمن النطاق (4.5 - 6) وتقريباً pH ≈ 5.5؟',
+    questionEn: 'Why do shampoo manufacturers formulate hair products around pH 4.5 - 6 (~5.5)?',
+    options: [
+      'لأن الشعر يتكون من بروتين الكيراتين وهذا النطاق يحميه من التلف والتقصف',
+      'لزيادة القدرة على تبييض لون الشعر كيميائياً',
+      'لجعل الوسط شديد القاعدية لإذابة الدهون بعنف',
+      'لمعادلة حموضة ماء البحر أثناء السباحة'
+    ],
+    optionsEn: [
+      'Because hair consists of keratin protein and this pH protects it from damage and split ends',
+      'To chemically bleach hair color',
+      'To make it strongly alkaline for severe degreasing',
+      'To neutralize sea water pH'
+    ],
+    correctIndex: 0,
+    curriculumRef: 'كتاب كولينز: ص 54 (الربط بالحياة)',
+    category: 'RealWorld',
+    explanation: 'يتكون الشعر من بروتين الكيراتين، وتعد درجة الحموضة (4.5 - 6) مناسبة للحفاظ عليه من التلف والتقصف والحفاظ على حيويته.'
+  },
+  {
+    id: 8,
+    question: 'إذا كانت التربة الزراعية شديدة الحموضة، ما المادة القاعدية المناسبة الموصى بها لمعادلتها وفق المنهاج؟',
+    questionEn: 'If agricultural soil is excessively acidic, what recommended basic substance neutralizes it?',
+    options: [
+      'حمض الكبريتيك المركز (H₂SO₄)',
+      'محلول هيدروكسيد الكالسيوم Ca(OH)₂ (الجير المطفأ)',
+      'غاز ثاني أكسيد الكربون (CO₂)',
+      'حمض الهيدروكلوريك (HCl)'
+    ],
+    optionsEn: [
+      'Concentrated sulfuric acid (H₂SO₄)',
+      'Calcium hydroxide Ca(OH)₂ solution (Slaked Lime)',
+      'Carbon dioxide gas (CO₂)',
+      'Hydrochloric acid (HCl)'
     ],
     correctIndex: 1,
-    explanation: 'تفاعل التعادل: حمض + قاعدة ← ملح + ماء + حرارة (مثال: HCl + NaOH ← NaCl + H₂O).'
+    curriculumRef: 'كتاب كولينز: ص 55 (الربط بالزراعة)',
+    category: 'RealWorld',
+    explanation: 'تُعالج التربة شديدة الحموضة بإضافة مادة قاعدية مثل محلول هيدروكسيد الكالسيوم Ca(OH)₂ لمعادلة أيونات H⁺ الفائضة.'
+  },
+  {
+    id: 9,
+    question: 'ما هو التغير اللوني لكاشف أزرق البروموثيمول (Bromothymol Blue) عند الانتقال من الوسط الحمضي إلى الوسط القاعدي؟',
+    questionEn: 'What is the color transition of Bromothymol Blue from acidic to basic medium?',
+    options: [
+      'من الأصفر في الوسط الحمضي إلى الأزرق في الوسط القاعدي (وأخضر عند التعادل)',
+      'من الوردي إلى عديم اللون تماماً',
+      'من الأحمر القاني إلى البنفسجي الغامق',
+      'يبقى ثابتاً بلون واحد دون تغير'
+    ],
+    optionsEn: [
+      'From yellow in acid to blue in base (and green at neutral pH 7)',
+      'From pink to completely colorless',
+      'From deep red to dark violet',
+      'Remains unchanged'
+    ],
+    correctIndex: 0,
+    curriculumRef: 'كتاب كولينز: ص 55',
+    category: 'Indicators',
+    explanation: 'يتغير لون أزرق البروموثيمول من الأصفر في الوسط الحمضي (pH < 6) إلى الأخضر في المتعادل (pH = 7) ثم الأزرق في القاعدي (pH > 7.6).'
+  },
+  {
+    id: 10,
+    question: 'أي من المواد التالية يُعد مثالاً على قاعدة ضعيفة تتأين جزئياً دون أن تحتوي صيغتها الأولية على أيون الهيدروكسيد؟',
+    questionEn: 'Which substance is a weak base that partially ionizes without containing an initial OH in its formula?',
+    options: [
+      'هيدروكسيد الصوديوم (NaOH)',
+      'هيدروكسيد البوتاسيوم (KOH)',
+      'غاز الأمونيا (NH₃)',
+      'حمض النيتريك (HNO₃)'
+    ],
+    optionsEn: [
+      'Sodium hydroxide (NaOH)',
+      'Potassium hydroxide (KOH)',
+      'Ammonia gas (NH₃)',
+      'Nitric acid (HNO₃)'
+    ],
+    correctIndex: 2,
+    curriculumRef: 'كتاب كولينز: ص 50، 53',
+    category: 'Bases',
+    explanation: 'غاز الأمونيا NH₃ لا يحتوي على OH⁻ في صيغته، ولكنه يتفاعل مع الماء جزئياً منتجاً OH⁻: NH₃ + H₂O ⇌ NH₄⁺ + OH⁻.'
   }
 ];
 
 export default function QuizPage() {
+  const { t, dir } = useLanguage();
+  const Arrow = dir === 'rtl' ? ArrowLeft : ArrowRight;
+
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: number }>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -126,7 +289,7 @@ export default function QuizPage() {
             student_phone: studentPhone || '0790000000',
             score,
             total_questions: QUIZ_QUESTIONS.length,
-            time_spent_seconds: 45,
+            time_spent_seconds: 60,
             answers: selectedAnswers
           })
         });
@@ -144,6 +307,9 @@ export default function QuizPage() {
     setSavingStatus('idle');
   };
 
+  const score = calculateScore();
+  const percentage = Math.round((score / QUIZ_QUESTIONS.length) * 100);
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       
@@ -151,187 +317,184 @@ export default function QuizPage() {
       <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
           <div className="space-y-1">
-            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-              التقويم التكويني المحوسب
+            <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+              {t('التقويم التكويني والختامي الذكي', 'Interactive Diagnostic Assessment')}
             </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
-              اختبار كيمياء الصف التاسع - الحموض والقواعد
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-950">
+              {t('اختبار استيعاب كيمياء الصف التاسع (كولينز ص 43 - 55)', 'Grade 9 Chemistry Comprehensive Mastery Quiz')}
             </h1>
           </div>
-          <div className="text-xs text-slate-500 font-bold bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl">
-            5 أسئلة معيارية وفق منهاج كولينز
+
+          <div className="flex items-center gap-2 font-mono text-xs text-slate-600 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
+            <Clock className="w-4 h-4 text-emerald-700" />
+            <span>10 {t('أسئلة معيارية', 'Questions')}</span>
           </div>
         </div>
 
-        <p className="text-xs text-slate-500 mt-3 leading-relaxed">
-          أداة تقويم لحظية لقياس مدى استيعاب الطالبات لنتاجات الحصة، مع حفظ النتائج في قاعدة بيانات Cloudflare D1 وإصدار شارة التميز.
+        <p className="text-xs text-slate-600 mt-3 leading-relaxed">
+          {t(
+            'اختبار تشخيصي متكامل يقيس النتاجات المعرفية، استيعاب المعادلات، الربط بالحياة والرياضة والزراعة، والتفكير العلمي المبني على المنهاج الوزاري.',
+            'Comprehensive diagnostic assessment evaluating cognitive outcomes, chemical equations, real-world connections, and scientific thinking.'
+          )}
         </p>
       </div>
 
       {!isSubmitted ? (
         <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
           
-          {/* Top Progress Indicator */}
-          <div className="flex items-center justify-between text-xs font-bold text-slate-500">
-            <span>السؤال {currentIdx + 1} من {QUIZ_QUESTIONS.length}</span>
-            <span className="text-emerald-700">
-              تمت الإجابة على {Object.keys(selectedAnswers).length} من {QUIZ_QUESTIONS.length}
-            </span>
-          </div>
-
-          <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-            <div 
-              className="bg-emerald-600 h-full transition-all duration-300"
-              style={{ width: `${((currentIdx + 1) / QUIZ_QUESTIONS.length) * 100}%` }}
-            />
-          </div>
-
-          {/* Question Text */}
-          <div className="space-y-4 pt-2">
-            <h2 className="text-base sm:text-lg font-black text-slate-900 leading-relaxed">
-              {currentQ.question}
-            </h2>
-
-            {/* Options */}
-            <div className="space-y-2.5">
-              {currentQ.options.map((opt, optIdx) => {
-                const isCurrentOptionSelected = selectedAnswers[currentIdx] === optIdx;
-                return (
-                  <button
-                    key={optIdx}
-                    onClick={() => handleSelectOption(optIdx)}
-                    className={`w-full text-right p-4 rounded-2xl border text-xs sm:text-sm font-semibold transition flex items-center justify-between ${
-                      isCurrentOptionSelected
-                        ? 'bg-emerald-50 border-emerald-500 text-emerald-950 ring-1 ring-emerald-400'
-                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
-                    }`}
-                  >
-                    <span>{opt}</span>
-                    <span className={`w-5 h-5 rounded-full border flex items-center justify-center text-[10px] font-bold ${
-                      isCurrentOptionSelected ? 'border-emerald-600 bg-emerald-600 text-white' : 'border-slate-300 text-slate-400'
-                    }`}>
-                      {String.fromCharCode(65 + optIdx)}
-                    </span>
-                  </button>
-                );
-              })}
+          {/* Progress Tracker */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-xs text-slate-500 font-bold">
+              <span>{t('السؤال', 'Question')} {currentIdx + 1} {t('من', 'of')} {QUIZ_QUESTIONS.length}</span>
+              <span className="text-emerald-700 font-mono">{currentQ.curriculumRef}</span>
+            </div>
+            <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+              <div 
+                className="bg-emerald-600 h-2.5 rounded-full transition-all duration-300"
+                style={{ width: `${((currentIdx + 1) / QUIZ_QUESTIONS.length) * 100}%` }}
+              />
             </div>
           </div>
 
-          {/* Navigation Controls */}
+          {/* Question Text */}
+          <div className="space-y-2 pt-2">
+            <div className="inline-block px-2.5 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold">
+              {currentQ.category}
+            </div>
+            <h2 className="text-base sm:text-lg font-bold text-slate-950 leading-relaxed">
+              {currentQ.question}
+            </h2>
+          </div>
+
+          {/* Options List */}
+          <div className="space-y-3 pt-2">
+            {currentQ.options.map((opt, optIdx) => {
+              const isSelectedOption = selectedAnswers[currentIdx] === optIdx;
+              return (
+                <button
+                  key={optIdx}
+                  onClick={() => handleSelectOption(optIdx)}
+                  className={`w-full text-right p-4 rounded-2xl border transition-all duration-150 flex items-center justify-between ${
+                    isSelectedOption
+                      ? 'bg-emerald-50/80 border-emerald-400 text-emerald-950 ring-2 ring-emerald-200 shadow-2xs'
+                      : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  <span className="text-xs sm:text-sm font-bold leading-relaxed">{opt}</span>
+                  <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${
+                    isSelectedOption ? 'border-emerald-600 bg-emerald-600 text-white' : 'border-slate-300'
+                  }`}>
+                    {isSelectedOption && <span className="w-2 h-2 rounded-full bg-white" />}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Nav Controls */}
           <div className="flex items-center justify-between pt-4 border-t border-slate-100">
             <button
-              onClick={() => setCurrentIdx((p) => Math.max(0, p - 1))}
+              onClick={() => setCurrentIdx((prev) => Math.max(0, prev - 1))}
               disabled={currentIdx === 0}
-              className="px-4 py-2 text-xs font-bold text-slate-600 disabled:text-slate-300 hover:bg-slate-50 rounded-xl transition"
+              className="px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:hover:bg-white transition"
             >
-              السؤال السابق
+              {t('السؤال السابق', 'Previous')}
             </button>
 
             {currentIdx < QUIZ_QUESTIONS.length - 1 ? (
               <button
-                onClick={() => setCurrentIdx((p) => Math.min(QUIZ_QUESTIONS.length - 1, p + 1))}
-                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs transition"
+                onClick={() => setCurrentIdx((prev) => Math.min(QUIZ_QUESTIONS.length - 1, prev + 1))}
+                disabled={!isSelected}
+                className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 text-white disabled:text-slate-400 text-xs font-bold shadow-xs transition"
               >
-                السؤال التالي
+                {t('السؤال التالي', 'Next')}
               </button>
             ) : (
               <button
                 onClick={handleFinishQuiz}
-                disabled={Object.keys(selectedAnswers).length < QUIZ_QUESTIONS.length}
-                className="px-6 py-2.5 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-200 text-white disabled:text-slate-400 text-xs font-bold rounded-xl shadow-xs transition"
+                disabled={!isSelected}
+                className="px-6 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-900 disabled:bg-slate-200 text-emerald-400 disabled:text-slate-400 text-xs font-bold shadow-xs transition flex items-center gap-1.5"
               >
-                إنهاء الاختبار وعرض النتيجة
+                <Award className="w-4 h-4" />
+                <span>{t('إنهاء الاختبار واعتماد النتيجة', 'Submit Quiz')}</span>
               </button>
             )}
           </div>
 
         </div>
       ) : (
-        /* Results View & Certificate */
-        <div className="space-y-6">
-          <div className="bg-white border border-slate-200 rounded-3xl p-8 text-center shadow-xs space-y-6">
-            <div className="w-16 h-16 mx-auto rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
-              <Award className="w-8 h-8" />
+        /* Results View */
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-8 text-center">
+          
+          {/* Score Circle */}
+          <div className="space-y-3">
+            <div className="w-24 h-24 mx-auto rounded-full bg-emerald-50 border-4 border-emerald-300 flex items-center justify-center">
+              <span className="text-3xl font-black text-emerald-800 font-mono">{percentage}%</span>
             </div>
-
-            <div className="space-y-1">
-              <h2 className="text-2xl font-black text-slate-900">
-                نتيجة التقويم التكويني: {calculateScore()} من {QUIZ_QUESTIONS.length}
-              </h2>
-              <p className="text-xs text-slate-500">
-                {calculateScore() >= 4 
-                  ? '🌟 أداء استثنائي ومتقن! لقد تم استيعاب جميع مفاهيم الحموض والقواعد بنجاح باهر.'
-                  : '👍 أداء جيد! يمكنك مراجعة الأسئلة وتفسيراتها العلمية أدناه لتعزيز المعرفة.'}
-              </p>
-            </div>
-
-            {/* Student metadata capture */}
-            <div className="max-w-md mx-auto p-4 rounded-2xl bg-slate-50 border border-slate-200 text-right space-y-3">
-              <span className="text-xs font-bold text-slate-700 block">تسجيل النتيجة في السجل الإلكتروني (D1):</span>
-              <div className="space-y-2">
-                <input
-                  type="text"
-                  placeholder="اسم الطالبة أو عضو اللجنة..."
-                  value={studentName}
-                  onChange={(e) => setStudentName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs outline-none focus:border-emerald-500"
-                />
-                <input
-                  type="tel"
-                  placeholder="رقم الهاتف لاستلام التقرير عبر واتساب (اختياري)..."
-                  value={studentPhone}
-                  onChange={(e) => setStudentPhone(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs outline-none focus:border-emerald-500"
-                />
-                <button
-                  onClick={handleFinishQuiz}
-                  className="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition"
-                >
-                  {savingStatus === 'saved' ? '✓ تم الحفظ في قاعدة البيانات' : 'حفظ النتيجة الآن'}
-                </button>
-              </div>
-            </div>
-
-            <button
-              onClick={handleRestart}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition"
-            >
-              <RotateCcw className="w-4 h-4" />
-              <span>إعادة الاختبار</span>
-            </button>
+            
+            <h2 className="text-2xl font-black text-slate-950">
+              {percentage >= 80 ? '🎉 أداء متميز ومتقن جداً!' : percentage >= 60 ? '👍 أداء جيد جداً!' : '📚 مراجعة مقترحة للمفاهيم'}
+            </h2>
+            <p className="text-xs text-slate-600">
+              حصلت على <strong className="text-emerald-800 font-mono text-sm">{score}</strong> من أصل <strong className="font-mono text-sm">{QUIZ_QUESTIONS.length}</strong> أسئلة صحيحة.
+            </p>
           </div>
 
-          {/* Detailed Explanations Breakdown */}
-          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
-            <h3 className="text-sm font-black text-slate-900 border-b border-slate-100 pb-3">مراجعة الإجابات والتفسير العلمي الدقيق:</h3>
-            <div className="space-y-4">
+          {/* Detailed Question Review */}
+          <div className="space-y-4 text-right pt-4 border-t border-slate-100">
+            <h3 className="font-extrabold text-sm text-slate-900">مراجعة الإجابات والتحليل العلمي النموذجي:</h3>
+            
+            <div className="space-y-3">
               {QUIZ_QUESTIONS.map((q, idx) => {
                 const userAns = selectedAnswers[idx];
                 const isCorrect = userAns === q.correctIndex;
                 return (
-                  <div key={q.id} className={`p-4 rounded-2xl border text-xs space-y-2 ${isCorrect ? 'bg-emerald-50/40 border-emerald-200' : 'bg-red-50/40 border-red-200'}`}>
-                    <div className="flex items-center justify-between font-bold">
-                      <span className="text-slate-900">{idx + 1}. {q.question}</span>
-                      {isCorrect ? (
-                        <span className="text-emerald-700 flex items-center gap-1 font-bold">
-                          <CheckCircle2 className="w-4 h-4" /> صحيح
-                        </span>
-                      ) : (
-                        <span className="text-red-700 flex items-center gap-1 font-bold">
-                          <XCircle className="w-4 h-4" /> غير دقيق
-                        </span>
-                      )}
+                  <div key={idx} className={`p-4 rounded-2xl border text-xs space-y-2 ${
+                    isCorrect ? 'bg-emerald-50/60 border-emerald-200' : 'bg-red-50/60 border-red-200'
+                  }`}>
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-start gap-2">
+                        {isCorrect ? (
+                          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                        ) : (
+                          <XCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                        )}
+                        <span className="font-bold text-slate-900">{idx + 1}. {q.question}</span>
+                      </div>
+                      <span className="text-[10px] font-mono text-slate-400 shrink-0">{q.curriculumRef}</span>
                     </div>
-                    <p className="text-slate-600"><strong>الإجابة الصحيحة:</strong> {q.options[q.correctIndex]}</p>
-                    <p className="text-slate-500 bg-white/80 p-2 rounded-lg border border-slate-200/60">
-                      💡 <strong>التفسير:</strong> {q.explanation}
-                    </p>
+
+                    <div className="space-y-1 text-slate-700 pr-6">
+                      <p><strong>الإجابة الصحيحة:</strong> {q.options[q.correctIndex]}</p>
+                      <p className="text-slate-600 bg-white/80 p-2 rounded-lg border border-slate-200/60">
+                        💡 <strong>التفسير العلمي:</strong> {q.explanation}
+                      </p>
+                    </div>
                   </div>
                 );
               })}
             </div>
           </div>
+
+          {/* Action Restart / Lab */}
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-4 border-t border-slate-100">
+            <button
+              onClick={handleRestart}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs transition"
+            >
+              <RotateCcw className="w-4 h-4" />
+              <span>{t('إعادة الاختبار', 'Retake Quiz')}</span>
+            </button>
+
+            <Link
+              href="/virtual-lab"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition"
+            >
+              <FlaskConical className="w-4 h-4" />
+              <span>{t('تطبيق في المختبر الافتراضي', 'Go to Virtual Lab')}</span>
+            </Link>
+          </div>
+
         </div>
       )}
 
