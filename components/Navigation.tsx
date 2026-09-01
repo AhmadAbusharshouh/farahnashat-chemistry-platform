@@ -18,13 +18,13 @@ export function Navbar() {
 
   const NAV_LINKS = [
     { href: '/', label: t('الرئيسية', 'Home') },
-    { href: '/lesson-plan', label: t('الحصة النموذجية (10 د)', 'Demo Lesson (10m)') },
-    { href: '/virtual-lab', label: t('المختبر الافتراضي', 'Virtual Lab'), badge: t('تفاعلي', 'Live') },
+    { href: '/lesson-plan', label: t('خطة الحصة (10 د)', 'Demo Lesson (10m)') },
+    { href: '/virtual-lab', label: t('المختبر الافتراضي', 'Virtual Lab'), badge: t('تجارب', 'Lab') },
     { href: '/curriculum-map', label: t('خريطة المنهاج', 'Curriculum Map') },
-    { href: '/quiz', label: t('التقويم التكويني', 'Quiz') },
-    { href: '/assistant', label: t('المساعد الذكي (AI)', 'AI Tutor') },
-    { href: '/about', label: t('الملف التعريفي', 'About Bio') },
-    { href: '/whatsapp-connect', label: t('تواصل واتساب', 'WhatsApp') },
+    { href: '/quiz', label: t('اختبار تشخيصي', 'Quiz') },
+    { href: '/assistant', label: t('المساعد التعليمي', 'Study Assistant') },
+    { href: '/about', label: t('عن المعلمة', 'About Teacher') },
+    { href: '/whatsapp-connect', label: t('تواصل معنا', 'Contact') },
   ];
 
   const toggleLanguage = () => {
@@ -36,7 +36,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
-          {/* Refined Minimalist Brand Stamp */}
+          {/* Brand Identity */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="w-9 h-9 rounded-lg bg-slate-950 text-emerald-400 flex items-center justify-center font-bold text-sm border border-slate-800 tracking-tight transition-transform group-hover:scale-102">
               <span className="num-en font-black text-xs">FN</span>
@@ -47,7 +47,7 @@ export function Navbar() {
                   {t('أ. فرح نشأت', 'Farah Nashat')}
                 </span>
                 <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
-                  {t('معلمة كيمياء', 'Chemistry')}
+                  {t('معلمة كيمياء', 'Chemistry Teacher')}
                 </span>
               </div>
               <p className="text-[11px] text-slate-500 font-medium">
@@ -56,7 +56,7 @@ export function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Navigation - Clean Editorial Tabs */}
+          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.href;
@@ -85,7 +85,7 @@ export function Navbar() {
             })}
           </nav>
 
-          {/* Clean Controls */}
+          {/* Controls */}
           <div className="flex items-center gap-2">
             <button
               onClick={toggleLanguage}
@@ -100,7 +100,7 @@ export function Navbar() {
               href="/virtual-lab"
               className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition-all shadow-2xs"
             >
-              <span>{t('المختبر الافتراضي', 'Launch Lab')}</span>
+              <span>{t('المختبر الافتراضي', 'Virtual Lab')}</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
 
@@ -161,39 +161,39 @@ export function Footer() {
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
               <h3 className="font-extrabold text-white text-base">
-                {t('منصة تدريس الكيمياء التفاعلية', 'Interactive Chemistry Teaching Platform')}
+                {t('الملف التعليمي للأستاذة فرح نشأت', 'Teacher Farah Nashat Educational Portfolio')}
               </h3>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed max-w-md">
               {t(
-                'ملف تحضيري ومهني متكامل للحصة النموذجية (10 دقائق) لدرس الحموض والقواعد من كتاب الكيمياء للصف التاسع (منهاج كولينز ص 43-55)، مُعد لمقابلة شاغر معلمة الكيمياء لدى المدرسة الإسلامية الحديثة - إربد (حكما) التابعة لجمعية المركز الإسلامي الخيرية.',
-                'A comprehensive pedagogical dossier and virtual chemistry laboratory tailored for the 10-minute demo lesson (Acids and Bases, Collins Grade 9 pp. 43-55) at Modern Islamic School - Irbid (Hikma), Islamic Centre Charity Society.'
+                'ملف تحضيري ومهني للحصة النموذجية (10 دقائق) لدرس الحموض والقواعد من كتاب الكيمياء للصف التاسع (منهاج كولينز ص 43-55)، مُعد لمقابلة شاغر معلمة الكيمياء لدى المدرسة الإسلامية الحديثة - إربد (حكما) التابعة لجمعية المركز الإسلامي الخيرية.',
+                'A dedicated professional teaching dossier and virtual chemistry laboratory prepared by Ms. Farah Nashat for the 10-minute demo lesson (Collins Grade 9 Chemistry, pp. 43-55) at Modern Islamic School - Irbid (Hikma).'
               )}
             </p>
             <div className="pt-2 text-xs text-slate-400 space-y-1">
-              <div><strong className="text-slate-200">{t('إعداد وإشراف:', 'Prepared By:')}</strong> {t('أ. فرح نشأت (بكالوريوس كيمياء)', 'Farah Nashat (B.Sc. Chemistry)')}</div>
-              <div><strong className="text-slate-200">{t('المؤسسة المستهدفة:', 'Target Institution:')}</strong> {t('المدرسة الإسلامية الحديثة - إربد (حكما)', 'Modern Islamic School - Irbid (Hikma)')}</div>
+              <div><strong className="text-slate-200">{t('إعداد المعلمة:', 'Teacher:')}</strong> {t('أ. فرح نشأت (بكالوريوس كيمياء)', 'Farah Nashat (B.Sc. Chemistry)')}</div>
+              <div><strong className="text-slate-200">{t('المدرسة المستهدفة:', 'School:')}</strong> {t('المدرسة الإسلامية الحديثة - إربد (حكما)', 'Modern Islamic School - Irbid (Hikma)')}</div>
             </div>
           </div>
 
           {/* Quick Syllabus & Lab Navigation (3 cols) */}
           <div className="md:col-span-3 space-y-3">
             <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-              {t('أركان المنهاج والمختبر', 'Syllabus & Lab Modules')}
+              {t('محتويات الملف والدرس', 'Dossier Contents')}
             </h4>
             <ul className="space-y-2 text-xs text-slate-400">
               <li><Link href="/lesson-plan" className="hover:text-emerald-400 transition">{t('خطة الحصة النموذجية (10 دقائق)', '10-Minute Demo Lesson Plan')}</Link></li>
-              <li><Link href="/virtual-lab" className="hover:text-emerald-400 transition">{t('مقياس الرقم الهيدروجيني pH الرقمي', 'Digital pH Meter Simulator')}</Link></li>
-              <li><Link href="/virtual-lab" className="hover:text-emerald-400 transition">{t('محاكاة تفاعل التعادل والمعايرة', 'Neutralization & Titration Chamber')}</Link></li>
-              <li><Link href="/curriculum-map" className="hover:text-emerald-400 transition">{t('خريطة منهاج كولينز (تاسع)', 'Collins Grade 9 Concept Map')}</Link></li>
-              <li><Link href="/quiz" className="hover:text-emerald-400 transition">{t('التقويم التكويني وبنك الأسئلة', 'Formative Quiz & Assessment')}</Link></li>
+              <li><Link href="/virtual-lab" className="hover:text-emerald-400 transition">{t('المختبر الافتراضي والتجارب', 'Virtual Chemistry Lab')}</Link></li>
+              <li><Link href="/curriculum-map" className="hover:text-emerald-400 transition">{t('خريطة منهاج كولينز (ص 43 - 55)', 'Collins Grade 9 Concept Map')}</Link></li>
+              <li><Link href="/quiz" className="hover:text-emerald-400 transition">{t('التقويم التكويني وأسئلة الفهم', 'Formative Assessment & Quiz')}</Link></li>
+              <li><Link href="/about" className="hover:text-emerald-400 transition">{t('السيرة الذاتية والمؤهلات', 'Teacher Bio & Qualifications')}</Link></li>
             </ul>
           </div>
 
           {/* Interview & Location Details (4 cols) */}
           <div className="md:col-span-4 space-y-3 bg-slate-900/60 p-5 rounded-2xl border border-slate-800/80">
             <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
-              {t('بيانات المقابلة والحصة النموذجية', 'Interview & Venue Logistics')}
+              {t('موعد المقابلة والحصة النموذجية', 'Interview & Demo Schedule')}
             </h4>
             <div className="space-y-2 text-xs text-slate-300 leading-relaxed">
               <p>
@@ -205,12 +205,12 @@ export function Footer() {
                 <span>{t('الساعة', 'At')} <span className="num-en font-bold text-white">08:00 AM</span> {t('صباحاً', '')}</span>
               </p>
               <p>
-                <strong className="text-white">{t('الموقع المعتمد:', 'Venue:')}</strong>{' '}
+                <strong className="text-white">{t('المكان:', 'Location:')}</strong>{' '}
                 <span>{t('إربد - شارع عمان - شمال مخابز السنبلة - بداية حكما', 'Irbid - Amman Street - North of Al-Sunbula Bakeries - Entrance of Hikma')}</span>
               </p>
               <p className="pt-1">
-                <strong className="text-white">{t('الدرس المقرر:', 'Topic:')}</strong>{' '}
-                <span>{t('الحموض والقواعد والكواشف (كتاب الكيمياء ص 43-55)', 'Acids, Bases, Indicators & pH (pp. 43-55)')}</span>
+                <strong className="text-white">{t('موضوع الحصة:', 'Topic:')}</strong>{' '}
+                <span>{t('الحموض والقواعد والكواشف (كتاب الكيمياء ص 43 - 55)', 'Acids, Bases, Indicators & pH (pp. 43-55)')}</span>
               </p>
             </div>
           </div>
@@ -224,7 +224,7 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-3">
             <span className="text-slate-400 font-medium">
-              {t('منهاج كولينز المطور - المملكة الأردنية الهاشمية', 'Collins Chemistry Curriculum - Hashemite Kingdom of Jordan')}
+              {t('كيمياء الصف التاسع - منهاج كولينز المطور', 'Grade 9 Chemistry - Collins Curriculum')}
             </span>
           </div>
         </div>

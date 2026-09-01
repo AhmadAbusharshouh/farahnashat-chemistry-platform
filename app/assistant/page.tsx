@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { 
   MessageSquare, 
   Send, 
-  Bot, 
   User, 
   Sparkles, 
   FlaskConical, 
-  Lightbulb,
-  CheckCircle2
+  Lightbulb, 
+  CheckCircle2,
+  BookOpen
 } from 'lucide-react';
+import { useLanguage } from '@/lib/LanguageContext';
 
 interface ChatMessage {
   id: string;
@@ -20,18 +21,20 @@ interface ChatMessage {
 }
 
 const SAMPLE_QUESTIONS = [
-  'ما الفرق بين الحمض القوي والحمض الضعيف؟',
-  'كيف يتغير لون مستخلص الملفوف الأحمر في الخل والصابون؟',
+  'ما الفرق بين الحمض القوي والحمض الضعيف ودرجة تأينهما؟',
+  'كيف يتغير لون مستخلص الملفوف الأحمر في الوسط الحمضي والقاعدي؟',
   'ما هو تفسير تفاعل التعادل كيميائياً؟',
-  'كيف تم توزيع وقت الحصة النموذجية (10 دقائق)؟'
+  'لماذا يُعد أكسيد الليثيوم Li₂O قلوياً؟',
+  'ما هي علاقة درجة حموضة الشامبو (pH 5.5) ببروتين كيراتين الشعر؟'
 ];
 
 export default function AssistantPage() {
+  const { t } = useLanguage();
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'init-1',
       sender: 'assistant',
-      text: 'مرحباً بك! أنا المساعد الكيميائي الذكي لمنصة الأستاذة فرح نشأت، مدعوم بتقنيات Cloudflare Workers AI. كيف يمكنني مساعدتك في استكشاف منهاج كيمياء الصف التاسع أو تفاصيل الحصة النموذجية اليوم؟',
+      text: 'أهلاً وسهلاً بك! أنا المساعد التعليمي لمراجعة منهاج كيمياء الصف التاسع (كتاب كولينز ص 43 - 55). يمكنك سؤالي عن أي مفهوم في درس الحموض والقواعد، المعادلات الكيميائية، الكواشف، أو تفاصيل وخطة الحصة النموذجية.',
       timestamp: 'الآن'
     }
   ]);
@@ -69,13 +72,13 @@ export default function AssistantPage() {
       };
       setMessages((prev) => [...prev, aiMsg]);
     } catch (err) {
-      const errorMsg: ChatMessage = {
+      const fallbackMsg: ChatMessage = {
         id: 'err-' + Date.now(),
         sender: 'assistant',
-        text: 'أهلاً بك! تذكر أن الحموض تطلق أيونات H⁺ بينما تطلق القواعد أيونات OH⁻، ومقياس pH يعبر عن تركيزها بدقة.',
+        text: 'أهلاً بك! تطلق الحموض أيونات H⁺ عند ذوبانها في الماء بينما تطلق القواعد أيونات OH⁻، ومقياس pH يعبر عن تركيزها بدقة.',
         timestamp: 'الآن'
       };
-      setMessages((prev) => [...prev, errorMsg]);
+      setMessages((prev) => [...prev, fallbackMsg]);
     } finally {
       setLoading(false);
     }
@@ -88,35 +91,40 @@ export default function AssistantPage() {
       <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Cloudflare Workers AI (Llama 3.1)</span>
-            </div>
-            <h1 className="text-2xl font-black text-slate-900">
-              المساعد الكيميائي الذكي (AI Chemistry Tutor)
+            <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+              {t('مراجعة المنهاج التفاعلية', 'Interactive Study Assistant')}
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-950">
+              {t('المساعد التعليمي لدرس الكيمياء', 'Chemistry Study & Concept Assistant')}
             </h1>
           </div>
-          <div className="text-xs text-slate-500 font-bold bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl">
-            مُدرب على منهاج كولينز للصف التاسع
+          <div className="text-xs text-slate-600 font-bold bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl">
+            {t('منهاج كولينز - الصف التاسع (ص 43 - 55)', 'Collins Grade 9 (pp. 43-55)')}
           </div>
         </div>
 
-        <p className="text-xs text-slate-500 mt-3 leading-relaxed">
-          اطرح أي سؤال حول التفاعلات، تأين الحموض والقواعد، كاشف الملفوف، أو تفاصيل وخطة الحصة النموذجية للمقابلة.
+        <p className="text-xs text-slate-600 mt-3 leading-relaxed">
+          {t(
+            'اطرح أي استفسار علمي حول مفاهيم وتجارب درس الحموض والقواعد والكواشف، معادلات التأين، وتطبيقات المنهاج الحياتية والصناعية.',
+            'Ask any question regarding acid-base concepts, ionization equations, indicators, or curriculum applications.'
+          )}
         </p>
       </div>
 
-      {/* Suggested Quick Prompt Chips */}
-      <div className="flex flex-wrap gap-2">
-        {SAMPLE_QUESTIONS.map((q, idx) => (
-          <button
-            key={idx}
-            onClick={() => handleSend(q)}
-            className="text-xs font-bold bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 px-3 py-2 rounded-xl border border-slate-200 transition text-right"
-          >
-            💡 {q}
-          </button>
-        ))}
+      {/* Suggested Quick Question Chips */}
+      <div className="space-y-1.5">
+        <span className="text-xs font-bold text-slate-500 block px-1">أسئلة شائعة من المنهاج للمراجعة السريعة:</span>
+        <div className="flex flex-wrap gap-2">
+          {SAMPLE_QUESTIONS.map((q, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleSend(q)}
+              className="text-xs font-bold bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-900 px-3 py-2 rounded-xl border border-slate-200 transition text-right"
+            >
+              💡 {q}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Chat Window Container */}
@@ -135,10 +143,10 @@ export default function AssistantPage() {
                   className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 ${
                     isUser
                       ? 'bg-slate-800 text-white'
-                      : 'bg-emerald-600 text-white shadow-xs'
+                      : 'bg-emerald-700 text-white shadow-xs'
                   }`}
                 >
-                  {isUser ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
+                  {isUser ? <User className="w-4 h-4" /> : <BookOpen className="w-4 h-4" />}
                 </div>
 
                 <div
@@ -162,9 +170,9 @@ export default function AssistantPage() {
           })}
 
           {loading && (
-            <div className="flex items-center gap-2 text-xs text-slate-400 p-2">
-              <Bot className="w-4 h-4 animate-spin text-emerald-600" />
-              <span>جاري صياغة الإجابة العلمية الدقيقة عبر Cloudflare AI...</span>
+            <div className="flex items-center gap-2 text-xs text-slate-500 p-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-600 animate-ping"></span>
+              <span>جاري استرجاع الإجابة من مفاهيم المنهاج...</span>
             </div>
           )}
         </div>
@@ -177,12 +185,12 @@ export default function AssistantPage() {
             onChange={(e) => setInputVal(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             placeholder="اكتب سؤالك الكيميائي هنا..."
-            className="flex-1 px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white text-xs outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition"
+            className="flex-1 px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white text-xs outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100 transition"
           />
           <button
             onClick={() => handleSend()}
             disabled={!inputVal.trim() || loading}
-            className="p-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 text-white font-bold rounded-xl transition shadow-xs"
+            className="p-3 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-200 text-white font-bold rounded-xl transition shadow-xs"
           >
             <Send className="w-4 h-4 rotate-180" />
           </button>

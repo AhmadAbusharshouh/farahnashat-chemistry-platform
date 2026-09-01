@@ -15,8 +15,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "منصة الكيمياء التفاعلية | أ. فرح نشأت - Modern Islamic School",
-  description: "Interactive Chemistry Platform & Virtual Lab for Grade 9 Collins Curriculum by Farah Nashat.",
+  title: "أ. فرح نشأت | معلمة الكيمياء - المدرسة الإسلامية الحديثة (إربد)",
+  description: "الملف التعليمي والتحضيري للحصة النموذجية والمقابلة الشخصية للأستاذة فرح نشأت - كيمياء الصف التاسع (منهاج كولينز).",
 };
 
 export default function RootLayout({
