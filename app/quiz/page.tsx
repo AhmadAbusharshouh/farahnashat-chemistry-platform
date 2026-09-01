@@ -10,12 +10,12 @@ import {
   Clock, 
   Share2, 
   Phone, 
-  Sparkles,
-  BookOpen,
-  ArrowRight,
-  ArrowLeft,
-  Filter,
-  FlaskConical
+  Sparkles, 
+  BookOpen, 
+  ArrowRight, 
+  ArrowLeft, 
+  Filter, 
+  FlaskConical 
 } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/LanguageContext';
@@ -307,46 +307,39 @@ export default function QuizPage() {
   const percentage = Math.round((score / QUIZ_QUESTIONS.length) * 100);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       
-      {/* Header - Sharp Precision Style */}
-      <div className="bg-white border-2 border-slate-900 p-6 sm:p-8 space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-slate-900 pb-4">
-          <div className="space-y-1">
-            <span className="text-xs font-mono font-bold text-emerald-950 bg-emerald-100 px-2.5 py-1 border border-emerald-300">
-              {t('التقويم التكويني والختامي', 'Diagnostic Assessment')}
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-950">
-              {t('اختبار استيعاب كيمياء الصف التاسع (كولينز ص 43 - 55)', 'Grade 9 Chemistry Comprehensive Mastery Quiz')}
+      {/* Header - Clean Light Style */}
+      <div className="bg-white border border-slate-200 p-6 space-y-3 shadow-2xs">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+          <div>
+            <h1 className="text-2xl font-black text-slate-900">
+              {t('اختبار التقويم التكويني والتشخيصي', 'Formative Assessment & Diagnostic Quiz')}
             </h1>
+            <p className="text-xs text-slate-500">
+              {t('اختبار تقويمي يقيس استيعاب المفاهيم والمعادلات وتطبيقات المنهاج', 'Diagnostic test evaluating concepts, chemical equations, and applications')}
+            </p>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-xs text-slate-800 bg-slate-100 px-3 py-1.5 border border-slate-300">
-            <Clock className="w-4 h-4 text-emerald-700" />
-            <span>10 {t('أسئلة معيارية', 'Questions')}</span>
+          <div className="flex items-center gap-1.5 font-mono text-xs text-slate-700 bg-slate-50 px-3 py-1 border border-slate-200">
+            <Clock className="w-3.5 h-3.5 text-emerald-700" />
+            <span>10 {t('أسئلة', 'Questions')}</span>
           </div>
         </div>
-
-        <p className="text-xs text-slate-700 leading-relaxed">
-          {t(
-            'اختبار تشخيصي متكامل يقيس النتاجات المعرفية، استيعاب المعادلات، الربط بالحياة والرياضة والزراعة، والتفكير العلمي المبني على المنهاج الوزاري.',
-            'Comprehensive diagnostic assessment evaluating cognitive outcomes, chemical equations, real-world connections, and scientific thinking.'
-          )}
-        </p>
       </div>
 
       {!isSubmitted ? (
-        <div className="bg-white border-2 border-slate-900 p-6 sm:p-8 space-y-6">
+        <div className="bg-white border border-slate-200 p-6 sm:p-8 space-y-5 shadow-2xs">
           
           {/* Progress Tracker */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs text-slate-600 font-bold font-mono">
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between text-xs text-slate-500 font-mono">
               <span>{t('السؤال', 'Question')} {currentIdx + 1} / {QUIZ_QUESTIONS.length}</span>
-              <span className="text-emerald-900 bg-emerald-50 px-2 py-0.5 border border-emerald-200">{currentQ.curriculumRef}</span>
+              <span className="text-emerald-800 bg-emerald-50 px-2 py-0.2 border border-emerald-200">{currentQ.curriculumRef}</span>
             </div>
-            <div className="w-full bg-slate-100 border border-slate-300 h-2">
+            <div className="w-full bg-slate-100 h-1.5 overflow-hidden">
               <div 
-                className="bg-emerald-700 h-2 transition-all duration-200"
+                className="bg-emerald-700 h-1.5 transition-all duration-200"
                 style={{ width: `${((currentIdx + 1) / QUIZ_QUESTIONS.length) * 100}%` }}
               />
             </div>
@@ -354,31 +347,28 @@ export default function QuizPage() {
 
           {/* Question Text */}
           <div className="space-y-2 pt-2">
-            <div className="inline-block px-2.5 py-0.5 bg-slate-950 text-emerald-400 text-[10px] font-mono font-bold">
-              {currentQ.category}
-            </div>
-            <h2 className="text-base sm:text-lg font-black text-slate-950 leading-relaxed">
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 leading-relaxed">
               {currentQ.question}
             </h2>
           </div>
 
           {/* Options List */}
-          <div className="space-y-2.5 pt-2">
+          <div className="space-y-2 pt-1">
             {currentQ.options.map((opt, optIdx) => {
               const isSelectedOption = selectedAnswers[currentIdx] === optIdx;
               return (
                 <button
                   key={optIdx}
                   onClick={() => handleSelectOption(optIdx)}
-                  className={`w-full text-right p-4 border-2 transition-all flex items-center justify-between ${
+                  className={`w-full text-right p-3.5 border transition flex items-center justify-between ${
                     isSelectedOption
-                      ? 'bg-slate-950 border-slate-950 text-white shadow-xs'
-                      : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50'
+                      ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold shadow-2xs'
+                      : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-50'
                   }`}
                 >
-                  <span className="text-xs sm:text-sm font-bold leading-relaxed">{opt}</span>
-                  <span className={`w-4 h-4 border shrink-0 ${
-                    isSelectedOption ? 'border-emerald-400 bg-emerald-400' : 'border-slate-400'
+                  <span className="text-xs sm:text-sm leading-relaxed">{opt}</span>
+                  <span className={`w-3.5 h-3.5 border shrink-0 ${
+                    isSelectedOption ? 'border-emerald-600 bg-emerald-600' : 'border-slate-300'
                   }`} />
                 </button>
               );
@@ -386,11 +376,11 @@ export default function QuizPage() {
           </div>
 
           {/* Nav Controls */}
-          <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+          <div className="flex items-center justify-between pt-4 border-t border-slate-100">
             <button
               onClick={() => setCurrentIdx((prev) => Math.max(0, prev - 1))}
               disabled={currentIdx === 0}
-              className="px-4 py-2 border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-40 transition"
+              className="px-4 py-2 border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40 transition"
             >
               {t('السؤال السابق', 'Previous')}
             </button>
@@ -399,7 +389,7 @@ export default function QuizPage() {
               <button
                 onClick={() => setCurrentIdx((prev) => Math.min(QUIZ_QUESTIONS.length - 1, prev + 1))}
                 disabled={!isSelected}
-                className="px-6 py-2.5 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-200 text-white disabled:text-slate-400 text-xs font-bold border border-emerald-900 transition"
+                className="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-200 text-white disabled:text-slate-400 text-xs font-bold border border-emerald-800 transition"
               >
                 {t('السؤال التالي', 'Next')}
               </button>
@@ -407,10 +397,10 @@ export default function QuizPage() {
               <button
                 onClick={handleFinishQuiz}
                 disabled={!isSelected}
-                className="px-6 py-2.5 bg-slate-950 hover:bg-slate-900 disabled:bg-slate-200 text-emerald-400 disabled:text-slate-400 text-xs font-bold border border-slate-950 transition flex items-center gap-1.5"
+                className="px-5 py-2 bg-emerald-800 hover:bg-emerald-900 disabled:bg-slate-200 text-white disabled:text-slate-400 text-xs font-bold border border-emerald-900 transition flex items-center gap-1.5"
               >
                 <Award className="w-4 h-4" />
-                <span>{t('إنهاء الاختبار واعتماد النتيجة', 'Submit Quiz')}</span>
+                <span>{t('إنهاء الاختبار', 'Submit')}</span>
               </button>
             )}
           </div>
@@ -418,47 +408,47 @@ export default function QuizPage() {
         </div>
       ) : (
         /* Results View */
-        <div className="bg-white border-2 border-slate-900 p-6 sm:p-10 space-y-8 text-center">
+        <div className="bg-white border border-slate-200 p-6 sm:p-8 space-y-6 text-center shadow-2xs">
           
-          <div className="space-y-3">
-            <div className="w-24 h-24 mx-auto bg-slate-950 border-2 border-emerald-500 flex items-center justify-center text-white">
-              <span className="text-3xl font-black text-emerald-400 font-mono">{percentage}%</span>
+          <div className="space-y-2">
+            <div className="w-20 h-20 mx-auto bg-emerald-50 border border-emerald-300 flex items-center justify-center">
+              <span className="text-2xl font-black text-emerald-800 font-mono">{percentage}%</span>
             </div>
             
-            <h2 className="text-2xl font-black text-slate-950">
+            <h2 className="text-xl font-black text-slate-900">
               {percentage >= 80 ? '🎉 أداء متميز ومتقن جداً!' : percentage >= 60 ? '👍 أداء جيد جداً!' : '📚 مراجعة مقترحة للمفاهيم'}
             </h2>
             <p className="text-xs text-slate-600">
-              حصلت على <strong className="text-emerald-900 font-mono text-sm">{score}</strong> من أصل <strong className="font-mono text-sm">{QUIZ_QUESTIONS.length}</strong> أسئلة صحيحة.
+              حصلت على <strong className="text-emerald-800 font-mono">{score}</strong> من أصل <strong className="font-mono">{QUIZ_QUESTIONS.length}</strong> أسئلة صحيحة.
             </p>
           </div>
 
-          <div className="space-y-3 text-right pt-4 border-t border-slate-200">
-            <h3 className="font-black text-sm text-slate-950">مراجعة الإجابات والتحليل العلمي:</h3>
+          <div className="space-y-2.5 text-right pt-4 border-t border-slate-100">
+            <h3 className="font-bold text-xs text-slate-700">مراجعة الإجابات والتحليل العلمي:</h3>
             
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               {QUIZ_QUESTIONS.map((q, idx) => {
                 const userAns = selectedAnswers[idx];
                 const isCorrect = userAns === q.correctIndex;
                 return (
-                  <div key={idx} className={`p-4 border text-xs space-y-2 ${
-                    isCorrect ? 'bg-emerald-50/60 border-emerald-300' : 'bg-red-50/60 border-red-300'
+                  <div key={idx} className={`p-3 border text-xs space-y-1.5 ${
+                    isCorrect ? 'bg-emerald-50/50 border-emerald-200' : 'bg-red-50/50 border-red-200'
                   }`}>
                     <div className="flex items-start justify-between gap-2">
-                      <div className="flex items-start gap-2">
+                      <div className="flex items-start gap-1.5">
                         {isCorrect ? (
                           <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
                         ) : (
                           <XCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
                         )}
-                        <span className="font-bold text-slate-950">{idx + 1}. {q.question}</span>
+                        <span className="font-bold text-slate-900">{idx + 1}. {q.question}</span>
                       </div>
-                      <span className="text-[10px] font-mono text-slate-500 shrink-0">{q.curriculumRef}</span>
+                      <span className="text-[10px] font-mono text-slate-400 shrink-0">{q.curriculumRef}</span>
                     </div>
 
-                    <div className="space-y-1 text-slate-800 pr-6">
+                    <div className="space-y-1 text-slate-700 pr-5">
                       <p><strong>الإجابة الصحيحة:</strong> {q.options[q.correctIndex]}</p>
-                      <p className="text-slate-700 bg-white p-2 border border-slate-200">
+                      <p className="text-slate-600 bg-white p-2 border border-slate-200">
                         💡 <strong>التفسير العلمي:</strong> {q.explanation}
                       </p>
                     </div>
@@ -468,20 +458,20 @@ export default function QuizPage() {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-4 border-t border-slate-200">
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-4 border-t border-slate-100">
             <button
               onClick={handleRestart}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold text-xs border border-slate-300 transition"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold text-xs border border-slate-200 transition"
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-3.5 h-3.5" />
               <span>{t('إعادة الاختبار', 'Retake Quiz')}</span>
             </button>
 
             <Link
               href="/virtual-lab"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs border border-emerald-900 transition"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs border border-emerald-800 transition"
             >
-              <FlaskConical className="w-4 h-4" />
+              <FlaskConical className="w-3.5 h-3.5" />
               <span>{t('تطبيق في المختبر الافتراضي', 'Go to Virtual Lab')}</span>
             </Link>
           </div>

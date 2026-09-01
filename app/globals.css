@@ -3,14 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --background: #fafbfb;
-  --foreground: #090d16;
+  --background: #f8fafc;
+  --foreground: #0f172a;
 }
 
 body {
   font-family: var(--font-outfit), var(--font-zain), system-ui, sans-serif;
   color: var(--foreground);
   background-color: var(--background);
+  background-image: 
+    radial-gradient(rgba(4, 120, 87, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.98)),
+    url('/images/site-bg-light.png');
+  background-size: 24px 24px, 100% 100%, cover;
+  background-attachment: fixed;
+  background-position: center;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -44,7 +51,7 @@ html[dir="rtl"] body {
   background: #047857;
 }
 
-/* Architectural Card & Surface */
+/* Architectural Card & Surface (Clean & Light) */
 .sharp-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
@@ -53,20 +60,21 @@ html[dir="rtl"] body {
 
 .sharp-card:hover {
   border-color: #047857;
-  box-shadow: 0 4px 12px -2px rgba(4, 120, 87, 0.08);
+  box-shadow: 0 6px 16px -2px rgba(4, 120, 87, 0.08);
 }
 
-.sharp-dark-card {
-  background: #020617;
-  border: 1px solid #1e293b;
-  transition: all 0.2s ease-in-out;
+/* Typewriter animation blinking cursor */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
-.sharp-dark-card:hover {
-  border-color: #059669;
-}
-
-/* Text balance utility */
-.text-wrap-balance {
-  text-wrap: balance;
+.typing-cursor::after {
+  content: '▋';
+  display: inline-block;
+  color: #047857;
+  margin-right: 2px;
+  animation: blink 0.8s infinite;
+  font-size: 0.85em;
+  vertical-align: middle;
 }

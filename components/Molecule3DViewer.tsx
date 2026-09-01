@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { RotateCw, ZoomIn, ZoomOut, Box, Sparkles, Eye } from 'lucide-react';
+import { RotateCw, ZoomIn, ZoomOut, Box, Sparkles, Eye, Boxes } from 'lucide-react';
 
 export interface MoleculeDefinition {
   id: string;
@@ -68,14 +68,14 @@ export const MOLECULES_3D_LIBRARY: MoleculeDefinition[] = [
     type: 'acid',
     description: 'حمض عضوي ضعيف (الخل المنزلي)؛ يتأين جزئياً فقط في حالة اتزان ديناميكي (⇌).',
     atoms: [
-      { elem: 'C', pos: [-0.8, 0, 0] },     // Methyl Carbon
+      { elem: 'C', pos: [-0.8, 0, 0] },
       { elem: 'H', pos: [-1.4, 0.7, 0] },
       { elem: 'H', pos: [-1.4, -0.7, 0.5] },
       { elem: 'H', pos: [-1.0, 0, -0.9] },
-      { elem: 'C', pos: [0.6, 0.2, 0] },     // Carboxyl Carbon
-      { elem: 'O', pos: [1.1, 1.2, 0] },     // Carbonyl Oxygen (=O)
-      { elem: 'O', pos: [1.3, -0.9, 0] },    // Hydroxyl Oxygen (-OH)
-      { elem: 'H', pos: [2.1, -0.7, 0] }     // Acidic Hydrogen
+      { elem: 'C', pos: [0.6, 0.2, 0] },
+      { elem: 'O', pos: [1.1, 1.2, 0] },
+      { elem: 'O', pos: [1.3, -0.9, 0] },
+      { elem: 'H', pos: [2.1, -0.7, 0] }
     ],
     bonds: [
       [0, 1], [0, 2], [0, 3], [0, 4],
@@ -128,12 +128,12 @@ export const MOLECULES_3D_LIBRARY: MoleculeDefinition[] = [
 ];
 
 const ELEMENT_COLORS: Record<string, number> = {
-  H: 0xffffff,    // White
+  H: 0xe2e8f0,    // Light Platinum
   O: 0xef4444,    // Red
-  Cl: 0x22c55e,   // Green
+  Cl: 0x10b981,   // Emerald Green
   Na: 0x8b5cf6,   // Violet/Purple
-  C: 0x334155,    // Dark Slate
-  N: 0x3b82f6     // Blue
+  C: 0x475569,    // Slate
+  N: 0x2563eb     // Blue
 };
 
 const ELEMENT_RADII: Record<string, number> = {
@@ -162,7 +162,7 @@ export function Molecule3DViewer() {
     if (!containerRef.current) return;
 
     const width = containerRef.current.clientWidth;
-    const height = containerRef.current.clientHeight || 340;
+    const height = 320;
 
     // Scene
     const scene = new THREE.Scene();
@@ -173,7 +173,7 @@ export function Molecule3DViewer() {
     camera.position.z = 5.5;
     cameraRef.current = camera;
 
-    // Renderer
+    // Renderer (Light & transparent)
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -185,14 +185,14 @@ export function Molecule3DViewer() {
     containerRef.current.appendChild(renderer.domElement);
 
     // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
     scene.add(ambientLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.0);
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.2);
     dirLight1.position.set(5, 8, 5);
     scene.add(dirLight1);
 
-    const dirLight2 = new THREE.DirectionalLight(0x047857, 1.5);
+    const dirLight2 = new THREE.DirectionalLight(0x047857, 1.2);
     dirLight2.position.set(-5, -5, -5);
     scene.add(dirLight2);
 
@@ -252,14 +252,12 @@ export function Molecule3DViewer() {
     window.addEventListener('mouseup', handleMouseUp);
     dom.addEventListener('wheel', handleWheel, { passive: false });
 
-    // Handle Resize
     const handleResize = () => {
       if (!containerRef.current || !rendererRef.current || !cameraRef.current) return;
       const newWidth = containerRef.current.clientWidth;
-      const newHeight = containerRef.current.clientHeight || 340;
-      cameraRef.current.aspect = newWidth / newHeight;
+      cameraRef.current.aspect = newWidth / 320;
       cameraRef.current.updateProjectionMatrix();
-      rendererRef.current.setSize(newWidth, newHeight);
+      rendererRef.current.setSize(newWidth, 320);
     };
     window.addEventListener('resize', handleResize);
 
@@ -274,12 +272,11 @@ export function Molecule3DViewer() {
     };
   }, []);
 
-  // Update Geometry when Selected Molecule Changes
+  // Update Geometry
   useEffect(() => {
     if (!moleculeGroupRef.current) return;
     const group = moleculeGroupRef.current;
 
-    // Clear previous children
     while (group.children.length > 0) {
       const obj = group.children[0];
       group.remove(obj);
@@ -288,8 +285,7 @@ export function Molecule3DViewer() {
 
     const isSpaceFill = displayMode === 'space_fill';
 
-    // 1. Build Atoms
-    selectedMolecule.atoms.forEach((atom, idx) => {
+    selectedMolecule.atoms.forEach((atom) => {
       const baseRadius = ELEMENT_RADII[atom.elem] || 0.4;
       const radius = isSpaceFill ? baseRadius * 1.8 : baseRadius;
       const color = ELEMENT_COLORS[atom.elem] || 0xcccccc;
@@ -308,7 +304,6 @@ export function Molecule3DViewer() {
       group.add(atomMesh);
     });
 
-    // 2. Build Bonds (in Ball & Stick mode)
     if (!isSpaceFill) {
       selectedMolecule.bonds.forEach(([aIdx, bIdx]) => {
         const atomA = selectedMolecule.atoms[aIdx];
@@ -339,110 +334,88 @@ export function Molecule3DViewer() {
       });
     }
 
-    // Reset rotation slightly
     group.rotation.set(0.3, 0.5, 0);
   }, [selectedMolecule, displayMode]);
 
   return (
-    <div className="bg-slate-950 text-white border border-slate-800 p-6 space-y-6">
+    <div className="bg-white border border-slate-200 p-5 space-y-4 shadow-2xs">
       
       {/* Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-emerald-400"></span>
-            <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400">
-              Interactive 3D Molecular Engine
-            </span>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800">
+            <Boxes className="w-4 h-4 text-emerald-700" />
+            <span>نمذجة الجزيئات ثلاثية الأبعاد (3D)</span>
           </div>
-          <h3 className="text-lg font-black tracking-tight text-white">
+          <h3 className="text-base font-black text-slate-900">
             {selectedMolecule.name}
           </h3>
         </div>
 
-        {/* 3D Control Action Buttons */}
-        <div className="flex items-center gap-1.5 font-mono text-xs">
+        <div className="flex items-center gap-1 font-mono text-xs">
           <button
             onClick={() => setAutoRotate(!autoRotate)}
-            className={`px-3 py-1.5 border transition ${
-              autoRotate ? 'bg-emerald-950 border-emerald-500 text-emerald-300' : 'bg-slate-900 border-slate-700 text-slate-400'
+            className={`px-2.5 py-1 border text-[11px] font-bold transition ${
+              autoRotate ? 'bg-emerald-50 border-emerald-300 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-600'
             }`}
           >
             {autoRotate ? 'دوران تلقائي ON' : 'دوران OFF'}
           </button>
           <button
             onClick={() => setDisplayMode(displayMode === 'ball_stick' ? 'space_fill' : 'ball_stick')}
-            className="px-3 py-1.5 bg-slate-900 border border-slate-700 hover:border-slate-500 text-slate-200 transition"
+            className="px-2.5 py-1 bg-white border border-slate-200 hover:border-slate-400 text-slate-700 text-[11px] font-bold transition"
           >
-            {displayMode === 'ball_stick' ? 'نموذج الكرات والعصي' : 'ملء الفراغ (Space-Fill)'}
+            {displayMode === 'ball_stick' ? 'الكرات والعصي' : 'ملء الفراغ'}
           </button>
         </div>
       </div>
 
       {/* Main 3D Stage & Molecule Chooser Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
         
-        {/* Molecule Library Selector (4 cols) */}
-        <div className="lg:col-span-4 space-y-2">
-          <span className="text-[10px] font-mono text-slate-400 block px-1">اختر الجزيء للعرض المجسم:</span>
-          <div className="space-y-1.5 max-h-[320px] overflow-y-auto pr-1">
-            {MOLECULES_3D_LIBRARY.map((m) => {
-              const isSelected = selectedMolecule.id === m.id;
-              return (
-                <button
-                  key={m.id}
-                  onClick={() => setSelectedMolecule(m)}
-                  className={`w-full text-right p-3 border transition flex items-center justify-between ${
-                    isSelected
-                      ? 'bg-emerald-950/80 border-emerald-400 text-emerald-200'
-                      : 'bg-slate-900/80 border-slate-800 hover:bg-slate-800 text-slate-300'
-                  }`}
-                >
-                  <div className="space-y-0.5">
-                    <div className="font-bold text-xs">{m.name}</div>
-                    <div className="font-mono text-[10px] text-slate-400">{m.nameEn}</div>
-                  </div>
-                  <span className="font-mono text-xs px-2 py-0.5 bg-slate-950 border border-slate-700 text-emerald-400">
-                    {m.formula}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+        {/* Molecule Selector (4 cols) */}
+        <div className="sm:col-span-4 space-y-1 max-h-[300px] overflow-y-auto pr-1">
+          {MOLECULES_3D_LIBRARY.map((m) => {
+            const isSelected = selectedMolecule.id === m.id;
+            return (
+              <button
+                key={m.id}
+                onClick={() => setSelectedMolecule(m)}
+                className={`w-full text-right p-2.5 border transition flex items-center justify-between ${
+                  isSelected
+                    ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold'
+                    : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'
+                }`}
+              >
+                <div className="truncate">
+                  <div className="text-xs">{m.name}</div>
+                </div>
+                <span className="font-mono text-[10px] px-1.5 py-0.2 bg-white border border-slate-200 text-emerald-800 shrink-0">
+                  {m.formula}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
         {/* 3D WebGL Canvas Viewport (8 cols) */}
-        <div className="lg:col-span-8 bg-slate-900 border border-slate-800 relative overflow-hidden flex flex-col justify-between">
-          
-          {/* Viewport Canvas Container */}
+        <div className="sm:col-span-8 bg-slate-50 border border-slate-200 relative overflow-hidden flex flex-col justify-between">
           <div 
             ref={containerRef} 
-            className="w-full h-[320px] cursor-grab active:cursor-grabbing relative"
+            className="w-full h-[300px] cursor-grab active:cursor-grabbing"
           />
 
-          {/* Micro Legend & Interaction Tip */}
-          <div className="p-3 bg-slate-950 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-[11px] text-slate-400">
-            <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-white border border-slate-600"></span> H (هيدروجين)</span>
-              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-red-500"></span> O (أكسجين)</span>
-              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-emerald-500"></span> Cl (كلور)</span>
-              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-blue-500"></span> N (نيتروجين)</span>
-            </div>
-            <div className="text-[10px] font-mono text-slate-500">
-              💡 اسحب بالماوس للتدوير ثلاثي الأبعاد • استخدم العجلة للتكبير
-            </div>
+          <div className="p-2 bg-white border-t border-slate-200 flex items-center justify-between text-[10px] text-slate-500 font-mono">
+            <span>اسحب بالماوس للتدوير ثلاثي الأبعاد</span>
+            <span className="text-emerald-800 font-bold">{selectedMolecule.formula}</span>
           </div>
         </div>
 
       </div>
 
-      {/* Chemical Explanation Strip */}
-      <div className="p-4 bg-slate-900 border border-slate-800 text-xs text-slate-300 space-y-1 text-right">
-        <div className="flex items-center justify-between text-emerald-400 font-bold mb-1">
-          <span>التفسير البنائي والتركيبي للجزيء:</span>
-          <span className="font-mono text-xs">{selectedMolecule.formula}</span>
-        </div>
-        <p className="leading-relaxed text-slate-300">{selectedMolecule.description}</p>
+      {/* Description */}
+      <div className="p-3 bg-emerald-50/60 border border-emerald-200 text-xs text-slate-700 space-y-1 text-right">
+        <p className="leading-relaxed">{selectedMolecule.description}</p>
       </div>
 
     </div>

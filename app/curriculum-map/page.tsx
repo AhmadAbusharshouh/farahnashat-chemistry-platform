@@ -315,108 +315,94 @@ export default function CurriculumMapPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       
-      {/* Header - Sharp Precision Style */}
-      <div className="bg-white border-2 border-slate-900 p-6 sm:p-8 space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-slate-900 pb-4">
-          <div className="space-y-1 max-w-2xl">
-            <span className="text-xs font-mono font-bold text-emerald-950 bg-emerald-100 px-2.5 py-1 border border-emerald-300">
-              {t('الخارطة المفاهيمية الشاملة للمنهاج', 'Comprehensive Curriculum Knowledge Map')}
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-950">
-              {t('منهاج كيمياء الصف التاسع - كتاب كولينز (ص 43 - 55)', 'Grade 9 Chemistry - Collins Textbook (pp. 43 - 55)')}
+      {/* Header - Clean Light Style */}
+      <div className="bg-white border border-slate-200 p-6 space-y-3 shadow-2xs">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+          <div>
+            <h1 className="text-2xl font-black text-slate-900">
+              {t('خارطة المفاهيم والمعادلات الكيميائية', 'Comprehensive Curriculum Knowledge Map')}
             </h1>
+            <p className="text-xs text-slate-500">
+              {t('تفكيك شامل لوحدة الحموض والقواعد والأملاح مع كافة المعادلات وتطبيقات المنهاج', 'Detailed breakdown of chemical units, balanced ionic equations, and textbook checkpoints')}
+            </p>
           </div>
           <Link
             href="/virtual-lab"
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-950 text-emerald-400 font-bold text-xs border border-slate-900 transition"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs border border-emerald-800 transition"
           >
-            <FlaskConical className="w-4 h-4" />
-            <span>{t('تطبيق المحاكاة في المختبر الافتراضي', 'Launch Lab Simulation')}</span>
+            <FlaskConical className="w-3.5 h-3.5" />
+            <span>{t('المختبر الافتراضي (3D)', 'Launch Lab')}</span>
           </Link>
         </div>
-
-        <p className="text-xs text-slate-700 leading-relaxed">
-          {t(
-            'تفكيك وتحليل معمق لجميع موضوعات وحدة "الحموض والقواعد والأملاح"، مزودة بالنتاجات، المعادلات الكيميائية، الربط بالحياة والصناعة والزراعة، وحلول بنك أسئلة "أتحقق" المدرجة في الكتاب الوزاري.',
-            'Deep breakdown of all 5 Collins Grade 9 curriculum modules with exact page citations, ionic equations, real-world connections, and full solutions to textbook checkpoints.'
-          )}
-        </p>
       </div>
 
-      {/* Main Layout: 5 Modules Sidebar + Detailed Content Stage */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      {/* Main Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Module Nav Selector (4 cols) */}
-        <div className="lg:col-span-4 space-y-2">
-          <h2 className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider px-1">
-            {t('المحاور التعليمية الخمسة:', 'Curriculum Core Modules:')}
-          </h2>
-          
-          <div className="space-y-1.5">
-            {CURRICULUM_MODULES.map((mod) => {
-              const isSelected = selectedModule.id === mod.id;
-              return (
-                <button
-                  key={mod.id}
-                  onClick={() => {
-                    setSelectedModule(mod);
-                    setActiveTab('overview');
-                    setShowAnswerIdx({});
-                  }}
-                  className={`w-full text-right p-4 border transition flex items-center justify-between ${
-                    isSelected
-                      ? 'bg-slate-950 text-white border-slate-950 shadow-xs'
-                      : 'bg-white border-slate-300 hover:bg-slate-50 text-slate-900'
-                  }`}
-                >
-                  <div className="space-y-1">
-                    <div className="font-bold text-xs sm:text-sm">{mod.title}</div>
-                    <div className={`text-[11px] font-mono ${isSelected ? 'text-emerald-400' : 'text-emerald-800'}`}>{mod.pages}</div>
-                  </div>
-                  <ChevronLeft className={`w-4 h-4 transition-transform ${isSelected ? 'text-emerald-400 -translate-x-1' : 'text-slate-400'}`} />
-                </button>
-              );
-            })}
-          </div>
+        <div className="lg:col-span-4 space-y-1.5">
+          {CURRICULUM_MODULES.map((mod) => {
+            const isSelected = selectedModule.id === mod.id;
+            return (
+              <button
+                key={mod.id}
+                onClick={() => {
+                  setSelectedModule(mod);
+                  setActiveTab('overview');
+                  setShowAnswerIdx({});
+                }}
+                className={`w-full text-right p-3.5 border transition flex items-center justify-between ${
+                  isSelected
+                    ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold shadow-2xs'
+                    : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-800'
+                }`}
+              >
+                <div className="space-y-0.5">
+                  <div className="text-xs sm:text-sm font-bold">{mod.title}</div>
+                  <div className={`text-[11px] font-mono ${isSelected ? 'text-emerald-800' : 'text-slate-400'}`}>{mod.pages}</div>
+                </div>
+                <ChevronLeft className={`w-4 h-4 transition-transform ${isSelected ? 'text-emerald-800 -translate-x-1' : 'text-slate-300'}`} />
+              </button>
+            );
+          })}
         </div>
 
         {/* Detailed Stage (8 cols) */}
-        <div className="lg:col-span-8 bg-white border-2 border-slate-900 p-6 sm:p-8 space-y-6">
+        <div className="lg:col-span-8 bg-white border border-slate-200 p-6 space-y-5 shadow-2xs">
           
-          {/* Header of selected module */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-slate-900 pb-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
             <div className="space-y-0.5">
-              <span className="text-[11px] font-bold text-emerald-950 font-mono bg-emerald-100 px-2 py-0.5 border border-emerald-300">
+              <span className="text-[10px] font-bold text-emerald-800 font-mono bg-emerald-50 px-2 py-0.2 border border-emerald-200">
                 {selectedModule.pages}
               </span>
-              <h3 className="text-xl font-black text-slate-950">{selectedModule.title}</h3>
+              <h3 className="text-lg font-black text-slate-900">{selectedModule.title}</h3>
             </div>
 
             {/* Sub-tabs */}
-            <div className="flex items-center gap-1 bg-slate-100 p-1 border border-slate-300 text-xs font-bold">
+            <div className="flex items-center gap-1 bg-slate-50 p-1 border border-slate-200 text-xs font-bold">
               <button
                 onClick={() => setActiveTab('overview')}
-                className={`px-3 py-1.5 transition ${activeTab === 'overview' ? 'bg-slate-950 text-emerald-400' : 'text-slate-700'}`}
+                className={`px-3 py-1 transition ${activeTab === 'overview' ? 'bg-emerald-700 text-white shadow-2xs' : 'text-slate-600'}`}
               >
                 {t('الملخص', 'Overview')}
               </button>
               <button
                 onClick={() => setActiveTab('equations')}
-                className={`px-3 py-1.5 transition ${activeTab === 'equations' ? 'bg-slate-950 text-emerald-400' : 'text-slate-700'}`}
+                className={`px-3 py-1 transition ${activeTab === 'equations' ? 'bg-emerald-700 text-white shadow-2xs' : 'text-slate-600'}`}
               >
                 {t('المعادلات', 'Equations')}
               </button>
               <button
                 onClick={() => setActiveTab('real_world')}
-                className={`px-3 py-1.5 transition ${activeTab === 'real_world' ? 'bg-slate-950 text-emerald-400' : 'text-slate-700'}`}
+                className={`px-3 py-1 transition ${activeTab === 'real_world' ? 'bg-emerald-700 text-white shadow-2xs' : 'text-slate-600'}`}
               >
                 {t('الربط بالحياة', 'Real-world')}
               </button>
               <button
                 onClick={() => setActiveTab('checkpoints')}
-                className={`px-3 py-1.5 transition ${activeTab === 'checkpoints' ? 'bg-slate-950 text-emerald-400' : 'text-slate-700'}`}
+                className={`px-3 py-1 transition ${activeTab === 'checkpoints' ? 'bg-emerald-700 text-white shadow-2xs' : 'text-slate-600'}`}
               >
                 {t('أسئلة "أتحقق"', 'Checkpoints')}
               </button>
@@ -425,18 +411,18 @@ export default function CurriculumMapPage() {
 
           {/* TAB: Overview & Key Points */}
           {activeTab === 'overview' && (
-            <div className="space-y-6">
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed bg-slate-50 p-4 border border-slate-300">
+            <div className="space-y-5">
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed bg-slate-50 p-4 border border-slate-200">
                 {selectedModule.summary}
               </p>
 
-              <div className="space-y-2.5">
-                <h4 className="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">
+              <div className="space-y-2">
+                <h4 className="text-xs font-bold text-slate-700">
                   {t('المفاهيم والنتاجات الرئيسة:', 'Key Concepts & Outcomes:')}
                 </h4>
                 <div className="grid grid-cols-1 gap-2">
                   {selectedModule.keyPoints.map((pt, idx) => (
-                    <div key={idx} className="p-3.5 bg-slate-50 border border-slate-300 text-xs flex items-start gap-2.5">
+                    <div key={idx} className="p-3 bg-slate-50 border border-slate-200 text-xs flex items-start gap-2">
                       <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
                       <span className="text-slate-800 leading-relaxed">{pt}</span>
                     </div>
@@ -448,11 +434,11 @@ export default function CurriculumMapPage() {
 
           {/* TAB: Equations */}
           {activeTab === 'equations' && (
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {selectedModule.equations.map((eq, idx) => (
-                <div key={idx} className="p-4 bg-slate-950 text-white space-y-2 border border-slate-800">
-                  <div className="text-xs font-bold text-emerald-400">{eq.title}</div>
-                  <div className="font-mono text-sm font-bold text-slate-100 dir-ltr bg-slate-900 p-3 border border-slate-800">
+                <div key={idx} className="p-3.5 bg-slate-50 border border-slate-200 space-y-1.5">
+                  <div className="text-xs font-bold text-slate-800">{eq.title}</div>
+                  <div className="font-mono text-xs font-bold text-emerald-900 dir-ltr bg-white p-2.5 border border-slate-200">
                     {eq.equation}
                   </div>
                 </div>
@@ -462,42 +448,42 @@ export default function CurriculumMapPage() {
 
           {/* TAB: Real-World Link */}
           {activeTab === 'real_world' && (
-            <div className="p-6 bg-emerald-50 border-2 border-emerald-400 space-y-4">
+            <div className="p-5 bg-emerald-50/70 border border-emerald-300 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold text-emerald-950 bg-emerald-200 px-3 py-1 border border-emerald-400">
+                <span className="text-xs font-mono font-bold text-emerald-900 bg-emerald-100 px-2.5 py-0.5 border border-emerald-300">
                   {selectedModule.realWorldConnection.category}
                 </span>
                 <span className="text-xs font-mono text-slate-500">{selectedModule.pages}</span>
               </div>
-              <h4 className="text-base font-black text-slate-950">{selectedModule.realWorldConnection.title}</h4>
-              <p className="text-xs sm:text-sm text-slate-800 leading-relaxed">
+              <h4 className="text-sm font-bold text-slate-900">{selectedModule.realWorldConnection.title}</h4>
+              <p className="text-xs text-slate-700 leading-relaxed">
                 {selectedModule.realWorldConnection.desc}
               </p>
             </div>
           )}
 
-          {/* TAB: Checkpoints ("أتحقق") */}
+          {/* TAB: Checkpoints */}
           {activeTab === 'checkpoints' && (
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {selectedModule.checkQuestions.map((cq, idx) => {
                 const isOpen = showAnswerIdx[idx];
                 return (
-                  <div key={idx} className="p-4 bg-slate-50 border border-slate-300 space-y-3">
+                  <div key={idx} className="p-3.5 bg-slate-50 border border-slate-200 space-y-2.5">
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-start gap-2">
                         <HelpCircle className="w-4 h-4 text-emerald-800 shrink-0 mt-0.5" />
-                        <h5 className="font-bold text-xs sm:text-sm text-slate-950">{cq.question}</h5>
+                        <h5 className="font-bold text-xs sm:text-sm text-slate-900">{cq.question}</h5>
                       </div>
                       <button
                         onClick={() => toggleAnswer(idx)}
-                        className="px-3 py-1 bg-white hover:bg-slate-100 border border-slate-300 text-[11px] font-bold text-emerald-900 shrink-0"
+                        className="px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 text-[11px] font-bold text-emerald-900 shrink-0"
                       >
                         {isOpen ? t('إخفاء الإجابة', 'Hide Answer') : t('إظهار الإجابة', 'Show Answer')}
                       </button>
                     </div>
 
                     {isOpen && (
-                      <div className="p-3 bg-emerald-50 border border-emerald-300 text-xs text-emerald-950 font-medium leading-relaxed whitespace-pre-line">
+                      <div className="p-3 bg-emerald-50 border border-emerald-200 text-xs text-emerald-950 font-medium leading-relaxed whitespace-pre-line">
                         {cq.answer}
                       </div>
                     )}

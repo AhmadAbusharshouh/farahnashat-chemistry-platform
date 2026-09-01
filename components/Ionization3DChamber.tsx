@@ -20,7 +20,7 @@ export function Ionization3DChamber() {
     if (!containerRef.current) return;
 
     const width = containerRef.current.clientWidth;
-    const height = 340;
+    const height = 300;
 
     // Scene
     const scene = new THREE.Scene();
@@ -42,19 +42,19 @@ export function Ionization3DChamber() {
     containerRef.current.appendChild(renderer.domElement);
 
     // Lights
-    const ambient = new THREE.AmbientLight(0xffffff, 0.8);
+    const ambient = new THREE.AmbientLight(0xffffff, 1.2);
     scene.add(ambient);
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.8);
     dirLight.position.set(5, 10, 7);
     scene.add(dirLight);
 
-    // 1. Glass Beaker (Cylinder)
+    // Glass Beaker
     const beakerGeo = new THREE.CylinderGeometry(1.8, 1.8, 3.2, 32, 1, true);
     const beakerMat = new THREE.MeshPhysicalMaterial({
       color: 0xffffff,
       transparent: true,
-      opacity: 0.25,
+      opacity: 0.3,
       roughness: 0.1,
       metalness: 0.1,
       transmission: 0.9,
@@ -72,22 +72,22 @@ export function Ionization3DChamber() {
     bottomMesh.position.set(0, -2.2, 0);
     scene.add(bottomMesh);
 
-    // 2. Liquid Level in Beaker
+    // Liquid in Beaker
     const liquidGeo = new THREE.CylinderGeometry(1.75, 1.75, 2.2, 32);
     const liquidMat = new THREE.MeshPhysicalMaterial({
       color: 0x0284c7,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.25,
       roughness: 0.2
     });
     const liquid = new THREE.Mesh(liquidGeo, liquidMat);
     liquid.position.set(0, -1.1, 0);
     scene.add(liquid);
 
-    // 3. Dual Graphite Electrodes
+    // Electrodes
     const electrodeGeo = new THREE.CylinderGeometry(0.12, 0.12, 3.0, 16);
     const electrodeMat = new THREE.MeshStandardMaterial({
-      color: 0x1e293b,
+      color: 0x334155,
       roughness: 0.4,
       metalness: 0.8
     });
@@ -100,10 +100,10 @@ export function Ionization3DChamber() {
     cathode.position.set(0.8, -0.4, 0);
     scene.add(cathode);
 
-    // 4. Overhead Lightbulb Apparatus
+    // Lightbulb
     const bulbGeo = new THREE.SphereGeometry(0.45, 32, 32);
     const bulbMat = new THREE.MeshStandardMaterial({
-      color: 0x334155,
+      color: 0x64748b,
       emissive: 0x000000,
       roughness: 0.2
     });
@@ -113,7 +113,7 @@ export function Ionization3DChamber() {
     bulbMeshRef.current = bulb;
 
     const bulbSocketGeo = new THREE.CylinderGeometry(0.2, 0.25, 0.4, 16);
-    const bulbSocketMat = new THREE.MeshStandardMaterial({ color: 0x64748b, metalness: 0.8 });
+    const bulbSocketMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.8 });
     const bulbSocket = new THREE.Mesh(bulbSocketGeo, bulbSocketMat);
     bulbSocket.position.set(0, 2.6, 0);
     scene.add(bulbSocket);
@@ -124,7 +124,7 @@ export function Ionization3DChamber() {
     scene.add(bulbLight);
     bulbLightRef.current = bulbLight;
 
-    // 5. Floating Ions Group
+    // Floating Ions Group
     const ionsGroup = new THREE.Group();
     scene.add(ionsGroup);
     ionsGroupRef.current = ionsGroup;
@@ -134,13 +134,11 @@ export function Ionization3DChamber() {
     const animate = () => {
       animId = requestAnimationFrame(animate);
 
-      // Animate floating ions
       if (ionsGroupRef.current) {
         const time = Date.now() * 0.002;
         ionsGroupRef.current.children.forEach((ionMesh: any, i) => {
           ionMesh.position.y += Math.sin(time + i) * 0.003;
           if (circuitClosed) {
-            // Cations move towards Cathode (+ -> -), Anions move towards Anode (- -> +)
             if (ionMesh.userData.isPositive) {
               ionMesh.position.x += 0.004;
               if (ionMesh.position.x > 0.7) ionMesh.position.x = -0.6;
@@ -159,9 +157,9 @@ export function Ionization3DChamber() {
     const handleResize = () => {
       if (!containerRef.current || !rendererRef.current || !cameraRef.current) return;
       const w = containerRef.current.clientWidth;
-      cameraRef.current.aspect = w / 340;
+      cameraRef.current.aspect = w / 300;
       cameraRef.current.updateProjectionMatrix();
-      rendererRef.current.setSize(w, 340);
+      rendererRef.current.setSize(w, 300);
     };
     window.addEventListener('resize', handleResize);
 
@@ -172,7 +170,7 @@ export function Ionization3DChamber() {
     };
   }, []);
 
-  // Update Ions & Bulb Glow when state changes
+  // Update Ions & Bulb Glow
   useEffect(() => {
     if (!bulbLightRef.current || !bulbMeshRef.current || !ionsGroupRef.current) return;
 
@@ -180,7 +178,6 @@ export function Ionization3DChamber() {
     const bulbMesh = bulbMeshRef.current;
     const ionsGroup = ionsGroupRef.current;
 
-    // Clear old ions
     while (ionsGroup.children.length > 0) {
       const child = ionsGroup.children[0];
       ionsGroup.remove(child);
@@ -198,15 +195,15 @@ export function Ionization3DChamber() {
     let emissiveColor = 0x000000;
 
     if (solutionType === 'strong_hcl') {
-      ionCount = 36; // Abundant ions in strong electrolyte
-      bulbIntensity = 5.0; // Bright glow
-      emissiveColor = 0xfef08a; // Warm bright white-yellow
+      ionCount = 36;
+      bulbIntensity = 5.0;
+      emissiveColor = 0xfde047;
     } else if (solutionType === 'weak_ch3cooh') {
-      ionCount = 8; // Sparse ions in weak electrolyte
-      bulbIntensity = 1.0; // Dim glow
-      emissiveColor = 0xb45309; // Dim amber
+      ionCount = 8;
+      bulbIntensity = 1.2;
+      emissiveColor = 0xd97706;
     } else {
-      ionCount = 0; // Pure distilled water
+      ionCount = 0;
       bulbIntensity = 0;
       emissiveColor = 0x000000;
     }
@@ -214,12 +211,11 @@ export function Ionization3DChamber() {
     bulbLight.intensity = bulbIntensity;
     (bulbMesh.material as THREE.MeshStandardMaterial).emissive.setHex(emissiveColor);
 
-    // Spawn 3D Ions
     const cationGeo = new THREE.SphereGeometry(0.1, 16, 16);
-    const cationMat = new THREE.MeshStandardMaterial({ color: 0xef4444, emissive: 0x991b1b }); // H+ (Red)
+    const cationMat = new THREE.MeshStandardMaterial({ color: 0xef4444, emissive: 0x991b1b });
 
     const anionGeo = new THREE.SphereGeometry(0.12, 16, 16);
-    const anionMat = new THREE.MeshStandardMaterial({ color: 0x10b981, emissive: 0x065f46 }); // Cl- / CH3COO- (Green)
+    const anionMat = new THREE.MeshStandardMaterial({ color: 0x10b981, emissive: 0x065f46 });
 
     for (let i = 0; i < ionCount; i++) {
       const isCation = i % 2 === 0;
@@ -235,85 +231,81 @@ export function Ionization3DChamber() {
   }, [solutionType, circuitClosed]);
 
   return (
-    <div className="bg-slate-950 text-white border border-slate-800 p-6 space-y-6">
+    <div className="bg-white border border-slate-200 p-5 space-y-4 shadow-2xs">
       
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-emerald-400"></span>
-            <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400">
-              3D Real-Time Ion Mobility & Conductivity Simulator
-            </span>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-amber-800">
+            <Zap className="w-4 h-4 text-amber-600" />
+            <span>محاكاة التأين والموصلية الكهربائية (3D)</span>
           </div>
-          <h3 className="text-lg font-black tracking-tight text-white">
-            محاكاة التأين ثلاثي الأبعاد وإضاءة المصباح (كولينز ص 52 - 53)
+          <h3 className="text-base font-black text-slate-900">
+            مقارنة شدة التوهج وحركة الأيونات
           </h3>
         </div>
 
         <button
           onClick={() => setCircuitClosed(!circuitClosed)}
-          className={`px-4 py-2 font-mono text-xs font-bold border transition flex items-center gap-2 ${
-            circuitClosed ? 'bg-amber-600 border-amber-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-400'
+          className={`px-3 py-1 text-xs font-bold border transition flex items-center gap-1.5 ${
+            circuitClosed ? 'bg-amber-600 text-white border-amber-700' : 'bg-slate-100 text-slate-700 border-slate-300'
           }`}
         >
-          <Zap className="w-4 h-4" />
-          <span>{circuitClosed ? 'فتح الدارة (إيقاف)' : 'إغلاق الدارة (تشغيل)'}</span>
+          <Zap className="w-3.5 h-3.5" />
+          <span>{circuitClosed ? 'فتح الدارة' : 'إغلاق الدارة'}</span>
         </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
         
         {/* Solution Selector (4 cols) */}
-        <div className="lg:col-span-4 space-y-2 text-right">
-          <span className="text-[10px] font-mono text-slate-400 block px-1">اختر المحلول الكهرلي:</span>
-          
+        <div className="sm:col-span-4 space-y-1.5 text-right">
           <button
             onClick={() => setSolutionType('strong_hcl')}
-            className={`w-full p-3.5 border transition text-right ${
+            className={`w-full p-2.5 border transition text-right ${
               solutionType === 'strong_hcl'
-                ? 'bg-emerald-950/90 border-emerald-400 text-emerald-200'
-                : 'bg-slate-900 border-slate-800 text-slate-300'
+                ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold'
+                : 'bg-white border-slate-200 text-slate-700'
             }`}
           >
-            <div className="font-bold text-xs">1. حمض قوي: HCl (0.1 M)</div>
-            <div className="text-[11px] text-slate-400 mt-1">تأين كلي (→) • إضاءة مصباح ساطعة جداً • وفرة أيونات</div>
+            <div className="text-xs">1. حمض قوي: HCl (0.1 M)</div>
+            <div className="text-[10px] text-slate-500">تأين كلي • إضاءة ساطعة</div>
           </button>
 
           <button
             onClick={() => setSolutionType('weak_ch3cooh')}
-            className={`w-full p-3.5 border transition text-right ${
+            className={`w-full p-2.5 border transition text-right ${
               solutionType === 'weak_ch3cooh'
-                ? 'bg-amber-950/90 border-amber-400 text-amber-200'
-                : 'bg-slate-900 border-slate-800 text-slate-300'
+                ? 'bg-amber-50 border-amber-400 text-amber-950 font-bold'
+                : 'bg-white border-slate-200 text-slate-700'
             }`}
           >
-            <div className="font-bold text-xs">2. حمض ضعيف: CH₃COOH (0.1 M)</div>
-            <div className="text-[11px] text-slate-400 mt-1">تأين جزئي (⇌) • إضاءة خافتة • قلة أيونات حرة</div>
+            <div className="text-xs">2. حمض ضعيف: CH₃COOH</div>
+            <div className="text-[10px] text-slate-500">تأين جزئي • إضاءة خافتة</div>
           </button>
 
           <button
             onClick={() => setSolutionType('water')}
-            className={`w-full p-3.5 border transition text-right ${
+            className={`w-full p-2.5 border transition text-right ${
               solutionType === 'water'
-                ? 'bg-sky-950/90 border-sky-400 text-sky-200'
-                : 'bg-slate-900 border-slate-800 text-slate-300'
+                ? 'bg-sky-50 border-sky-400 text-sky-950 font-bold'
+                : 'bg-white border-slate-200 text-slate-700'
             }`}
           >
-            <div className="font-bold text-xs">3. ماء مقطر نقي (H₂O)</div>
-            <div className="text-[11px] text-slate-400 mt-1">غير موصل • المصباح مطفأ تماماً</div>
+            <div className="text-xs">3. ماء مقطر (H₂O)</div>
+            <div className="text-[10px] text-slate-500">غير موصل • المصباح مطفأ</div>
           </button>
         </div>
 
         {/* 3D Visual Viewport (8 cols) */}
-        <div className="lg:col-span-8 bg-slate-900 border border-slate-800 relative">
-          <div ref={containerRef} className="w-full h-[340px]" />
+        <div className="sm:col-span-8 bg-slate-50 border border-slate-200 relative">
+          <div ref={containerRef} className="w-full h-[300px]" />
           
-          <div className="p-3 bg-slate-950 border-t border-slate-800 flex items-center justify-between text-xs font-mono">
-            <span className="text-emerald-400 font-bold">
-              {solutionType === 'strong_hcl' && '💡 حالة المصباح: متوهج ساطع (High Conductivity)'}
-              {solutionType === 'weak_ch3cooh' && '💡 حالة المصباح: إضاءة خافتة وضعيفة (Low Conductivity)'}
-              {solutionType === 'water' && '💡 حالة المصباح: مطفأ (Non-Conductive)'}
+          <div className="p-2 bg-white border-t border-slate-200 flex items-center justify-between text-xs font-mono">
+            <span className="text-emerald-800 font-bold text-[11px]">
+              {solutionType === 'strong_hcl' && '💡 إضاءة المصباح: ساطعة وقوية'}
+              {solutionType === 'weak_ch3cooh' && '💡 إضاءة المصباح: خافتة وضعيفة'}
+              {solutionType === 'water' && '💡 إضاءة المصباح: مطفأ'}
             </span>
             <span className="text-slate-500 text-[10px]">
               {circuitClosed ? 'التيار الكهربائي سارٍ' : 'الدارة مفتوحة'}
