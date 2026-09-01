@@ -19,6 +19,15 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "Farah Nashat | Chemistry Education & Virtual Lab - أ. فرح نشأت",
   description: "Official Chemistry Educational Platform, 3D Interactive Virtual Laboratory, and Concept Guides by Teacher Farah Nashat.",
+  icons: {
+    icon: [
+      { url: "/images/logo.svg", type: "image/svg+xml" },
+      { url: "/images/logo-icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/images/logo.svg",
+    apple: "/images/logo-icon.png",
+  },
 };
 
 export default function RootLayout({

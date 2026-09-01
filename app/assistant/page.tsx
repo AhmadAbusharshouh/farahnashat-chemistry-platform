@@ -140,11 +140,11 @@ export default function AssistantPage() {
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-white border border-emerald-300 overflow-hidden flex items-center justify-center p-0.5 shrink-0 shadow-2xs">
               <Image
-                src="/images/ai-avatar.png"
+                src="/images/ai-avatar.svg"
                 alt="AI Chemistry Avatar"
                 width={40}
                 height={40}
-                className="object-cover w-full h-full"
+                className="object-contain w-full h-full"
               />
             </div>
             <div>
@@ -202,11 +202,11 @@ export default function AssistantPage() {
                 >
                   {isUser ? <User className="w-4 h-4" /> : (
                     <Image
-                      src="/images/ai-avatar.png"
+                      src="/images/ai-avatar.svg"
                       alt="AI Avatar"
                       width={32}
                       height={32}
-                      className="object-cover w-full h-full"
+                      className="object-contain w-full h-full"
                     />
                   )}
                 </div>

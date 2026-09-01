@@ -155,13 +155,13 @@ export function Navbar() {
               })}
             </nav>
 
-            {/* CENTERED LARGE EMBLEM ICON (FULL HEIGHT, SPACIOUS, ZERO CLIPPING) */}
-            <div className="flex items-center justify-center shrink-0 px-4 h-full py-2">
+            {/* CENTERED FULL LOGO SVG AS IT IS */}
+            <div className="flex items-center justify-center shrink-0 px-4 h-full py-1">
               <Link href="/" className="flex items-center justify-center h-full group" title="Farah Nashat Chemistry">
                 <div className="relative h-16 sm:h-20 w-16 sm:w-20 transition-transform group-hover:scale-105 flex items-center justify-center">
                   <Image 
-                    src="/images/logo-icon.png" 
-                    alt="Farah Nashat Chemistry Emblem" 
+                    src="/images/logo.svg" 
+                    alt="Farah Nashat Chemistry Logo" 
                     width={80} 
                     height={80}
                     className="object-contain max-h-full max-w-full"
@@ -437,7 +437,7 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <div className="w-14 h-14 bg-white border border-emerald-300 flex items-center justify-center p-1 shadow-2xs">
                 <Image
-                  src="/images/logo-icon.png"
+                  src="/images/logo.svg"
                   alt="Farah Nashat Logo"
                   width={52}
                   height={52}

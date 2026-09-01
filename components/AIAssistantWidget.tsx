@@ -133,11 +133,11 @@ export function AIAssistantWidget() {
           >
             <div className="relative w-11 h-11 sm:w-12 sm:h-12 bg-emerald-100 border border-emerald-300 overflow-hidden flex items-center justify-center shrink-0">
               <Image
-                src="/images/ai-avatar.png"
+                src="/images/ai-avatar.svg"
                 alt="AI Chemistry Avatar"
                 width={48}
                 height={48}
-                className="object-cover w-full h-full"
+                className="object-contain w-full h-full"
               />
             </div>
 
@@ -162,11 +162,11 @@ export function AIAssistantWidget() {
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 bg-white border border-emerald-300 overflow-hidden shrink-0 flex items-center justify-center p-0.5">
                   <Image
-                    src="/images/ai-avatar.png"
+                    src="/images/ai-avatar.svg"
                     alt="AI Avatar"
                     width={36}
                     height={36}
-                    className="object-cover w-full h-full"
+                    className="object-contain w-full h-full"
                   />
                 </div>
                 <div>
@@ -229,11 +229,11 @@ export function AIAssistantWidget() {
                     >
                       {isUser ? <User className="w-3 h-3" /> : (
                         <Image
-                          src="/images/ai-avatar.png"
+                          src="/images/ai-avatar.svg"
                           alt="Bot"
                           width={24}
                           height={24}
-                          className="object-cover w-full h-full"
+                          className="object-contain w-full h-full"
                         />
                       )}
                     </div>

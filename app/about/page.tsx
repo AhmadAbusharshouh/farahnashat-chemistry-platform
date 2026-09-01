@@ -26,7 +26,7 @@ export default function AboutPage() {
           <div className="md:col-span-4 flex flex-col items-center text-center space-y-3">
             <div className="w-28 h-28 bg-emerald-50 border border-emerald-300 flex items-center justify-center p-2 shadow-2xs">
               <Image 
-                src="/images/logo-icon.png" 
+                src="/images/logo.svg" 
                 alt="Farah Nashat Chemistry Logo" 
                 width={100} 
                 height={100}
