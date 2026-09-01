@@ -1,23 +1,36 @@
 import localFont from 'next/font/local';
 
-export const alHurraFont = localFont({
+export const zainFont = localFont({
   src: [
     {
-      path: '../public/fonts/alhurratxtlight.ttf',
+      path: '../public/fonts/zain/zain-light.ttf',
       weight: '300',
       style: 'normal',
     },
     {
-      path: '../public/fonts/alhurratxtreg.ttf',
+      path: '../public/fonts/zain/zain-regular.ttf',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '../public/fonts/alhurratxtbold.ttf',
+      path: '../public/fonts/zain/zain-bold.ttf',
       weight: '700',
       style: 'normal',
     },
+    {
+      path: '../public/fonts/zain/zain-extrabold.ttf',
+      weight: '800',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/zain/zain-black.ttf',
+      weight: '900',
+      style: 'normal',
+    },
   ],
-  variable: '--font-alhurra',
+  variable: '--font-zain',
   display: 'swap',
 });
+
+// Backward compatibility alias
+export const alHurraFont = zainFont;

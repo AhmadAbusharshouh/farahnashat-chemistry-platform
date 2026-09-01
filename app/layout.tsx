@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
-import { alHurraFont } from "@/lib/fonts";
+import { zainFont } from "@/lib/fonts";
 import "./globals.css";
 import { TopLoadingBar } from "@/components/TopLoadingBar";
 import { Navbar, Footer } from "@/components/Navigation";
@@ -15,8 +15,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "أ. فرح نشأت | معلمة الكيمياء - المدرسة الإسلامية الحديثة (إربد)",
-  description: "الملف التعليمي والتحضيري للحصة النموذجية والمقابلة الشخصية للأستاذة فرح نشأت - كيمياء الصف التاسع (منهاج كولينز).",
+  title: "Farah Nashat | Chemistry Education & Virtual Lab - أ. فرح نشأت",
+  description: "Official Chemistry Educational Platform, 3D Interactive Virtual Laboratory, and Concept Guides by Teacher Farah Nashat.",
 };
 
 export default function RootLayout({
@@ -25,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className={`${alHurraFont.variable} ${outfit.variable}`}>
-      <body className="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased selection:bg-emerald-100 selection:text-emerald-900">
+    <html lang="ar" dir="rtl" className={`${zainFont.variable} ${outfit.variable}`}>
+      <body className="bg-[#fafbfb] text-slate-900 min-h-screen flex flex-col antialiased selection:bg-emerald-100 selection:text-emerald-900">
         <LanguageProvider>
           <Suspense fallback={null}>
             <TopLoadingBar />

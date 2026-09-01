@@ -3,17 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #fcfdfd;
+  --background: #fafbfb;
   --foreground: #090d16;
 }
 
-/* 
-  Number font override: 
-  Arabic text uses AlHurra for Arabic glyphs, but digits (0-9) and Latin punctuation 
-  fallback naturally to Outfit.
-*/
 body {
-  font-family: var(--font-outfit), var(--font-alhurra), system-ui, sans-serif;
+  font-family: var(--font-outfit), var(--font-zain), system-ui, sans-serif;
   color: var(--foreground);
   background-color: var(--background);
   text-rendering: optimizeLegibility;
@@ -22,7 +17,7 @@ body {
 
 html[lang="ar"] body,
 html[dir="rtl"] body {
-  font-family: var(--font-alhurra), var(--font-outfit), system-ui, sans-serif;
+  font-family: var(--font-zain), var(--font-outfit), system-ui, sans-serif;
 }
 
 /* Explicit class to force crisp Western numbers everywhere needed */
@@ -34,31 +29,41 @@ html[dir="rtl"] body {
   direction: ltr;
 }
 
-/* Custom Scrollbar - Subtle and minimal */
+/* Custom Scrollbar - Sharp and minimal */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #f8fafc;
+  background: #f1f5f9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
-
-/* High-craft clean surfaces */
-.editorial-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03), 0 1px 2px -1px rgba(15, 23, 42, 0.03);
+::-webkit-scrollbar-thumb:hover {
+  background: #047857;
 }
 
-.editorial-card:hover {
-  border-color: #cbd5e1;
+/* Architectural Card & Surface */
+.sharp-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease-in-out;
+}
+
+.sharp-card:hover {
+  border-color: #047857;
+  box-shadow: 0 4px 12px -2px rgba(4, 120, 87, 0.08);
+}
+
+.sharp-dark-card {
+  background: #020617;
+  border: 1px solid #1e293b;
+  transition: all 0.2s ease-in-out;
+}
+
+.sharp-dark-card:hover {
+  border-color: #059669;
 }
 
 /* Text balance utility */
