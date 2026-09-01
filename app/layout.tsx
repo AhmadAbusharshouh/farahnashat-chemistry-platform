@@ -4,6 +4,7 @@ import { zainFont } from "@/lib/fonts";
 import "./globals.css";
 import { TopLoadingBar } from "@/components/TopLoadingBar";
 import { Navbar, Footer } from "@/components/Navigation";
+import { SplashScreen } from "@/components/SplashScreen";
 import { LanguageProvider } from "@/lib/LanguageContext";
 import { Suspense } from "react";
 
@@ -27,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" className={`${zainFont.variable} ${outfit.variable}`}>
       <body className="bg-[#fafbfb] text-slate-900 min-h-screen flex flex-col antialiased selection:bg-emerald-100 selection:text-emerald-900">
+        <SplashScreen />
         <LanguageProvider>
           <Suspense fallback={null}>
             <TopLoadingBar />

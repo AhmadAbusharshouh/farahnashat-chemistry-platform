@@ -31,7 +31,7 @@ import {
   Boxes, 
   Eye,
   Atom,
-  TestTube
+  PhoneCall
 } from 'lucide-react';
 import { SUBSTANCES_DATA, ChemicalSubstance } from '@/lib/types';
 import { useLanguage } from '@/lib/LanguageContext';
@@ -161,11 +161,11 @@ export default function HomePage() {
                 </Link>
 
                 <Link
-                  href="/curriculum-map"
+                  href="/lesson-plan"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-slate-900 font-bold text-xs border border-slate-300 transition"
                 >
-                  <Layers className="w-4 h-4 text-emerald-700" />
-                  <span>{t('خريطة المنهاج والمعادلات', 'Curriculum Map')}</span>
+                  <BookOpen className="w-4 h-4 text-emerald-700" />
+                  <span>{t('خطة الدرس النموذجية', 'Demo Lesson Plan')}</span>
                 </Link>
               </div>
 
@@ -297,27 +297,27 @@ export default function HomePage() {
             </div>
           </Link>
 
-          {/* Tile 2: Curriculum Map */}
+          {/* Tile 2: Demo Lesson Plan */}
           <Link
-            href="/curriculum-map"
+            href="/lesson-plan"
             className="sharp-card p-6 flex flex-col justify-between space-y-4 group bg-white"
           >
             <div className="space-y-3">
               <div className="w-10 h-10 bg-slate-50 text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
-                <Layers className="w-5 h-5 text-slate-700" />
+                <BookOpen className="w-5 h-5 text-slate-700" />
               </div>
               <h3 className="font-black text-slate-950 text-base group-hover:text-emerald-700 transition">
-                {t('خريطة المفاهيم والمعادلات الكيميائية', 'Curriculum Map & Equations')}
+                {t('خطة الدرس النموذجية', 'Demo Lesson Blueprint')}
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 {t(
-                  'تفكيك شامل للمفاهيم الأساسية، معادلات التأين المتوازنة، وربط الكيمياء بالصناعة والرياضة والبيئة والزراعة.',
-                  'In-depth conceptual breakdown with balanced ionic equations and real-world linkages.'
+                  'نموذج تطبيقي لخطة تدريسية مبرمجة زمنياً وفق نموذج 5Es واستراتيجيات التعلم النشط وتوزيع النتاجات.',
+                  'Exemplary pedagogical lesson blueprint structured with 5Es and active learning strategies.'
                 )}
               </p>
             </div>
             <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 pt-3 border-t border-slate-100">
-              <span>{t('استعراض خريطة المنهاج', 'Explore Curriculum Map')}</span>
+              <span>{t('عرض خطة الدرس', 'View Lesson Blueprint')}</span>
               <Arrow className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </div>
           </Link>
@@ -372,32 +372,7 @@ export default function HomePage() {
             </div>
           </Link>
 
-          {/* Tile 5: Lesson Plan */}
-          <Link
-            href="/lesson-plan"
-            className="sharp-card p-6 flex flex-col justify-between space-y-4 group bg-white"
-          >
-            <div className="space-y-3">
-              <div className="w-10 h-10 bg-slate-50 text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
-                <BookOpen className="w-5 h-5 text-slate-700" />
-              </div>
-              <h3 className="font-black text-slate-950 text-base group-hover:text-emerald-700 transition">
-                {t('خطة الحصة النموذجية', 'Demo Lesson Blueprint')}
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                {t(
-                  'نموذج تطبيقي لخطة تدريسية مبرمجة زمنياً وفق نموذج 5Es واستراتيجيات التعلم النشط.',
-                  'Exemplary pedagogical lesson blueprint structured with 5Es and active learning.'
-                )}
-              </p>
-            </div>
-            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 pt-3 border-t border-slate-100">
-              <span>{t('عرض خطة الدرس', 'View Lesson Blueprint')}</span>
-              <Arrow className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-            </div>
-          </Link>
-
-          {/* Tile 6: About Teacher */}
+          {/* Tile 5: About Teacher */}
           <Link
             href="/about"
             className="sharp-card p-6 flex flex-col justify-between space-y-4 group bg-white"
@@ -418,6 +393,31 @@ export default function HomePage() {
             </div>
             <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 pt-3 border-t border-slate-100">
               <span>{t('قراءة السيرة الذاتية', 'Read Bio & Credentials')}</span>
+              <Arrow className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+            </div>
+          </Link>
+
+          {/* Tile 6: Direct Contact */}
+          <Link
+            href="/whatsapp-connect"
+            className="sharp-card p-6 flex flex-col justify-between space-y-4 group bg-white"
+          >
+            <div className="space-y-3">
+              <div className="w-10 h-10 bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center justify-center font-bold">
+                <PhoneCall className="w-5 h-5 text-emerald-700" />
+              </div>
+              <h3 className="font-black text-slate-950 text-base group-hover:text-emerald-700 transition">
+                {t('بوابة التواصل المباشر', 'Contact Gateway')}
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                {t(
+                  'إرسال واستقبال الروابط التعليمية وملخصات الدروس مباشرة عبر تطبيق واتساب.',
+                  'Send and receive educational links and study summaries directly via WhatsApp.'
+                )}
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 pt-3 border-t border-slate-100">
+              <span>{t('فتح بوابة التواصل', 'Open Contact Gateway')}</span>
               <Arrow className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </div>
           </Link>

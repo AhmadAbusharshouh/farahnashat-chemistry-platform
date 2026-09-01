@@ -31,9 +31,9 @@ export default function WhatsAppConnectPage() {
 
     const msg = `✨ *منصة الكيمياء التعليمية - أ. فرح نشأت*\n\n` +
       `أهلاً بك أ. ${name || 'الكريم'}،\n` +
-      `يسعدنا إرسال روابط المختبر الافتراضي 3D وخارطة المنهاج:\n` +
+      `يسعدنا إرسال روابط المختبر الافتراضي 3D وخطة الدرس النموذجية:\n` +
       `🧪 المختبر الرقمي 3D: https://farahnashat-chemistry.pages.dev/virtual-lab/\n` +
-      `🗺️ خريطة المنهاج: https://farahnashat-chemistry.pages.dev/curriculum-map/\n\n` +
+      `📋 خطة الدرس: https://farahnashat-chemistry.pages.dev/lesson-plan/\n\n` +
       (feedback ? `📝 رسالتكم: "${feedback}"\n\n` : '') +
       `شاكرين اهتمامكم وتواصلكم الطيب! 🌸`;
 
@@ -151,7 +151,7 @@ export default function WhatsAppConnectPage() {
             <h3 className="font-black text-slate-900 text-sm">محتويات الرسالة المرسلة:</h3>
             <ul className="space-y-1.5 text-slate-600">
               <li className="flex items-center gap-1.5">✓ رابط المختبر الافتراضي ثلاثي الأبعاد (3D).</li>
-              <li className="flex items-center gap-1.5">✓ رابط خارطة المفاهيم والمعادلات الكيميائية.</li>
+              <li className="flex items-center gap-1.5">✓ رابط خطة الدرس النموذجية المعيارية.</li>
               <li className="flex items-center gap-1.5">✓ رابط اختبارات التقويم التكويني والتشخيصي.</li>
               <li className="flex items-center gap-1.5">✓ بيانات التواصل مع الأستاذة فرح نشأت.</li>
             </ul>

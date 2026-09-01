@@ -24,11 +24,11 @@ export function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { lang, setLang, t } = useLanguage();
 
-  // Condensed, single-word links that fit in ONE line on desktop
+  // Clean, single-word links that fit in ONE line on desktop
   const LEFT_NAV_LINKS = [
     { href: '/', label: t('الرئيسية', 'Home') },
     { href: '/virtual-lab', label: t('المختبر', 'Lab') },
-    { href: '/curriculum-map', label: t('المنهاج', 'Curriculum') },
+    { href: '/lesson-plan', label: t('الخطة', 'Plan') },
   ];
 
   const RIGHT_NAV_LINKS = [
@@ -40,7 +40,6 @@ export function Navbar() {
   const ALL_MOBILE_LINKS = [
     { href: '/', label: t('الرئيسية', 'Home') },
     { href: '/virtual-lab', label: t('المختبر الافتراضي (3D)', 'Virtual Lab (3D)') },
-    { href: '/curriculum-map', label: t('خريطة المنهاج والمعادلات', 'Curriculum Map') },
     { href: '/quiz', label: t('اختبار التقويم والتشخيص', 'Quiz & Assessment') },
     { href: '/assistant', label: t('المساعد التعليمي الذكي', 'AI Study Assistant') },
     { href: '/lesson-plan', label: t('خطة الدرس النموذجية', 'Demo Lesson Plan') },
@@ -62,19 +61,19 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200">
+      <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-18">
+          <div className="flex items-center justify-between h-20 sm:h-24">
             
             {/* Left Nav: Single-word links in ONE line */}
-            <nav className="hidden md:flex items-center gap-1.5 flex-1 justify-start whitespace-nowrap">
+            <nav className="hidden md:flex items-center gap-2 flex-1 justify-start whitespace-nowrap">
               {LEFT_NAV_LINKS.map((link) => {
                 const isActive = pathname === link.href;
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`px-3 py-1.5 text-xs font-bold transition-all border whitespace-nowrap ${
+                    className={`px-3.5 py-2 text-xs font-bold transition-all border whitespace-nowrap ${
                       isActive
                         ? 'bg-emerald-700 text-white border-emerald-700 shadow-2xs'
                         : 'border-transparent text-slate-700 hover:text-emerald-800 hover:bg-emerald-50 hover:border-emerald-200'
@@ -86,15 +85,15 @@ export function Navbar() {
               })}
             </nav>
 
-            {/* CENTERED LOGO ONLY - NO TEXT, SCALED TO FULL HEADER HEIGHT */}
-            <div className="flex items-center justify-center shrink-0 px-2 h-full py-1">
+            {/* CENTERED LARGE EMBLEM ICON (FULL HEIGHT, SPACIOUS, ZERO CLIPPING) */}
+            <div className="flex items-center justify-center shrink-0 px-4 h-full py-2">
               <Link href="/" className="flex items-center justify-center h-full group" title="Farah Nashat Chemistry">
-                <div className="relative h-12 sm:h-14 w-12 sm:w-14 transition-transform group-hover:scale-105 flex items-center justify-center">
+                <div className="relative h-16 sm:h-20 w-16 sm:w-20 transition-transform group-hover:scale-105 flex items-center justify-center">
                   <Image 
                     src="/images/logo-icon.png" 
-                    alt="Farah Nashat Chemistry Logo" 
-                    width={56} 
-                    height={56}
+                    alt="Farah Nashat Chemistry Emblem" 
+                    width={80} 
+                    height={80}
                     className="object-contain max-h-full max-w-full"
                     priority
                   />
@@ -102,16 +101,16 @@ export function Navbar() {
               </Link>
             </div>
 
-            {/* Right Nav & Sign In Control */}
-            <div className="flex items-center gap-1.5 flex-1 justify-end whitespace-nowrap">
-              <nav className="hidden lg:flex items-center gap-1.5 whitespace-nowrap">
+            {/* Right Nav & Controls */}
+            <div className="flex items-center gap-2 flex-1 justify-end whitespace-nowrap">
+              <nav className="hidden lg:flex items-center gap-2 whitespace-nowrap">
                 {RIGHT_NAV_LINKS.map((link) => {
                   const isActive = pathname === link.href;
                   return (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className={`px-3 py-1.5 text-xs font-bold transition-all border whitespace-nowrap ${
+                      className={`px-3.5 py-2 text-xs font-bold transition-all border whitespace-nowrap ${
                         isActive
                           ? 'bg-emerald-700 text-white border-emerald-700 shadow-2xs'
                           : 'border-transparent text-slate-700 hover:text-emerald-800 hover:bg-emerald-50 hover:border-emerald-200'
@@ -126,23 +125,23 @@ export function Navbar() {
               {/* Language Switcher */}
               <button
                 onClick={toggleLanguage}
-                className="inline-flex items-center gap-1 px-2.5 py-1.5 border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-slate-700 transition"
+                className="inline-flex items-center gap-1 px-2.5 py-2 border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-slate-700 transition ml-1"
                 title="Language / اللغة"
               >
                 <Globe className="w-3.5 h-3.5 text-slate-500" />
                 <span className="num-en text-[11px] uppercase tracking-wider">{lang === 'ar' ? 'EN' : 'عربي'}</span>
               </button>
 
-              {/* PROMINENT VISIBLE SIGN IN BUTTON */}
+              {/* Prominent Sign In Button */}
               {isLoggedIn ? (
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold">
+                <div className="inline-flex items-center gap-1.5 px-3 py-2 bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold">
                   <User className="w-3.5 h-3.5 text-emerald-700" />
                   <span>{studentId}</span>
                 </div>
               ) : (
                 <button
                   onClick={() => setShowSignInModal(true)}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold border border-emerald-800 shadow-2xs transition"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold border border-emerald-800 shadow-2xs transition"
                 >
                   <LogIn className="w-3.5 h-3.5" />
                   <span>{t('تسجيل الدخول', 'Sign In')}</span>
@@ -187,7 +186,7 @@ export function Navbar() {
         )}
       </header>
 
-      {/* SIGN IN MODAL */}
+      {/* Sign In Modal */}
       {showSignInModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
           <div className="bg-white border-2 border-emerald-700 p-6 sm:p-8 max-w-sm w-full space-y-5 shadow-2xl relative">
@@ -248,15 +247,15 @@ export function Footer() {
         
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 text-right">
           
-          {/* Main Profile Info with LOGO (6 cols) */}
+          {/* Main Profile Info with FULL LOGO (6 cols) */}
           <div className="md:col-span-6 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white border border-emerald-300 flex items-center justify-center p-1 shadow-2xs">
+              <div className="w-12 h-12 bg-white border border-emerald-300 flex items-center justify-center p-1 shadow-2xs">
                 <Image
                   src="/images/logo-icon.png"
                   alt="Farah Nashat Logo"
-                  width={36}
-                  height={36}
+                  width={44}
+                  height={44}
                   className="object-contain w-full h-full"
                 />
               </div>
@@ -277,21 +276,20 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Quick Syllabus & Lab Navigation (3 cols) */}
+          {/* Quick Links (3 cols) */}
           <div className="md:col-span-3 space-y-3">
             <h4 className="text-xs font-mono font-bold text-emerald-800 uppercase tracking-wider border-b border-slate-200 pb-1">
               {t('أقسام الموقع', 'Platform Sections')}
             </h4>
             <ul className="space-y-2 text-xs text-slate-600">
               <li><Link href="/virtual-lab" className="hover:text-emerald-700 transition">{t('المختبر الافتراضي (3D)', '3D Virtual Lab')}</Link></li>
-              <li><Link href="/curriculum-map" className="hover:text-emerald-700 transition">{t('خريطة المنهاج والمعادلات', 'Curriculum Map')}</Link></li>
               <li><Link href="/quiz" className="hover:text-emerald-700 transition">{t('التقويم التكويني والتشخيصي', 'Formative Assessment')}</Link></li>
               <li><Link href="/assistant" className="hover:text-emerald-700 transition">{t('المساعد التعليمي الذكي', 'AI Study Assistant')}</Link></li>
               <li><Link href="/about" className="hover:text-emerald-700 transition">{t('عن المعلمة والسيرة الذاتية', 'Teacher Bio')}</Link></li>
             </ul>
           </div>
 
-          {/* Contact & Resources (3 cols) */}
+          {/* Contact (3 cols) */}
           <div className="md:col-span-3 space-y-3">
             <h4 className="text-xs font-mono font-bold text-emerald-800 uppercase tracking-wider border-b border-slate-200 pb-1">
               {t('روابط سريعة', 'Quick Links')}
