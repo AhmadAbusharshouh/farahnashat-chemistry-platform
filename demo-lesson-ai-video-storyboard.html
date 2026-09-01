@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة المشاهد والشخصيات المعتمدة | أ. فرح نشأت</title>
+  <title>برومبتات Google Flow والمشاهد بالثواني | أ. فرح نشأت</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,198 +39,234 @@
 <body class="p-4 sm:p-8 max-w-5xl mx-auto space-y-8 selection:bg-emerald-500 selection:text-white">
 
   <!-- Header -->
-  <header class="bg-gradient-to-r from-slate-950 via-slate-900 to-emerald-950 text-white p-6 sm:p-8 rounded-3xl shadow-xl border-b-4 border-emerald-500 space-y-4">
-    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
-      <div>
-        <span class="bg-emerald-500 text-slate-950 font-black text-xs px-3 py-1 rounded-full">
-          المقابلة والحصة النموذجية (10 دقائق) | المدارس الإسلامية الحديثة
-        </span>
-        <h1 class="text-2xl sm:text-3xl font-black mt-2">
-          🎬 لوحة المشاهد والصور المولدة بالذكاء الاصطناعي
-        </h1>
-      </div>
-      <div class="text-left bg-slate-900/90 border border-emerald-500/40 p-3 rounded-2xl text-xs font-mono">
-        <div class="text-emerald-400 font-bold">المعلمة: فرح نشأت</div>
-        <div class="text-slate-300">المدة: دقيقة و 5 ثوانٍ</div>
-        <div class="text-emerald-300 font-bold">خالٍ 100% من ذوات الأرواح ✅</div>
-      </div>
+  <header class="bg-gradient-to-r from-slate-950 via-slate-900 to-emerald-950 text-white p-6 sm:p-8 rounded-3xl shadow-xl border-b-4 border-emerald-500 space-y-3">
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <span class="bg-emerald-500 text-slate-950 font-black text-xs px-3 py-1 rounded-full">
+        دليل إنتاج الفيديو عبر Google Flow / Veo / Kling / Runway
+      </span>
+      <span class="text-xs text-slate-300 font-mono">5 لقطات (Clips) مقسمة بالثواني</span>
     </div>
-
-    <!-- Quick Audio & Copy Bar -->
-    <div class="flex flex-wrap items-center gap-3 pt-1">
-      <button onclick="playLockedVoice()" id="audioBtn" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-6 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow-md">
-        <span>🔊</span>
-        <span id="audioBtnText">استماع للحوار الصوتي المعتمد كاملاً</span>
-      </button>
-      <button onclick="copyLockedText()" id="copyBtn" class="bg-white/10 hover:bg-white/20 text-white font-bold px-4 py-2.5 rounded-xl text-xs border border-white/20 transition flex items-center gap-1.5">
-        <span>📋</span>
-        <span id="copyBtnText">نسخ النص المعتمد</span>
-      </button>
-    </div>
+    <h1 class="text-2xl sm:text-3xl font-black">
+      🚀 برومبتات Google Flow الجاهزة للنسخ (كليب بكليب)
+    </h1>
+    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+      لكل لقطة (10 ثوانٍ): ارفعي صورة الشخصية في Google Flow، والصقي البرومبت الإنجليزي المرافق لتوليد الحركة والتحريك فوراً.
+    </p>
   </header>
 
-  <!-- النص المعتمد النهائي المقفل -->
-  <section class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-emerald-500 shadow-md space-y-4">
-    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-      <h2 class="text-lg sm:text-xl font-black text-emerald-950 flex items-center gap-2">
-        <span>📜</span>
-        <span>النص المعتمد والمدقق نهائياً (الحوار الكامل):</span>
-      </h2>
-      <span class="text-xs bg-emerald-100 text-emerald-900 font-bold px-3 py-1 rounded-full font-mono">
-        Locked Script
-      </span>
-    </div>
-
-    <div class="bg-emerald-50/50 border border-emerald-200 rounded-2xl p-6 text-slate-900 text-base sm:text-lg leading-loose font-bold space-y-3" id="lockedScriptBox">
-      <p>
-        <strong class="text-emerald-800">المساعد الذكي:</strong> "صباح الخير يا صبايا! متذكرين شو تعلمنا بصف سابع عن الحموض والقواعد؟ كنا نحكي عن إنها مش مواد كيميائية بالمختبر وبس، بل مقسمة كثير من الأشياء اللي بنستخدمها بحياتنا اليومية لقسمين أساسيين!"
-      </p>
-      <p class="border-t border-emerald-200/60 pt-2">
-        <strong class="text-amber-700">🍋 الليمونة:</strong> "مثلنا إحنا الحموض.. طعمنا حامض ولاذع، وبتلاقونا بالليمون والخل وعصائر الفواكه، وبنحوّل ورقة تباع الشمس للون الأحمر!"
-      </p>
-      <p class="border-t border-emerald-200/60 pt-2">
-        <strong class="text-blue-700">🧼 الصابونة:</strong> "وفي المقابل إحنا القواعد.. طعمنا مرّ، وملمسنا ناعم وزلق، وسر قوة الصابون والمُنظفات وبيكربونات الصوديوم، وبنحوّل تباع الشمس للون الأزرق!"
-      </p>
-      <p class="border-t border-emerald-200/60 pt-2">
-        <strong class="text-emerald-800">المساعد الذكي:</strong> "وخلينا اليوم ننعش ذاكرتنا.. كيف كنا نميز بينهم بشكل كيميائي آمن وبدون ما نتذوق الأشياء الضارة؟.. أيوة: الكواشف! مثل تباع الشمس، أو كاشف طبيعي بسيط مثل منقوع الملفوف الأحمر اللي بقلب أحمر أو وردي مع الحمض وبتحول لأخضر أو أزرق مع القاعدة!"
-      </p>
-      <p class="border-t border-emerald-200/60 pt-2 text-purple-950 font-black">
-        <strong class="text-purple-700">الجميع معاً:</strong> "واليوم مع الأستاذة فرح نشأت.. رح نعيش التجربة عملياً قدامكم، ونطبق على أرض الواقع وفي منصتنا افتراضيًا كمان!.. تفضلي مس فرح!"
-      </p>
-    </div>
-  </section>
-
-  <!-- معرض الصور المولدة بالـ AI والمشاهد -->
+  <!-- Clips List -->
   <section class="space-y-6">
-    <div class="flex items-center justify-between border-b border-slate-300 pb-2">
-      <h2 class="text-xl font-black text-slate-900 flex items-center gap-2">
-        <span>🎨</span>
-        <span>معرض المشاهد والصور المولدة (3D Visuals):</span>
-      </h2>
-      <span class="text-xs font-bold text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200">
-        4 مشاهد بصرية فائقة الدقة 8K
-      </span>
+
+    <!-- Clip 1: Robot -->
+    <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-1 bg-emerald-600 text-white font-mono font-bold text-xs rounded-lg">Clip 1</span>
+          <h3 class="font-black text-slate-900 text-sm sm:text-base">اللقطة 1: افتتاحية الروبوت كيمو (00:00 - 00:12)</h3>
+        </div>
+        <span class="text-xs font-mono text-slate-400">الصورة: char-robot-isolated.png</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 text-xs">
+        <div class="md:col-span-4 bg-emerald-50 p-4 rounded-2xl border border-emerald-200 space-y-2 flex flex-col justify-between">
+          <div>
+            <span class="font-bold text-emerald-900 block mb-1">🎙️ النص الصوتي المرفق:</span>
+            <p class="text-slate-800 leading-relaxed font-semibold">
+              "صباح الخير يا صبايا! متذكرين شو تعلمنا بصف سابع عن الحموض والقواعد؟ كنا نحكي عن إنها مش مواد كيميائية بالمختبر وبس، بل مقسمة كثير من الأشياء اللي بنستخدمها بحياتنا اليومية لقسمين أساسيين!"
+            </p>
+          </div>
+          <a href="/images/char-robot-isolated.png" download class="block text-center bg-white text-emerald-800 border border-emerald-300 py-1.5 rounded-xl font-bold hover:bg-emerald-100 transition">
+            ⬇️ تحميل صورة الروبوت
+          </a>
+        </div>
+
+        <div class="md:col-span-8 bg-slate-900 text-slate-200 p-4 rounded-2xl font-mono space-y-3 flex flex-col justify-between">
+          <div class="space-y-1">
+            <span class="text-[11px] font-bold text-emerald-400 uppercase">Google Flow Motion Prompt:</span>
+            <p class="text-slate-300 leading-relaxed select-all" id="p1">
+              3D animated cute robot science assistant cheerfully waving both robotic hands to the camera, tilting head with cute blinking cyan LED digital eyes, floating gently in a futuristic bright science chemistry lab with glowing holographic periodic table in background, dynamic camera slow push-in, Pixar animation style, 4k 60fps, smooth character movement
+            </p>
+          </div>
+          <button onclick="copyP('p1', this)" class="self-end bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold px-4 py-1.5 rounded-xl text-xs transition">
+            نسخ البرومبت 📋
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-      <!-- المشهد 1: الليمونة -->
-      <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition space-y-3 p-4 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between bg-amber-500 text-slate-950 px-3 py-1.5 rounded-xl text-xs font-black">
-            <span>🍋 شخصية الليمونة (الحموض)</span>
-            <span>ورقة تباع الشمس الحمراء</span>
-          </div>
-          <div class="rounded-2xl overflow-hidden border border-slate-200 relative aspect-video bg-slate-100">
-            <img src="/images/character-lemon-3d.png" alt="الليمونة ثلاثية الأبعاد" class="w-full h-full object-cover">
-          </div>
-          <p class="text-xs text-slate-700 font-semibold leading-relaxed">
-            ليمونة مجسمة ثلاثية الأبعاد بلمعان نقي، مع قطرات ندى متوهجة وورقة تباع الشمس الحمراء على طاولة رخامية فاخرة.
-          </p>
+    <!-- Clip 2: Lemon -->
+    <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-1 bg-amber-500 text-slate-950 font-mono font-bold text-xs rounded-lg">Clip 2</span>
+          <h3 class="font-black text-slate-900 text-sm sm:text-base">اللقطة 2: الليمونة المتحمسة - الحموض (00:12 - 00:23)</h3>
         </div>
-        <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200 text-[11px] font-bold text-amber-900">
-          "مثلنا إحنا الحموض.. طعمنا حامض ولاذع، وبنحوّل ورقة تباع الشمس للأحمر!"
-        </div>
+        <span class="text-xs font-mono text-slate-400">الصورة: char-lemon-isolated.png</span>
       </div>
 
-      <!-- المشهد 2: الصابونة -->
-      <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition space-y-3 p-4 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between bg-blue-600 text-white px-3 py-1.5 rounded-xl text-xs font-black">
-            <span>🧼 شخصية الصابونة (القواعد)</span>
-            <span>ورقة تباع الشمس الزرقاء</span>
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 text-xs">
+        <div class="md:col-span-4 bg-amber-50 p-4 rounded-2xl border border-amber-200 space-y-2 flex flex-col justify-between">
+          <div>
+            <span class="font-bold text-amber-900 block mb-1">🎙️ النص الصوتي المرفق:</span>
+            <p class="text-slate-800 leading-relaxed font-semibold">
+              "مثلنا إحنا الحموض.. طعمنا حامض ولاذع، وبتلاقونا بالليمون والخل وعصائر الفواكه، وبنحوّل ورقة تباع الشمس للون الأحمر!"
+            </p>
           </div>
-          <div class="rounded-2xl overflow-hidden border border-slate-200 relative aspect-video bg-slate-100">
-            <img src="/images/character-soap-3d.png" alt="الصابونة ثلاثية الأبعاد" class="w-full h-full object-cover">
-          </div>
-          <p class="text-xs text-slate-700 font-semibold leading-relaxed">
-            قالب صابون حريري نقي محاط بفقاعات كريستالية لامعة، مع ورقة تباع الشمس الزرقاء ومظهر يعكس النظافة والانسيابية.
-          </p>
+          <a href="/images/char-lemon-isolated.png" download class="block text-center bg-white text-amber-800 border border-amber-300 py-1.5 rounded-xl font-bold hover:bg-amber-100 transition">
+            ⬇️ تحميل صورة الليمونة
+          </a>
         </div>
-        <div class="bg-blue-50 p-2.5 rounded-xl border border-blue-200 text-[11px] font-bold text-blue-900">
-          "وفي المقابل إحنا القواعد.. طعمنا مرّ، وملمسنا ناعم وزلق، وبنحوّل تباع الشمس للأزرق!"
+
+        <div class="md:col-span-8 bg-slate-900 text-slate-200 p-4 rounded-2xl font-mono space-y-3 flex flex-col justify-between">
+          <div class="space-y-1">
+            <span class="text-[11px] font-bold text-amber-400 uppercase">Google Flow Motion Prompt:</span>
+            <p class="text-slate-300 leading-relaxed select-all" id="p2">
+              Cute 3D Pixar lemon character joyfully bouncing and gesturing excitedly with its little hands, holding up a glowing red litmus paper strip, sparkling fresh water droplets splashing around, vibrant yellow lighting, happy facial expression talking to audience, cinematic depth of field, fluid 3D character animation
+            </p>
+          </div>
+          <button onclick="copyP('p2', this)" class="self-end bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-1.5 rounded-xl text-xs transition">
+            نسخ البرومبت 📋
+          </button>
         </div>
       </div>
-
-      <!-- المشهد 3: كاشف الملفوف الأحمر والألوان -->
-      <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition space-y-3 p-4 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between bg-purple-600 text-white px-3 py-1.5 rounded-xl text-xs font-black">
-            <span>🥬 كاشف الملفوف الأحمر الطبيعي</span>
-            <span>وردي للحمض ⟷ أخضر للقاعدة</span>
-          </div>
-          <div class="rounded-2xl overflow-hidden border border-slate-200 relative aspect-video bg-slate-100">
-            <img src="/images/cabbage-indicator-colors-3d.png" alt="كاشف الملفوف الأحمر وتغير الألوان" class="w-full h-full object-cover">
-          </div>
-          <p class="text-xs text-slate-700 font-semibold leading-relaxed">
-            دوارق زجاجية كريستالية تظهر التدرج اللوني الساحر لكاشف الملفوف: بنفسجي متعادل بالوسط، وردي/أحمر مع الخل باليسار، وأخضر زمردي مع المعقم باليمين.
-          </p>
-        </div>
-        <div class="bg-purple-50 p-2.5 rounded-xl border border-purple-200 text-[11px] font-bold text-purple-900">
-          "كاشف طبيعي بسيط مثل منقوع الملفوف الأحمر بقلب أحمر مع الحمض وبتحول لأخضر مع القاعدة!"
-        </div>
-      </div>
-
-      <!-- المشهد 4: المساعد الذكي والمنصة -->
-      <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition space-y-3 p-4 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs font-black">
-            <span>🔬 المساعد الذكي والمنصة الافتراضية</span>
-            <span>محاكاة 3D وتدريج pH</span>
-          </div>
-          <div class="rounded-2xl overflow-hidden border border-slate-200 relative aspect-video bg-slate-100">
-            <img src="/images/character-smart-assistant-3d.png" alt="المساعد الذكي والمختبر الافتراضي" class="w-full h-full object-cover">
-          </div>
-          <p class="text-xs text-slate-700 font-semibold leading-relaxed">
-            مسبار مخبري رقمي متطور بحلقات نيون زمردية وشاشات هولوغرامية تفاعلية تعرض واجهة منصة كيمياء التاسع والمختبر الافتراضي.
-          </p>
-        </div>
-        <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-200 text-[11px] font-bold text-emerald-900">
-          "واليوم مع الأستاذة فرح نشأت.. رح نعيش التجربة عملياً ونطبق على المنصة افتراضياً!"
-        </div>
-      </div>
-
     </div>
+
+    <!-- Clip 3: Soap -->
+    <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-1 bg-blue-600 text-white font-mono font-bold text-xs rounded-lg">Clip 3</span>
+          <h3 class="font-black text-slate-900 text-sm sm:text-base">اللقطة 3: الصابونة الرايقة - القواعد (00:23 - 00:35)</h3>
+        </div>
+        <span class="text-xs font-mono text-slate-400">الصورة: char-soap-isolated.png</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 text-xs">
+        <div class="md:col-span-4 bg-blue-50 p-4 rounded-2xl border border-blue-200 space-y-2 flex flex-col justify-between">
+          <div>
+            <span class="font-bold text-blue-900 block mb-1">🎙️ النص الصوتي المرفق:</span>
+            <p class="text-slate-800 leading-relaxed font-semibold">
+              "وفي المقابل إحنا القواعد.. طعمنا مرّ، وملمسنا ناعم وزلق، وسر قوة الصابون والمُنظفات وبيكربونات الصوديوم، وبنحوّل تباع الشمس للون الأزرق!"
+            </p>
+          </div>
+          <a href="/images/char-soap-isolated.png" download class="block text-center bg-white text-blue-800 border border-blue-300 py-1.5 rounded-xl font-bold hover:bg-blue-100 transition">
+            ⬇️ تحميل صورة الصابونة
+          </a>
+        </div>
+
+        <div class="md:col-span-8 bg-slate-900 text-slate-200 p-4 rounded-2xl font-mono space-y-3 flex flex-col justify-between">
+          <div class="space-y-1">
+            <span class="text-[11px] font-bold text-blue-400 uppercase">Google Flow Motion Prompt:</span>
+            <p class="text-slate-300 leading-relaxed select-all" id="p3">
+              Cute 3D Pixar pastel turquoise soap bar character smoothly gliding and making elegant gentle welcoming hand gestures, floating shimmering soap bubbles rising around, holding a glowing blue litmus paper strip, soft clean ambient lighting, gentle cute smile and blinking cartoon eyes, 4k Disney style animation
+            </p>
+          </div>
+          <button onclick="copyP('p3', this)" class="self-end bg-blue-500 hover:bg-blue-400 text-slate-950 font-bold px-4 py-1.5 rounded-xl text-xs transition">
+            نسخ البرومبت 📋
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clip 4: Cabbage Indicator -->
+    <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-1 bg-purple-600 text-white font-mono font-bold text-xs rounded-lg">Clip 4</span>
+          <h3 class="font-black text-slate-900 text-sm sm:text-base">اللقطة 4: كاشف الملفوف السحري والألوان (00:35 - 00:52)</h3>
+        </div>
+        <span class="text-xs font-mono text-slate-400">الصورة: char-flask-isolated.png</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 text-xs">
+        <div class="md:col-span-4 bg-purple-50 p-4 rounded-2xl border border-purple-200 space-y-2 flex flex-col justify-between">
+          <div>
+            <span class="font-bold text-purple-900 block mb-1">🎙️ النص الصوتي المرفق:</span>
+            <p class="text-slate-800 leading-relaxed font-semibold">
+              "وخلينا اليوم ننعش ذاكرتنا.. كيف كنا نميز بينهم بشكل كيميائي آمن وبدون ما نتذوق الأشياء الضارة؟.. أيوة: الكواشف! مثل تباع الشمس، أو كاشف طبيعي بسيط مثل منقوع الملفوف الأحمر اللي بقلب أحمر أو وردي مع الحمض وبتحول لأخضر أو أزرق مع القاعدة!"
+            </p>
+          </div>
+          <a href="/images/char-flask-isolated.png" download class="block text-center bg-white text-purple-800 border border-purple-300 py-1.5 rounded-xl font-bold hover:bg-purple-100 transition">
+            ⬇️ تحميل صورة الدورق
+          </a>
+        </div>
+
+        <div class="md:col-span-8 bg-slate-900 text-slate-200 p-4 rounded-2xl font-mono space-y-3 flex flex-col justify-between">
+          <div class="space-y-1">
+            <span class="text-[11px] font-bold text-purple-400 uppercase">Google Flow Motion Prompt:</span>
+            <p class="text-slate-300 leading-relaxed select-all" id="p4">
+              Cute 3D animated glass chemistry flask character with purple liquid inside swirling dynamically and transforming into bright magenta pink on one side and emerald green on the other side, colorful sparkling light rays emerging from top, glowing particles, cheerful happy reaction, studio lab environment, cinematic camera orbit
+            </p>
+          </div>
+          <button onclick="copyP('p4', this)" class="self-end bg-purple-500 hover:bg-purple-400 text-white font-bold px-4 py-1.5 rounded-xl text-xs transition">
+            نسخ البرومبت 📋
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clip 5: Finale & Platform -->
+    <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-1 bg-slate-900 text-emerald-400 font-mono font-bold text-xs rounded-lg">Clip 5</span>
+          <h3 class="font-black text-slate-900 text-sm sm:text-base">اللقطة 5: الختام والتسليم لمس فرح والمنصة (00:52 - 01:05)</h3>
+        </div>
+        <span class="text-xs font-mono text-slate-400">الصورة: character-smart-assistant-3d.png</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 text-xs">
+        <div class="md:col-span-4 bg-slate-100 p-4 rounded-2xl border border-slate-300 space-y-2 flex flex-col justify-between">
+          <div>
+            <span class="font-bold text-slate-900 block mb-1">🎙️ النص الصوتي المرفق:</span>
+            <p class="text-slate-800 leading-relaxed font-semibold">
+              "واليوم مع الأستاذة فرح نشأت.. رح نعيش التجربة عملياً قدامكم، ونطبق على أرض الواقع وفي منصتنا افتراضيًا كمان!.. تفضلي مس فرح!"
+            </p>
+          </div>
+          <a href="/images/character-smart-assistant-3d.png" download class="block text-center bg-white text-slate-900 border border-slate-400 py-1.5 rounded-xl font-bold hover:bg-slate-200 transition">
+            ⬇️ تحميل صورة المنصة
+          </a>
+        </div>
+
+        <div class="md:col-span-8 bg-slate-900 text-slate-200 p-4 rounded-2xl font-mono space-y-3 flex flex-col justify-between">
+          <div class="space-y-1">
+            <span class="text-[11px] font-bold text-emerald-400 uppercase">Google Flow Motion Prompt:</span>
+            <p class="text-slate-300 leading-relaxed select-all" id="p5">
+              All cute 3D characters together on a futuristic laboratory table enthusiastically clapping and pointing towards the audience and a large glowing holographic screen displaying "Chemistry Grade 9 - Teacher Farah Nashat", triumphant inspiring celebratory atmosphere, smooth camera pull-back, ultra high quality Pixar render
+            </p>
+          </div>
+          <button onclick="copyP('p5', this)" class="self-end bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-1.5 rounded-xl text-xs transition">
+            نسخ البرومبت 📋
+          </button>
+        </div>
+      </div>
+    </div>
+
   </section>
 
-  <!-- JavaScript logic for Audio and Copy -->
+  <!-- CapCut Stitching Guide -->
+  <section class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-3 text-xs">
+    <h3 class="font-black text-emerald-400 text-sm flex items-center gap-2">
+      <span>✂️</span>
+      <span>كيف تدمجين الفيديوهات الخمسة في أقل من دقيقتين؟ (CapCut Guide)</span>
+    </h3>
+    <ol class="list-decimal list-inside space-y-1.5 text-slate-300 leading-relaxed">
+      <li>حمّلي الفيديوهات الخمسة الناتجة من Google Flow / Runway.</li>
+      <li>افتحي تطبيق <strong>CapCut</strong> وضعي الفيديوهات الخمسة بالترتيب (Clip 1 إلى 5) على خط التايم لاين.</li>
+      <li>أضيفي ملف الصوت (Voiceover) في المسار الصوتي بالأسفل ليطابق حركة كل شخصية.</li>
+      <li>أضيفي انتقال سريع (Cross Dissolve مدته 0.3 ثانية) بين كل كليب والتالي ليكون الانتقال فائق السلاسة.</li>
+      <li>اضغطي <strong>Export</strong> بجودة 1080p.. ومبروك الفيديو الاحترافي الكامل! 🎉</li>
+    </ol>
+  </section>
+
+  <!-- Script for Copy -->
   <script>
-    const fullSpeech = "المساعد الذكي: صباح الخير يا صبايا! متذكرين شو تعلمنا بصف سابع عن الحموض والقواعد؟ كنا نحكي عن إنها مش مواد كيميائية بالمختبر وبس، بل مقسمة كثير من الأشياء اللي بنستخدمها بحياتنا اليومية لقسمين أساسيين! الليمونة: مثلنا إحنا الحموض.. طعمنا حامض ولاذع، وبتلاقونا بالليمون والخل وعصائر الفواكه، وبنحوّل ورقة تباع الشمس للون الأحمر! الصابونة: وفي المقابل إحنا القواعد.. طعمنا مرّ، وملمسنا ناعم وزلق، وسر قوة الصابون والمُنظفات وبيكربونات الصوديوم، وبنحوّل تباع الشمس للون الأزرق! المساعد الذكي: وخلينا اليوم ننعش ذاكرتنا.. كيف كنا نميز بينهم بشكل كيميائي آمن وبدون ما نتذوق الأشياء الضارة؟.. أيوة: الكواشف! مثل تباع الشمس، أو كاشف طبيعي بسيط مثل منقوع الملفوف الأحمر اللي بقلب أحمر أو وردي مع الحمض وبتحول لأخضر أو أزرق مع القاعدة! الجميع معاً: واليوم مع الأستاذة فرح نشأت.. رح نعيش التجربة عملياً قدامكم، ونطبق على أرض الواقع وفي منصتنا افتراضيًا كمان!.. تفضلي مس فرح!";
-
-    let isPlaying = false;
-    function playLockedVoice() {
-      if ('speechSynthesis' in window) {
-        if (isPlaying) {
-          window.speechSynthesis.cancel();
-          isPlaying = false;
-          document.getElementById('audioBtnText').innerText = 'استماع للحوار الصوتي المعتمد كاملاً';
-          return;
-        }
-
-        const u = new SpeechSynthesisUtterance(fullSpeech);
-        u.lang = 'ar-SA';
-        u.rate = 0.95;
-        u.onstart = () => {
-          isPlaying = true;
-          document.getElementById('audioBtnText').innerText = 'جاري القراءة الصوتية... (اضغطي للإيقاف)';
-        };
-        u.onend = () => {
-          isPlaying = false;
-          document.getElementById('audioBtnText').innerText = 'استماع للحوار الصوتي المعتمد كاملاً';
-        };
-        window.speechSynthesis.speak(u);
-      } else {
-        alert('ميزة القراءة الصوتية غير مدعومة في متصفحك.');
-      }
-    }
-
-    function copyLockedText() {
-      navigator.clipboard.writeText(fullSpeech).then(() => {
-        const btnText = document.getElementById('copyBtnText');
-        btnText.innerText = 'تم النسخ بنجاح! ✅';
-        setTimeout(() => {
-          btnText.innerText = 'نسخ النص المعتمد';
-        }, 2000);
+    function copyP(id, btn) {
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.innerText;
+        btn.innerText = 'تم النسخ! ✅';
+        setTimeout(() => { btn.innerText = orig; }, 2000);
       });
     }
   </script>

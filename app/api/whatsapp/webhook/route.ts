@@ -2,16 +2,6 @@ import { NextResponse } from 'next/server';
 import { sendWhatsAppNotification } from '@/lib/evolution';
 import { generateChemistryAnswer } from '@/lib/ai-tutor';
 
-// WhatsApp AI Webhook Handler for Evolution API
-// Trigger Phrase: "للذكاء الاصطناعي كيمياء"
-const TRIGGER_PATTERNS = [
-  /^للذكاء\s+الاصطناعي\s+كيمياء:?\s*(.*)/i,
-  /^للذكاء\s+الاصطناعي\s+كيمياء\s+(.*)/i,
-  /^!كيمياء\s*(.*)/i,
-  /^كيمياء:\s*(.*)/i,
-  /^!chem\s*(.*)/i
-];
-
 export async function POST(req: Request) {
   try {
     const payload = await req.json();
@@ -35,7 +25,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ status: 'ignored', reason: 'No remoteJid found' });
     }
 
-    // Ignore status broadcasts and group messages unless intended
+    // Ignore status broadcasts and newsletter messages
     if (remoteJid.includes('status@broadcast') || remoteJid.includes('@newsletter')) {
       return NextResponse.json({ status: 'ignored', reason: 'Broadcast message' });
     }
@@ -55,41 +45,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ status: 'ignored', reason: 'Empty text' });
     }
 
-    // Check if the message matches our specified trigger: "للذكاء الاصطناعي كيمياء"
-    let query = '';
-    let isTriggered = false;
-
-    for (const pattern of TRIGGER_PATTERNS) {
-      const match = incomingText.match(pattern);
-      if (match) {
-        query = (match[1] || '').trim();
-        isTriggered = true;
-        break;
-      }
-    }
-
-    // If query is empty after trigger
-    if (isTriggered && !query) {
-      const helpMsg = `✨ *المساعد الكيميائي الذكي - أ. فرح نشأت*\n\n` +
-        `أهلاً بك! يمكنك سؤالي عن أي مفهوم، معادلة أو تجربة كيميائية 🧪🌸\n\n` +
-        `💡 *طريقة الاستخدام:*\n` +
-        `أرسل: *للذكاء الاصطناعي كيمياء [سؤالك]*\n\n` +
-        `مثال: *للذكاء الاصطناعي كيمياء ما الفرق بين الحمض القوي والضعيف؟*`;
-
-      await sendWhatsAppNotification(remoteJid, helpMsg);
-      return NextResponse.json({ status: 'success', action: 'sent_help_menu' });
-    }
-
-    // If not triggered with prefix, ignore
-    if (!isTriggered) {
-      return NextResponse.json({ status: 'ignored', reason: 'Trigger phrase not matched' });
-    }
+    const query = incomingText;
 
     // Detect language
     const isEnglish = /[a-zA-Z]/.test(query) && !/[\u0600-\u06FF]/.test(query);
     const lang = isEnglish ? 'en' : 'ar';
 
-    // Generate response using expanded friendly persona & cf/zai-org/glm-5.3-flash
+    // Generate response using System Prompt & cf/zai-org/glm-5.3-flash
     const aiResult = await generateChemistryAnswer(query, lang);
 
     // Format message nicely for WhatsApp
