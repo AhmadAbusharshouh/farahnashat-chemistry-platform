@@ -657,6 +657,8 @@ export function Footer() {
           <Link href="/about" className="hover:text-emerald-700 transition">{t('عن المعلمة', 'About Teacher')}</Link>
           <span className="text-slate-300">•</span>
           <Link href="/whatsapp-connect" className="hover:text-emerald-700 transition">{t('بوابة التواصل', 'Contact Gateway')}</Link>
+          <span className="text-slate-300">•</span>
+          <Link href="/admin" className="text-emerald-800 hover:text-emerald-950 transition font-black">{t('لوحة المعلمة', 'Teacher Admin')}</Link>
         </div>
 
         {/* Bottom Credits Bar */}

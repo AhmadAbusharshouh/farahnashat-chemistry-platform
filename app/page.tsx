@@ -13,7 +13,6 @@ import {
   Boxes, 
   Atom,
   PhoneCall,
-  Flame,
   ArrowUpRight,
   MessageSquare,
   Send,
@@ -22,28 +21,11 @@ import {
 import { useLanguage } from '@/lib/LanguageContext';
 import { Molecule3DViewer } from '@/components/Molecule3DViewer';
 import { Ionization3DChamber } from '@/components/Ionization3DChamber';
-import MetallicDodecahedron, { 
-  CHEMICAL_FACES_DATA, 
-  MetallicDodecahedronHandle 
-} from '@/components/MetallicDodecahedron';
+import { Hero3DMolecule } from '@/components/Hero3DMolecule';
 
 export default function HomePage() {
   const { lang, t, dir } = useLanguage();
   const Arrow = dir === 'rtl' ? ArrowLeft : ArrowRight;
-
-  const dodecahedronRef = useRef<MetallicDodecahedronHandle>(null);
-  const [activeChemIndex, setActiveChemIndex] = useState<number>(0);
-
-  const activeChemical = CHEMICAL_FACES_DATA[activeChemIndex] || CHEMICAL_FACES_DATA[0];
-
-  const handleSelectChemical = (index: number) => {
-    setActiveChemIndex(index);
-    dodecahedronRef.current?.burst();
-  };
-
-  const handleBurst = () => {
-    dodecahedronRef.current?.burst();
-  };
 
   // Live Chat Assistant State for Homepage
   const [homeChatInput, setHomeChatInput] = useState('');
@@ -136,15 +118,15 @@ export default function HomePage() {
   };
 
   return (
-    <div className="space-y-16 pb-16">
+    <div className="space-y-12 sm:space-y-16 pb-16">
       
       {/* ========================================================================= */}
-      {/* 1. CLEAN LIGHT-MODE HERO SECTION (WITH 3D METALLIC DODECAHEDRON) */}
+      {/* 1. CLEAN LIGHT HERO SECTION (100% VISIBLE ON MOBILE WITHOUT SCROLLING) */}
       {/* ========================================================================= */}
-      <section className="relative overflow-hidden bg-white border-b border-slate-200 pt-8 sm:pt-12 pb-12 sm:pb-16">
+      <section className="relative overflow-hidden bg-white border-b border-slate-200 py-3 sm:py-8">
         
-        {/* Soft Chemistry Laboratory Light Background Texture */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
+        {/* Subtle Background Art Watermark */}
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-15">
           <Image
             src="/images/clean-beakers-light.png"
             alt="Chemistry Laboratory Background"
@@ -154,136 +136,54 @@ export default function HomePage() {
           />
         </div>
 
-        {/* Ambient Soft Emerald Glow Accent */}
-        <div className="absolute top-0 right-1/3 w-80 h-80 bg-emerald-100/60 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-center">
             
-            {/* Left Column: Teacher Identity & Concise Action Buttons */}
-            <div className="lg:col-span-6 space-y-5 text-right">
+            {/* Minimal Headline & Action Buttons (Left Column) */}
+            <div className="lg:col-span-6 space-y-3 sm:space-y-4 text-center lg:text-right">
               
-              {/* Main Headline */}
-              <div className="space-y-2">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 leading-[1.2] tracking-tight">
-                  {t('تعلّم الكيمياء بأسلوب تفاعلي', 'Learn Chemistry Interactively')} <br />
-                  <span className="text-emerald-700">
-                    {t('مع الأستاذة فرح نشأت', 'with Teacher Farah Nashat')}
+              <div className="space-y-1">
+                <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-950 leading-tight">
+                  {t('الأستاذة فرح نشأت', 'Teacher Farah Nashat')} <br />
+                  <span className="text-emerald-700 text-xl sm:text-3xl lg:text-4xl">
+                    {t('كيمياء تفاعلية ومجسمات 3D', 'Interactive Chemistry & 3D')}
                   </span>
                 </h1>
                 
-                <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-lg font-normal">
+                <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-md mx-auto lg:mx-0">
                   {t(
-                    'منصة تعليمية متكاملة لشرح مفاهيم الكيمياء عبر النمذجة ثلاثية الأبعاد (3D)، والمختبر الافتراضي، والمساعد الذكي.',
-                    'A chemistry platform designed by Teacher Farah Nashat offering 3D molecular solids, virtual lab inquiry, and AI assistance.'
+                    'المنصة التعليمية للنمذجة الجزيئية ثلاثية الأبعاد والمختبر الافتراضي الذكي.',
+                    'Educational platform for 3D molecular modeling and virtual laboratory inquiry.'
                   )}
                 </p>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-1">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-1">
                 <Link
                   href="/virtual-lab"
-                  className="inline-flex items-center gap-2 px-5 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm rounded-lg transition-all shadow-xs hover:scale-102"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 sm:px-5 sm:py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm rounded-lg transition-all shadow-xs hover:scale-102"
                 >
                   <FlaskConical className="w-4 h-4" />
-                  <span>{t('المختبر الافتراضي (3D)', 'Launch Virtual Lab')}</span>
-                  <Arrow className="w-4 h-4" />
+                  <span>{t('المختبر الافتراضي (3D)', 'Virtual Lab (3D)')}</span>
+                  <Arrow className="w-3.5 h-3.5" />
                 </Link>
 
                 <Link
                   href="/assistant"
-                  className="inline-flex items-center gap-2 px-5 py-3 bg-white hover:bg-emerald-50 text-emerald-900 font-bold text-xs sm:text-sm border-2 border-emerald-600 rounded-lg transition-all hover:scale-102 shadow-2xs"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 sm:px-5 sm:py-3 bg-white hover:bg-emerald-50 text-emerald-900 font-bold text-xs sm:text-sm border-2 border-emerald-600 rounded-lg transition-all hover:scale-102 shadow-2xs"
                 >
                   <Sparkles className="w-4 h-4 text-emerald-700" />
-                  <span>{t('المساعد الكيميائي الذكي', 'AI Study Tutor')}</span>
+                  <span>{t('المساعد الذكي', 'AI Study Tutor')}</span>
                 </Link>
-
-                <button
-                  type="button"
-                  onClick={handleBurst}
-                  className="inline-flex items-center gap-1.5 px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-bold border border-slate-300 rounded-lg transition active:scale-95"
-                  title={t('انقر لتفجير الوجوه', 'Click to burst faces')}
-                >
-                  <Flame className="w-4 h-4 text-amber-600" />
-                  <span>{t('تفكيك الروابط (Burst)', 'Burst 3D Solid')}</span>
-                </button>
-              </div>
-
-              {/* Quick Chemical Formulas Selector */}
-              <div className="pt-2 space-y-2">
-                <div className="text-xs font-bold text-slate-600 flex items-center gap-1.5">
-                  <Atom className="w-3.5 h-3.5 text-emerald-700" />
-                  <span>{t('اختر مادة لفحصها في المجسم 3D:', 'Select substance to inspect in 3D:')}</span>
-                </div>
-
-                <div className="flex flex-wrap gap-1.5">
-                  {CHEMICAL_FACES_DATA.slice(0, 6).map((chem, idx) => {
-                    const isSelected = activeChemIndex === idx;
-                    return (
-                      <button
-                        key={chem.formula}
-                        onClick={() => handleSelectChemical(idx)}
-                        className={`px-3 py-1.5 rounded-md text-xs font-bold font-mono transition-all border ${
-                          isSelected
-                            ? 'bg-emerald-700 text-white border-emerald-800 shadow-2xs'
-                            : 'bg-white hover:bg-emerald-50 text-slate-800 border-slate-300 hover:border-emerald-500'
-                        }`}
-                      >
-                        {chem.formula}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="text-xs font-bold text-emerald-800 bg-emerald-50/80 p-2.5 rounded-md border border-emerald-200 flex items-center justify-between">
-                  <span>{activeChemical.nameAr} ({activeChemical.typeAr})</span>
-                  <span className="font-mono bg-white px-2 py-0.5 rounded border border-emerald-300 text-emerald-900">
-                    pH = {activeChemical.ph}
-                  </span>
-                </div>
               </div>
 
             </div>
 
-            {/* Right Column: 3D Metallic Chemical Dodecahedron */}
-            <div className="lg:col-span-6">
-              <div className="relative rounded-2xl bg-gradient-to-b from-slate-50 to-slate-100/80 border border-slate-300 p-3 sm:p-4 shadow-md overflow-hidden">
-                
-                {/* 3D Header Strip */}
-                <div className="flex items-center justify-between pb-2 border-b border-slate-200 text-xs px-1">
-                  <div className="flex items-center gap-1.5 text-emerald-800 font-bold">
-                    <Boxes className="w-4 h-4 text-emerald-700" />
-                    <span>{t('مجسم كيميائي تفاعلي (3D)', 'Interactive 3D Solid')}</span>
-                  </div>
-                  <span className="text-[11px] text-slate-500">
-                    {t('اسحب للتدوير • انقر للتفكيك', 'Drag to rotate • Click to burst')}
-                  </span>
-                </div>
-
-                {/* 3D Canvas Area */}
-                <div className="relative h-[320px] sm:h-[380px] w-full flex items-center justify-center">
-                  <MetallicDodecahedron
-                    ref={dodecahedronRef}
-                    shape="dodecahedron"
-                    finish="metal"
-                    tint="#ffffff"
-                    color="#059669"
-                    edges={true}
-                    edgeColor="#10b981"
-                    showChemicalLabels={true}
-                    selectedFormula={activeChemical.formula}
-                    burst={{ enabled: true, distance: 35, twist: 22 }}
-                    transition={{ type: 'tween', duration: 0.65, delay: 0.55, ease: 'easeOut' }}
-                    rotation={{ x: 1.8, y: 4.5, z: 0 }}
-                    dragSensitivity={10}
-                    sizePercent={95}
-                    style={{ width: '100%', height: '100%' }}
-                  />
-                </div>
-
-              </div>
+            {/* Real 3D Molecule Interactive Stage (Right Column) */}
+            <div className="lg:col-span-6 w-full">
+              <Hero3DMolecule />
             </div>
 
           </div>
@@ -341,8 +241,8 @@ export default function HomePage() {
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 {t(
-                  'محاكاة تفاعلية: مقياس pH الرقمي، اختبار الموصلية وإضاءة المصباح، تفاعل الفلزات مع الحموض، ومحطة الكواشف الخمسة.',
-                  'Interactive 3D laboratory: digital pH probe, 3D conductivity lamp, metal reactions with Pop Test, and 5 indicators.'
+                  'محاكاة تفاعلية: الكواشف الخمسة، مقياس pH الرقمي، اختبار الموصلية، وتفاعل الفلزات.',
+                  'Interactive 3D laboratory: 5 indicators, digital pH probe, conductivity lamp, and metal reactions.'
                 )}
               </p>
             </div>
