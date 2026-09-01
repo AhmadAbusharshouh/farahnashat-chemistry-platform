@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>السيناريو المدقق علمياً | أ. فرح نشأت</title>
+  <title>لوحة المشاهد والشخصيات المعتمدة | أ. فرح نشأت</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,141 +36,187 @@
     }
   </style>
 </head>
-<body class="p-4 sm:p-8 max-w-4xl mx-auto space-y-6 selection:bg-emerald-500 selection:text-white">
+<body class="p-4 sm:p-8 max-w-5xl mx-auto space-y-8 selection:bg-emerald-500 selection:text-white">
 
   <!-- Header -->
-  <header class="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-lg border-b-4 border-emerald-500 space-y-3">
-    <div class="flex flex-wrap items-center justify-between gap-2">
-      <span class="bg-emerald-500 text-slate-950 font-black text-xs px-3 py-1 rounded-full">
-        النسخة المدققة علمياً | كيمياء المنهاج الأردني (كولينز)
-      </span>
-      <span class="text-xs text-slate-300 font-mono">المدة: 01:05 دقيقة (~65-70 ثانية)</span>
-    </div>
-    <h1 class="text-2xl sm:text-3xl font-black">
-      🧪 السيناريو العلمي المعتمد للحوار والتجربة
-    </h1>
-    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-      تم تدقيق كافة المفاهيم العلمية: طعم الحموض الحامض اللاذع وتأثيرها الأحمر، طعم القواعد المرّ وملمسها الزلق وتأثيرها الأزرق، كاشف الملفوف، ومقياس الـ pH.
-    </p>
-  </header>
-
-  <!-- Interactive Editor Box -->
-  <section class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-emerald-500 shadow-md space-y-4">
-    
-    <!-- Top toolbar of editor -->
-    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
-      <div class="flex items-center gap-2 text-xs font-bold">
-        <span class="text-slate-500">الشخصيات العلمية:</span>
-        <span class="bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg border border-amber-200">🍋 الليمونة (حامض / لاذع / أحمر)</span>
-        <span class="bg-blue-100 text-blue-900 px-2.5 py-1 rounded-lg border border-blue-200">🧼 الصابونة (مرّ / زلق / أزرق)</span>
-        <span class="bg-emerald-100 text-emerald-900 px-2.5 py-1 rounded-lg border border-emerald-200">🔬 المساعد الذكي</span>
+  <header class="bg-gradient-to-r from-slate-950 via-slate-900 to-emerald-950 text-white p-6 sm:p-8 rounded-3xl shadow-xl border-b-4 border-emerald-500 space-y-4">
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
+      <div>
+        <span class="bg-emerald-500 text-slate-950 font-black text-xs px-3 py-1 rounded-full">
+          المقابلة والحصة النموذجية (10 دقائق) | المدارس الإسلامية الحديثة
+        </span>
+        <h1 class="text-2xl sm:text-3xl font-black mt-2">
+          🎬 لوحة المشاهد والصور المولدة بالذكاء الاصطناعي
+        </h1>
       </div>
-
-      <!-- Live Counters -->
-      <div class="flex items-center gap-3 text-xs bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl font-mono">
-        <div>الكلمات: <span id="wordCount" class="font-black text-emerald-800">0</span></div>
-        <div class="border-r border-slate-300 pr-3">الزمن المتوقع: <span id="timeEstimate" class="font-black text-emerald-800">0</span> ثانية</div>
+      <div class="text-left bg-slate-900/90 border border-emerald-500/40 p-3 rounded-2xl text-xs font-mono">
+        <div class="text-emerald-400 font-bold">المعلمة: فرح نشأت</div>
+        <div class="text-slate-300">المدة: دقيقة و 5 ثوانٍ</div>
+        <div class="text-emerald-300 font-bold">خالٍ 100% من ذوات الأرواح ✅</div>
       </div>
     </div>
 
-    <!-- Textarea -->
-    <div class="space-y-2">
-      <label for="scriptEditor" class="block text-xs font-bold text-slate-700">
-        📝 نص السيناريو المدقق (يمكنك التعديل أو النسخ مباشرة):
-      </label>
-      <textarea 
-        id="scriptEditor" 
-        rows="13" 
-        oninput="updateStats()"
-        class="w-full p-4 sm:p-5 rounded-2xl border-2 border-slate-300 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-200 outline-none text-base sm:text-lg leading-relaxed font-bold text-slate-900 bg-slate-50/50 transition resize-y"
-      >المساعد الذكي: صباح الخير يا صبايا! متذكرين شو تعلمنا بصف سابع عن الحموض والقواعد؟ كنا نحكي إنها مش مواد كيميائية بالمختبر وبس، بل مقسمة كثير من الأشياء اللي بنستخدمها بحياتنا اليومية لقسمين أساسيين!
-
-الليمونة: مثلنا إحنا الحموض.. طعمنا حامض ولاذع، وبتلاقونا بالليمون والخل وعصائر الفواكه، وبنحوّل ورقة تباع الشمس للون الأحمر!
-
-الصابونة: وفي المقابل إحنا القواعد.. طعمنا مرّ، وملمسنا ناعم وزلق، وسر قوة الصابون والمُنظفات وبيكربونات الصوديوم، وبنحوّل تباع الشمس للون الأزرق!
-
-المساعد الذكي: وخلينا اليوم ننعش ذاكرتنا.. كيف كنا نميز بينهم بشكل كيميائي آمن وبدون ما نتذوق الأشياء الضارة؟.. أكيد بالكواشف! مثل تباع الشمس، أو كاشف طبيعي بسيط مثل منقوع الملفوف الأحمر اللي بقلب وردي مع الحمض وبتحول لأخضر مع القاعدة!
-
-المساعد الذكي: وعشان نعرف قوة الحمض أو القاعدة بالرقم.. مقياس الرقم الهيدروجيني pH بحكيلنا القصة كلها: أقل من 7 حمضي، 7 متعادل، وأكثر من 7 قاعدي!
-
-الجميع معاً: واليوم مع الأستاذة فرح نشأت.. رح نعيش التجربة عملياً قدامكم، ونطبق بالمختبر الافتراضي ومنصتنا التفاعلية.. تفضلي مس فرح!</textarea>
-    </div>
-
-    <!-- Bottom Actions -->
-    <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
-      <div class="flex items-center gap-2">
-        <button onclick="playCustomVoice()" id="playCustomBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow">
-          <span>🔊</span>
-          <span id="playCustomBtnText">استماع للحوار الصوتي الآن</span>
-        </button>
-        <button onclick="stopVoice()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-3 py-2.5 rounded-xl text-xs transition">
-          ⏹️ إيقاف
-        </button>
-      </div>
-
-      <button onclick="copyEditedText()" id="copyBtn" class="bg-slate-900 hover:bg-slate-800 text-emerald-400 font-black px-6 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 border border-slate-800 shadow">
+    <!-- Quick Audio & Copy Bar -->
+    <div class="flex flex-wrap items-center gap-3 pt-1">
+      <button onclick="playLockedVoice()" id="audioBtn" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-6 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow-md">
+        <span>🔊</span>
+        <span id="audioBtnText">استماع للحوار الصوتي المعتمد كاملاً</span>
+      </button>
+      <button onclick="copyLockedText()" id="copyBtn" class="bg-white/10 hover:bg-white/20 text-white font-bold px-4 py-2.5 rounded-xl text-xs border border-white/20 transition flex items-center gap-1.5">
         <span>📋</span>
         <span id="copyBtnText">نسخ النص المعتمد</span>
       </button>
     </div>
+  </header>
 
-  </section>
+  <!-- النص المعتمد النهائي المقفل -->
+  <section class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-emerald-500 shadow-md space-y-4">
+    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <h2 class="text-lg sm:text-xl font-black text-emerald-950 flex items-center gap-2">
+        <span>📜</span>
+        <span>النص المعتمد والمدقق نهائياً (الحوار الكامل):</span>
+      </h2>
+      <span class="text-xs bg-emerald-100 text-emerald-900 font-bold px-3 py-1 rounded-full font-mono">
+        Locked Script
+      </span>
+    </div>
 
-  <!-- Scientific Facts Quick Check Card -->
-  <section class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-3 text-xs">
-    <h3 class="font-black text-slate-900 text-sm border-b border-slate-100 pb-2 flex items-center gap-1.5">
-      <span>✅</span>
-      <span>جدول المطابقة العلمية للمنهاج الأردني (Grade 7 & 9 Curriculum Verification):</span>
-    </h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 space-y-1">
-        <div class="font-extrabold text-amber-950">🍋 الحموض (Acids):</div>
-        <p class="text-slate-700">• الطعم: حامض / لاذع.</p>
-        <p class="text-slate-700">• تباع الشمس: يحول الأزرق إلى <strong>أحمر</strong>.</p>
-        <p class="text-slate-700">• الملفوف الأحمر: يتحول إلى <strong>وردي / أحمر</strong>.</p>
-        <p class="text-slate-700">• الرقم الهيدروجيني: <span class="num-en font-bold text-amber-900">pH &lt; 7</span>.</p>
-      </div>
-
-      <div class="p-3 bg-blue-50 rounded-xl border border-blue-200 space-y-1">
-        <div class="font-extrabold text-blue-950">🧼 القواعد (Bases):</div>
-        <p class="text-slate-700">• الطعم: <strong>مرّ</strong> | الملمس: <strong>ناعم زلق صابوني</strong>.</p>
-        <p class="text-slate-700">• تباع الشمس: يحول الأحمر إلى <strong>أزرق</strong>.</p>
-        <p class="text-slate-700">• الملفوف الأحمر: يتحول إلى <strong>أخضر / أزرق</strong>.</p>
-        <p class="text-slate-700">• الرقم الهيدروجيني: <span class="num-en font-bold text-blue-900">pH &gt; 7</span>.</p>
-      </div>
+    <div class="bg-emerald-50/50 border border-emerald-200 rounded-2xl p-6 text-slate-900 text-base sm:text-lg leading-loose font-bold space-y-3" id="lockedScriptBox">
+      <p>
+        <strong class="text-emerald-800">المساعد الذكي:</strong> "صباح الخير يا صبايا! متذكرين شو تعلمنا بصف سابع عن الحموض والقواعد؟ كنا نحكي عن إنها مش مواد كيميائية بالمختبر وبس، بل مقسمة كثير من الأشياء اللي بنستخدمها بحياتنا اليومية لقسمين أساسيين!"
+      </p>
+      <p class="border-t border-emerald-200/60 pt-2">
+        <strong class="text-amber-700">🍋 الليمونة:</strong> "مثلنا إحنا الحموض.. طعمنا حامض ولاذع، وبتلاقونا بالليمون والخل وعصائر الفواكه، وبنحوّل ورقة تباع الشمس للون الأحمر!"
+      </p>
+      <p class="border-t border-emerald-200/60 pt-2">
+        <strong class="text-blue-700">🧼 الصابونة:</strong> "وفي المقابل إحنا القواعد.. طعمنا مرّ، وملمسنا ناعم وزلق، وسر قوة الصابون والمُنظفات وبيكربونات الصوديوم، وبنحوّل تباع الشمس للون الأزرق!"
+      </p>
+      <p class="border-t border-emerald-200/60 pt-2">
+        <strong class="text-emerald-800">المساعد الذكي:</strong> "وخلينا اليوم ننعش ذاكرتنا.. كيف كنا نميز بينهم بشكل كيميائي آمن وبدون ما نتذوق الأشياء الضارة؟.. أيوة: الكواشف! مثل تباع الشمس، أو كاشف طبيعي بسيط مثل منقوع الملفوف الأحمر اللي بقلب أحمر أو وردي مع الحمض وبتحول لأخضر أو أزرق مع القاعدة!"
+      </p>
+      <p class="border-t border-emerald-200/60 pt-2 text-purple-950 font-black">
+        <strong class="text-purple-700">الجميع معاً:</strong> "واليوم مع الأستاذة فرح نشأت.. رح نعيش التجربة عملياً قدامكم، ونطبق على أرض الواقع وفي منصتنا افتراضيًا كمان!.. تفضلي مس فرح!"
+      </p>
     </div>
   </section>
 
-  <!-- JavaScript logic -->
+  <!-- معرض الصور المولدة بالـ AI والمشاهد -->
+  <section class="space-y-6">
+    <div class="flex items-center justify-between border-b border-slate-300 pb-2">
+      <h2 class="text-xl font-black text-slate-900 flex items-center gap-2">
+        <span>🎨</span>
+        <span>معرض المشاهد والصور المولدة (3D Visuals):</span>
+      </h2>
+      <span class="text-xs font-bold text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200">
+        4 مشاهد بصرية فائقة الدقة 8K
+      </span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- المشهد 1: الليمونة -->
+      <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition space-y-3 p-4 flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between bg-amber-500 text-slate-950 px-3 py-1.5 rounded-xl text-xs font-black">
+            <span>🍋 شخصية الليمونة (الحموض)</span>
+            <span>ورقة تباع الشمس الحمراء</span>
+          </div>
+          <div class="rounded-2xl overflow-hidden border border-slate-200 relative aspect-video bg-slate-100">
+            <img src="/images/character-lemon-3d.png" alt="الليمونة ثلاثية الأبعاد" class="w-full h-full object-cover">
+          </div>
+          <p class="text-xs text-slate-700 font-semibold leading-relaxed">
+            ليمونة مجسمة ثلاثية الأبعاد بلمعان نقي، مع قطرات ندى متوهجة وورقة تباع الشمس الحمراء على طاولة رخامية فاخرة.
+          </p>
+        </div>
+        <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200 text-[11px] font-bold text-amber-900">
+          "مثلنا إحنا الحموض.. طعمنا حامض ولاذع، وبنحوّل ورقة تباع الشمس للأحمر!"
+        </div>
+      </div>
+
+      <!-- المشهد 2: الصابونة -->
+      <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition space-y-3 p-4 flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between bg-blue-600 text-white px-3 py-1.5 rounded-xl text-xs font-black">
+            <span>🧼 شخصية الصابونة (القواعد)</span>
+            <span>ورقة تباع الشمس الزرقاء</span>
+          </div>
+          <div class="rounded-2xl overflow-hidden border border-slate-200 relative aspect-video bg-slate-100">
+            <img src="/images/character-soap-3d.png" alt="الصابونة ثلاثية الأبعاد" class="w-full h-full object-cover">
+          </div>
+          <p class="text-xs text-slate-700 font-semibold leading-relaxed">
+            قالب صابون حريري نقي محاط بفقاعات كريستالية لامعة، مع ورقة تباع الشمس الزرقاء ومظهر يعكس النظافة والانسيابية.
+          </p>
+        </div>
+        <div class="bg-blue-50 p-2.5 rounded-xl border border-blue-200 text-[11px] font-bold text-blue-900">
+          "وفي المقابل إحنا القواعد.. طعمنا مرّ، وملمسنا ناعم وزلق، وبنحوّل تباع الشمس للأزرق!"
+        </div>
+      </div>
+
+      <!-- المشهد 3: كاشف الملفوف الأحمر والألوان -->
+      <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition space-y-3 p-4 flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between bg-purple-600 text-white px-3 py-1.5 rounded-xl text-xs font-black">
+            <span>🥬 كاشف الملفوف الأحمر الطبيعي</span>
+            <span>وردي للحمض ⟷ أخضر للقاعدة</span>
+          </div>
+          <div class="rounded-2xl overflow-hidden border border-slate-200 relative aspect-video bg-slate-100">
+            <img src="/images/cabbage-indicator-colors-3d.png" alt="كاشف الملفوف الأحمر وتغير الألوان" class="w-full h-full object-cover">
+          </div>
+          <p class="text-xs text-slate-700 font-semibold leading-relaxed">
+            دوارق زجاجية كريستالية تظهر التدرج اللوني الساحر لكاشف الملفوف: بنفسجي متعادل بالوسط، وردي/أحمر مع الخل باليسار، وأخضر زمردي مع المعقم باليمين.
+          </p>
+        </div>
+        <div class="bg-purple-50 p-2.5 rounded-xl border border-purple-200 text-[11px] font-bold text-purple-900">
+          "كاشف طبيعي بسيط مثل منقوع الملفوف الأحمر بقلب أحمر مع الحمض وبتحول لأخضر مع القاعدة!"
+        </div>
+      </div>
+
+      <!-- المشهد 4: المساعد الذكي والمنصة -->
+      <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition space-y-3 p-4 flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs font-black">
+            <span>🔬 المساعد الذكي والمنصة الافتراضية</span>
+            <span>محاكاة 3D وتدريج pH</span>
+          </div>
+          <div class="rounded-2xl overflow-hidden border border-slate-200 relative aspect-video bg-slate-100">
+            <img src="/images/character-smart-assistant-3d.png" alt="المساعد الذكي والمختبر الافتراضي" class="w-full h-full object-cover">
+          </div>
+          <p class="text-xs text-slate-700 font-semibold leading-relaxed">
+            مسبار مخبري رقمي متطور بحلقات نيون زمردية وشاشات هولوغرامية تفاعلية تعرض واجهة منصة كيمياء التاسع والمختبر الافتراضي.
+          </p>
+        </div>
+        <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-200 text-[11px] font-bold text-emerald-900">
+          "واليوم مع الأستاذة فرح نشأت.. رح نعيش التجربة عملياً ونطبق على المنصة افتراضياً!"
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- JavaScript logic for Audio and Copy -->
   <script>
-    function updateStats() {
-      const text = document.getElementById('scriptEditor').value.trim();
-      const words = text ? text.split(/\s+/).length : 0;
-      const estimatedSeconds = Math.round(words / 2.2);
-      
-      document.getElementById('wordCount').innerText = words;
-      document.getElementById('timeEstimate').innerText = estimatedSeconds;
-    }
+    const fullSpeech = "المساعد الذكي: صباح الخير يا صبايا! متذكرين شو تعلمنا بصف سابع عن الحموض والقواعد؟ كنا نحكي عن إنها مش مواد كيميائية بالمختبر وبس، بل مقسمة كثير من الأشياء اللي بنستخدمها بحياتنا اليومية لقسمين أساسيين! الليمونة: مثلنا إحنا الحموض.. طعمنا حامض ولاذع، وبتلاقونا بالليمون والخل وعصائر الفواكه، وبنحوّل ورقة تباع الشمس للون الأحمر! الصابونة: وفي المقابل إحنا القواعد.. طعمنا مرّ، وملمسنا ناعم وزلق، وسر قوة الصابون والمُنظفات وبيكربونات الصوديوم، وبنحوّل تباع الشمس للون الأزرق! المساعد الذكي: وخلينا اليوم ننعش ذاكرتنا.. كيف كنا نميز بينهم بشكل كيميائي آمن وبدون ما نتذوق الأشياء الضارة؟.. أيوة: الكواشف! مثل تباع الشمس، أو كاشف طبيعي بسيط مثل منقوع الملفوف الأحمر اللي بقلب أحمر أو وردي مع الحمض وبتحول لأخضر أو أزرق مع القاعدة! الجميع معاً: واليوم مع الأستاذة فرح نشأت.. رح نعيش التجربة عملياً قدامكم، ونطبق على أرض الواقع وفي منصتنا افتراضيًا كمان!.. تفضلي مس فرح!";
 
-    let isSpeaking = false;
-    function playCustomVoice() {
-      const text = document.getElementById('scriptEditor').value.trim();
-      if (!text) return;
-
+    let isPlaying = false;
+    function playLockedVoice() {
       if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(text);
+        if (isPlaying) {
+          window.speechSynthesis.cancel();
+          isPlaying = false;
+          document.getElementById('audioBtnText').innerText = 'استماع للحوار الصوتي المعتمد كاملاً';
+          return;
+        }
+
+        const u = new SpeechSynthesisUtterance(fullSpeech);
         u.lang = 'ar-SA';
         u.rate = 0.95;
-        
-        const btnText = document.getElementById('playCustomBtnText');
         u.onstart = () => {
-          isSpeaking = true;
-          btnText.innerText = 'جاري القراءة الصوتية...';
+          isPlaying = true;
+          document.getElementById('audioBtnText').innerText = 'جاري القراءة الصوتية... (اضغطي للإيقاف)';
         };
         u.onend = () => {
-          isSpeaking = false;
-          btnText.innerText = 'استماع للحوار الصوتي الآن';
+          isPlaying = false;
+          document.getElementById('audioBtnText').innerText = 'استماع للحوار الصوتي المعتمد كاملاً';
         };
         window.speechSynthesis.speak(u);
       } else {
@@ -178,27 +224,15 @@
       }
     }
 
-    function stopVoice() {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        isSpeaking = false;
-        document.getElementById('playCustomBtnText').innerText = 'استماع للحوار الصوتي الآن';
-      }
-    }
-
-    function copyEditedText() {
-      const text = document.getElementById('scriptEditor').value;
-      navigator.clipboard.writeText(text).then(() => {
+    function copyLockedText() {
+      navigator.clipboard.writeText(fullSpeech).then(() => {
         const btnText = document.getElementById('copyBtnText');
-        const original = btnText.innerText;
         btnText.innerText = 'تم النسخ بنجاح! ✅';
         setTimeout(() => {
-          btnText.innerText = original;
+          btnText.innerText = 'نسخ النص المعتمد';
         }, 2000);
       });
     }
-
-    updateStats();
   </script>
 
 </body>

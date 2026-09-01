@@ -47,14 +47,18 @@ export default function HomePage() {
     }
   ]);
   const [homeChatLoading, setHomeChatLoading] = useState(false);
-  const homeChatEndRef = useRef<HTMLDivElement>(null);
+  const homeChatContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollHomeChat = () => {
-    homeChatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (homeChatContainerRef.current) {
+      homeChatContainerRef.current.scrollTop = homeChatContainerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
-    scrollHomeChat();
+    if (homeChatMessages.length > 1) {
+      scrollHomeChat();
+    }
   }, [homeChatMessages]);
 
   const handleSelectSubstanceWithScroll = (sub: ChemicalSubstance) => {
@@ -565,8 +569,8 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* Chat Messages Container with Auto-Scroll */}
-          <div className="bg-slate-50 p-4 border border-slate-200 h-[380px] overflow-y-auto space-y-3">
+          {/* Chat Messages Container with Internal Auto-Scroll */}
+          <div ref={homeChatContainerRef} className="bg-slate-50 p-4 border border-slate-200 h-[380px] overflow-y-auto space-y-3">
             {homeChatMessages.map((msg) => (
               <div
                 key={msg.id}
@@ -591,7 +595,6 @@ export default function HomePage() {
                 <span>{t('جاري معالجة الإجابة العلمية...', 'Synthesizing scientific answer...')}</span>
               </div>
             )}
-            <div ref={homeChatEndRef} />
           </div>
 
           {/* Chat Input Bar */}
