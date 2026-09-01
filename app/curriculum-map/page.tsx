@@ -18,7 +18,8 @@ import {
   Dna,
   Sprout,
   ShieldAlert,
-  ArrowRight
+  ArrowRight,
+  Boxes
 } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/LanguageContext';
@@ -316,11 +317,11 @@ export default function CurriculumMapPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
       
-      {/* Header */}
-      <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
+      {/* Header - Sharp Precision Style */}
+      <div className="bg-white border-2 border-slate-900 p-6 sm:p-8 space-y-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-slate-900 pb-4">
           <div className="space-y-1 max-w-2xl">
-            <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+            <span className="text-xs font-mono font-bold text-emerald-950 bg-emerald-100 px-2.5 py-1 border border-emerald-300">
               {t('الخارطة المفاهيمية الشاملة للمنهاج', 'Comprehensive Curriculum Knowledge Map')}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-950">
@@ -329,14 +330,14 @@ export default function CurriculumMapPage() {
           </div>
           <Link
             href="/virtual-lab"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition"
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-950 text-emerald-400 font-bold text-xs border border-slate-900 transition"
           >
             <FlaskConical className="w-4 h-4" />
-            <span>{t('تطبيق المحاكاة في المختبر الافتراضي', 'Launch Matching Lab Simulation')}</span>
+            <span>{t('تطبيق المحاكاة في المختبر الافتراضي', 'Launch Lab Simulation')}</span>
           </Link>
         </div>
 
-        <p className="text-xs text-slate-600 mt-3 leading-relaxed">
+        <p className="text-xs text-slate-700 leading-relaxed">
           {t(
             'تفكيك وتحليل معمق لجميع موضوعات وحدة "الحموض والقواعد والأملاح"، مزودة بالنتاجات، المعادلات الكيميائية، الربط بالحياة والصناعة والزراعة، وحلول بنك أسئلة "أتحقق" المدرجة في الكتاب الوزاري.',
             'Deep breakdown of all 5 Collins Grade 9 curriculum modules with exact page citations, ionic equations, real-world connections, and full solutions to textbook checkpoints.'
@@ -348,12 +349,12 @@ export default function CurriculumMapPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* Module Nav Selector (4 cols) */}
-        <div className="lg:col-span-4 space-y-3">
-          <h2 className="text-xs font-black text-slate-400 uppercase tracking-wider px-2">
+        <div className="lg:col-span-4 space-y-2">
+          <h2 className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider px-1">
             {t('المحاور التعليمية الخمسة:', 'Curriculum Core Modules:')}
           </h2>
           
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {CURRICULUM_MODULES.map((mod) => {
               const isSelected = selectedModule.id === mod.id;
               return (
@@ -364,17 +365,17 @@ export default function CurriculumMapPage() {
                     setActiveTab('overview');
                     setShowAnswerIdx({});
                   }}
-                  className={`w-full text-right p-4 rounded-2xl border transition flex items-center justify-between ${
+                  className={`w-full text-right p-4 border transition flex items-center justify-between ${
                     isSelected
-                      ? 'bg-emerald-50/80 border-emerald-400 ring-2 ring-emerald-200'
-                      : 'bg-white border-slate-200 hover:bg-slate-50'
+                      ? 'bg-slate-950 text-white border-slate-950 shadow-xs'
+                      : 'bg-white border-slate-300 hover:bg-slate-50 text-slate-900'
                   }`}
                 >
                   <div className="space-y-1">
-                    <div className="font-bold text-xs sm:text-sm text-slate-950">{mod.title}</div>
-                    <div className="text-[11px] text-emerald-700 font-medium">{mod.pages}</div>
+                    <div className="font-bold text-xs sm:text-sm">{mod.title}</div>
+                    <div className={`text-[11px] font-mono ${isSelected ? 'text-emerald-400' : 'text-emerald-800'}`}>{mod.pages}</div>
                   </div>
-                  <ChevronLeft className={`w-4 h-4 transition-transform ${isSelected ? 'text-emerald-700 -translate-x-1' : 'text-slate-300'}`} />
+                  <ChevronLeft className={`w-4 h-4 transition-transform ${isSelected ? 'text-emerald-400 -translate-x-1' : 'text-slate-400'}`} />
                 </button>
               );
             })}
@@ -382,42 +383,42 @@ export default function CurriculumMapPage() {
         </div>
 
         {/* Detailed Stage (8 cols) */}
-        <div className="lg:col-span-8 bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+        <div className="lg:col-span-8 bg-white border-2 border-slate-900 p-6 sm:p-8 space-y-6">
           
           {/* Header of selected module */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-slate-900 pb-4">
             <div className="space-y-0.5">
-              <span className="text-[11px] font-bold text-emerald-700 font-mono bg-emerald-50 px-2 py-0.5 rounded">
+              <span className="text-[11px] font-bold text-emerald-950 font-mono bg-emerald-100 px-2 py-0.5 border border-emerald-300">
                 {selectedModule.pages}
               </span>
-              <h3 className="text-xl font-black text-slate-900">{selectedModule.title}</h3>
+              <h3 className="text-xl font-black text-slate-950">{selectedModule.title}</h3>
             </div>
 
-            {/* Inner Sub-tabs */}
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-xs font-bold">
+            {/* Sub-tabs */}
+            <div className="flex items-center gap-1 bg-slate-100 p-1 border border-slate-300 text-xs font-bold">
               <button
                 onClick={() => setActiveTab('overview')}
-                className={`px-3 py-1.5 rounded-lg transition ${activeTab === 'overview' ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-600'}`}
+                className={`px-3 py-1.5 transition ${activeTab === 'overview' ? 'bg-slate-950 text-emerald-400' : 'text-slate-700'}`}
               >
-                {t('الملخص والنتاجات', 'Overview')}
+                {t('الملخص', 'Overview')}
               </button>
               <button
                 onClick={() => setActiveTab('equations')}
-                className={`px-3 py-1.5 rounded-lg transition ${activeTab === 'equations' ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-600'}`}
+                className={`px-3 py-1.5 transition ${activeTab === 'equations' ? 'bg-slate-950 text-emerald-400' : 'text-slate-700'}`}
               >
-                {t('المعادلات الكيميائية', 'Equations')}
+                {t('المعادلات', 'Equations')}
               </button>
               <button
                 onClick={() => setActiveTab('real_world')}
-                className={`px-3 py-1.5 rounded-lg transition ${activeTab === 'real_world' ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-600'}`}
+                className={`px-3 py-1.5 transition ${activeTab === 'real_world' ? 'bg-slate-950 text-emerald-400' : 'text-slate-700'}`}
               >
                 {t('الربط بالحياة', 'Real-world')}
               </button>
               <button
                 onClick={() => setActiveTab('checkpoints')}
-                className={`px-3 py-1.5 rounded-lg transition ${activeTab === 'checkpoints' ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-600'}`}
+                className={`px-3 py-1.5 transition ${activeTab === 'checkpoints' ? 'bg-slate-950 text-emerald-400' : 'text-slate-700'}`}
               >
-                {t('أسئلة "أتحقق" المحلولة', 'Checkpoints')}
+                {t('أسئلة "أتحقق"', 'Checkpoints')}
               </button>
             </div>
           </div>
@@ -425,19 +426,19 @@ export default function CurriculumMapPage() {
           {/* TAB: Overview & Key Points */}
           {activeTab === 'overview' && (
             <div className="space-y-6">
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed bg-slate-50 p-4 border border-slate-300">
                 {selectedModule.summary}
               </p>
 
-              <div className="space-y-3">
-                <h4 className="font-extrabold text-xs text-slate-900 uppercase tracking-wider">
-                  {t('المفاهيم والنتاجات الرئيسة (Key Concepts):', 'Key Concepts & Outcomes:')}
+              <div className="space-y-2.5">
+                <h4 className="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  {t('المفاهيم والنتاجات الرئيسة:', 'Key Concepts & Outcomes:')}
                 </h4>
-                <div className="grid grid-cols-1 gap-2.5">
+                <div className="grid grid-cols-1 gap-2">
                   {selectedModule.keyPoints.map((pt, idx) => (
-                    <div key={idx} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 text-xs flex items-start gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                      <span className="text-slate-700 leading-relaxed">{pt}</span>
+                    <div key={idx} className="p-3.5 bg-slate-50 border border-slate-300 text-xs flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
+                      <span className="text-slate-800 leading-relaxed">{pt}</span>
                     </div>
                   ))}
                 </div>
@@ -447,35 +448,29 @@ export default function CurriculumMapPage() {
 
           {/* TAB: Equations */}
           {activeTab === 'equations' && (
-            <div className="space-y-4">
-              <div className="text-xs text-slate-500">
-                المعادلات الكيميائية والأيونية المقررة في هذا المحور وفق المنهاج الوزاري:
-              </div>
-
-              <div className="space-y-3">
-                {selectedModule.equations.map((eq, idx) => (
-                  <div key={idx} className="p-4 rounded-2xl bg-slate-950 text-white space-y-2 border border-slate-800">
-                    <div className="text-xs font-bold text-emerald-400">{eq.title}</div>
-                    <div className="font-mono text-sm font-bold text-slate-100 dir-ltr bg-slate-900 p-3 rounded-xl border border-slate-800">
-                      {eq.equation}
-                    </div>
+            <div className="space-y-3">
+              {selectedModule.equations.map((eq, idx) => (
+                <div key={idx} className="p-4 bg-slate-950 text-white space-y-2 border border-slate-800">
+                  <div className="text-xs font-bold text-emerald-400">{eq.title}</div>
+                  <div className="font-mono text-sm font-bold text-slate-100 dir-ltr bg-slate-900 p-3 border border-slate-800">
+                    {eq.equation}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           )}
 
           {/* TAB: Real-World Link */}
           {activeTab === 'real_world' && (
-            <div className="p-6 rounded-3xl bg-emerald-50/60 border border-emerald-200 space-y-4">
+            <div className="p-6 bg-emerald-50 border-2 border-emerald-400 space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full">
+                <span className="text-xs font-mono font-bold text-emerald-950 bg-emerald-200 px-3 py-1 border border-emerald-400">
                   {selectedModule.realWorldConnection.category}
                 </span>
-                <span className="text-xs font-mono text-slate-400">{selectedModule.pages}</span>
+                <span className="text-xs font-mono text-slate-500">{selectedModule.pages}</span>
               </div>
-              <h4 className="text-base font-extrabold text-slate-900">{selectedModule.realWorldConnection.title}</h4>
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+              <h4 className="text-base font-black text-slate-950">{selectedModule.realWorldConnection.title}</h4>
+              <p className="text-xs sm:text-sm text-slate-800 leading-relaxed">
                 {selectedModule.realWorldConnection.desc}
               </p>
             </div>
@@ -483,38 +478,32 @@ export default function CurriculumMapPage() {
 
           {/* TAB: Checkpoints ("أتحقق") */}
           {activeTab === 'checkpoints' && (
-            <div className="space-y-4">
-              <div className="text-xs text-slate-500">
-                حلول نموذجية لكافة أسئلة &quot;أتحقق&quot; الواردة في صفحات هذا المحور:
-              </div>
-
-              <div className="space-y-3">
-                {selectedModule.checkQuestions.map((cq, idx) => {
-                  const isOpen = showAnswerIdx[idx];
-                  return (
-                    <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex items-start gap-2">
-                          <HelpCircle className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
-                          <h5 className="font-bold text-xs sm:text-sm text-slate-900">{cq.question}</h5>
-                        </div>
-                        <button
-                          onClick={() => toggleAnswer(idx)}
-                          className="px-3 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-[11px] font-bold text-emerald-800 shrink-0"
-                        >
-                          {isOpen ? t('إخفاء الإجابة', 'Hide Answer') : t('إظهار الإجابة', 'Show Answer')}
-                        </button>
+            <div className="space-y-3">
+              {selectedModule.checkQuestions.map((cq, idx) => {
+                const isOpen = showAnswerIdx[idx];
+                return (
+                  <div key={idx} className="p-4 bg-slate-50 border border-slate-300 space-y-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-2">
+                        <HelpCircle className="w-4 h-4 text-emerald-800 shrink-0 mt-0.5" />
+                        <h5 className="font-bold text-xs sm:text-sm text-slate-950">{cq.question}</h5>
                       </div>
-
-                      {isOpen && (
-                        <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-950 font-medium leading-relaxed whitespace-pre-line">
-                          {cq.answer}
-                        </div>
-                      )}
+                      <button
+                        onClick={() => toggleAnswer(idx)}
+                        className="px-3 py-1 bg-white hover:bg-slate-100 border border-slate-300 text-[11px] font-bold text-emerald-900 shrink-0"
+                      >
+                        {isOpen ? t('إخفاء الإجابة', 'Hide Answer') : t('إظهار الإجابة', 'Show Answer')}
+                      </button>
                     </div>
-                  );
-                })}
-              </div>
+
+                    {isOpen && (
+                      <div className="p-3 bg-emerald-50 border border-emerald-300 text-xs text-emerald-950 font-medium leading-relaxed whitespace-pre-line">
+                        {cq.answer}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
 

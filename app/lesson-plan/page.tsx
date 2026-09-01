@@ -2,11 +2,16 @@
 
 import { 
   Clock, 
-  Target,
+  Target, 
   AlertTriangle, 
-  ArrowLeft,
-  ArrowRight
+  ArrowLeft, 
+  ArrowRight,
+  BookOpen,
+  FlaskConical,
+  CheckCircle2,
+  Boxes
 } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/LanguageContext';
 
@@ -15,14 +20,14 @@ export default function LessonPlanPage() {
   const Arrow = dir === 'rtl' ? ArrowLeft : ArrowRight;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
       
-      {/* Header Banner - Clean Editorial Structure */}
-      <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5">
+      {/* Header Banner - Sharp Precision Style */}
+      <div className="bg-white border-2 border-slate-900 p-6 sm:p-8 space-y-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-slate-900 pb-5">
           <div className="space-y-1.5 max-w-2xl">
-            <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-              {t('خطة الحصة النموذجية المعيارية', 'Standard Demo Lesson Blueprint')}
+            <span className="text-xs font-mono font-bold text-emerald-950 bg-emerald-100 px-3 py-1 border border-emerald-300">
+              {t('خطة الحصة النموذجية المعيارية (10 دقائق)', 'Standard 10-Minute Demo Lesson Blueprint')}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
               {t('تحضير درس "الحموض والقواعد والكواشف" (', 'Lesson Plan: "Acids, Bases & Indicators" (')}
@@ -30,47 +35,80 @@ export default function LessonPlanPage() {
             </h1>
           </div>
           
-          <div className="bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-2xl text-xs shrink-0">
-            <div className="text-slate-500 font-medium">{t('الزمن الكلي للحصة', 'Total Duration')}</div>
-            <div className="text-emerald-800 font-black text-sm flex items-center gap-1.5 pt-0.5">
-              <Clock className="w-4 h-4 text-emerald-600" />
-              <span><span className="num-en text-base">10</span> {t('دقائق نموذجية', 'Minutes')}</span>
+          <div className="bg-slate-950 text-white border border-slate-900 px-4 py-2.5 text-xs shrink-0">
+            <div className="text-slate-400 font-mono">{t('الزمن الكلي للحصة', 'Total Duration')}</div>
+            <div className="text-emerald-400 font-mono font-black text-sm flex items-center gap-1.5 pt-0.5">
+              <Clock className="w-4 h-4 text-emerald-400" />
+              <span><span className="num-en text-base">10</span> {t('دقائق محكمة', 'Minutes')}</span>
             </div>
           </div>
         </div>
 
-        {/* Lesson Metadata Grid with Western numbers */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
-          <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/70">
+        {/* Lesson Metadata Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+          <div className="p-3 bg-slate-50 border border-slate-300">
             <span className="text-slate-500 block mb-1 font-medium">{t('المبحث والمرحلة', 'Subject & Grade')}</span>
-            <span className="font-bold text-slate-900">{t('الكيمياء - الصف التاسع الأساسي', 'Chemistry - Grade 9')}</span>
+            <span className="font-black text-slate-950">{t('الكيمياء - الصف التاسع الأساسي', 'Chemistry - Grade 9')}</span>
           </div>
-          <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/70">
+          <div className="p-3 bg-slate-50 border border-slate-300">
             <span className="text-slate-500 block mb-1 font-medium">{t('مرجع المنهاج', 'Curriculum Ref')}</span>
-            <span className="font-bold text-slate-900">{t('كتاب كولينز (الصفحات ', 'Collins (pp. ')}<span className="num-en">43 - 55</span>)</span>
+            <span className="font-black text-slate-950">{t('كتاب كولينز (الصفحات ', 'Collins (pp. ')}<span className="num-en font-mono">43 - 55</span>)</span>
           </div>
-          <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/70">
+          <div className="p-3 bg-slate-50 border border-slate-300">
             <span className="text-slate-500 block mb-1 font-medium">{t('المدرسة المستهدفة', 'Target School')}</span>
-            <span className="font-bold text-slate-900">{t('الإسلامية الحديثة - إربد (حكما)', 'Modern Islamic - Irbid')}</span>
+            <span className="font-black text-slate-950">{t('الإسلامية الحديثة - إربد (حكما)', 'Modern Islamic - Irbid')}</span>
           </div>
-          <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/70">
+          <div className="p-3 bg-slate-50 border border-slate-300">
             <span className="text-slate-500 block mb-1 font-medium">{t('المعلمة المنفذة', 'Teacher')}</span>
-            <span className="font-bold text-emerald-800">{t('أ. فرح نشأت', 'Farah Nashat')}</span>
+            <span className="font-black text-emerald-800">{t('أ. فرح نشأت (بكالوريوس كيمياء)', 'Farah Nashat (B.Sc.)')}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Hero Classroom Image & Context Strip */}
+      <div className="border-2 border-slate-900 bg-white grid grid-cols-1 md:grid-cols-12 gap-0">
+        <div className="md:col-span-5 relative aspect-[16/10] md:aspect-auto bg-slate-900 overflow-hidden min-h-[240px]">
+          <Image
+            src="/images/demo-lesson-classroom.png"
+            alt="Active Learning Chemistry Classroom"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+        <div className="md:col-span-7 p-6 space-y-3 text-right flex flex-col justify-center">
+          <div className="inline-block px-2 py-0.5 bg-emerald-100 text-emerald-950 font-mono text-[11px] font-bold border border-emerald-300">
+            استراتيجية التدريس: نموذج 5Es والتعلم النشط
+          </div>
+          <h2 className="text-lg font-black text-slate-950">
+            حصة استقصائية تفاعلية تحفز التفكير العلمي لدى الطالبات
+          </h2>
+          <p className="text-xs text-slate-600 leading-relaxed">
+            تمت هندسة هذه الحصة لتجمع بين إثارة الفضول عبر لغز الطعم والملمس، وبناء المفاهيم الكيميائية بدقة، وإجراء التجارب المعملية عبر المختبر الافتراضي، ثم التحقق الفوري من تحقق النتاجات التعليمية.
+          </p>
+          <div className="pt-2">
+            <Link
+              href="/virtual-lab"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-950 text-emerald-400 text-xs font-bold border border-slate-900 hover:bg-slate-900 transition"
+            >
+              <Boxes className="w-3.5 h-3.5" />
+              <span>فتح مجسمات 3D المرتبطة بالحصة</span>
+            </Link>
           </div>
         </div>
       </div>
 
       {/* Learning Objectives */}
-      <section className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-slate-950 text-emerald-400 flex items-center justify-center font-bold">
+      <section className="bg-white border-2 border-slate-900 p-6 sm:p-8 space-y-6">
+        <div className="flex items-center gap-3 border-b-2 border-slate-900 pb-4">
+          <div className="w-9 h-9 bg-slate-950 text-emerald-400 flex items-center justify-center font-bold">
             <Target className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-lg sm:text-xl font-bold text-slate-950">
+            <h2 className="text-lg sm:text-xl font-black text-slate-950">
               {t('نتاجات ومخرجات التعلم المستهدفة', 'Target Learning Outcomes')} <span className="num-en text-sm text-slate-500 font-semibold">(Learning Outcomes)</span>
             </h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-600">
               {t(
                 'يتوقع من الطالبة في نهاية الحصة المصغرة (10 دقائق) أن تكون قادرة على تحقيق التالي:',
                 'By the end of the 10-minute session, students are expected to demonstrate:'
@@ -79,234 +117,139 @@ export default function LessonPlanPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs leading-relaxed">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs leading-relaxed">
           
-          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-extrabold text-emerald-800 text-sm">
-                  <span className="num-en font-black text-base">01.</span> {t('النتاج المعرفي', 'Cognitive Outcome')}
-                </span>
-                <span className="num-en text-[11px] font-bold text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">Cognitive</span>
-              </div>
-              <p className="text-slate-600">
-                {t(
-                  'التمييز بين الحموض والقواعد من حيث الخصائص الكيميائية، نوع الأيونات الناتجة في المحلول المائي (H⁺ مقابل OH⁻)، واستخدامات كل منهما.',
-                  'Differentiate between acids and bases by chemical properties, identifying H⁺ vs OH⁻ aqueous ionization.'
-                )}
-              </p>
+          <div className="p-4 bg-slate-50 border border-slate-300 space-y-2">
+            <div className="flex items-center justify-between mb-1">
+              <span className="font-black text-emerald-950 text-sm">
+                <span className="num-en font-black text-base">01.</span> {t('النتاج المعرفي', 'Cognitive Outcome')}
+              </span>
+              <span className="font-mono text-[10px] font-bold text-slate-700 bg-white px-1.5 py-0.5 border border-slate-300">Cognitive</span>
             </div>
+            <p className="text-slate-700">
+              {t(
+                'التمييز بين الحموض والقواعد من حيث الخصائص الكيميائية، نوع الأيونات الناتجة في المحلول المائي (H⁺ مقابل OH⁻)، واستخدامات كل منهما.',
+                'Differentiate between acids and bases by chemical properties, identifying H⁺ vs OH⁻ aqueous ionization.'
+              )}
+            </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-extrabold text-emerald-800 text-sm">
-                  <span className="num-en font-black text-base">02.</span> {t('النتاج المهاري والاستقصائي', 'Skill & Inquiry')}
-                </span>
-                <span className="num-en text-[11px] font-bold text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">Skill</span>
-              </div>
-              <p className="text-slate-600">
-                {t(
-                  'استخدام كاشف تباع الشمس والكواشف الطبيعية (الملفوف الأحمر) ومقياس الرقم الهيدروجيني pH الرقمي لتصنيف المواد الكيميائية بدقة.',
-                  'Utilize litmus paper, natural red cabbage indicator, and digital pH meters to classify substances accurately.'
-                )}
-              </p>
+          <div className="p-4 bg-slate-50 border border-slate-300 space-y-2">
+            <div className="flex items-center justify-between mb-1">
+              <span className="font-black text-emerald-950 text-sm">
+                <span className="num-en font-black text-base">02.</span> {t('النتاج المهاري والاستقصائي', 'Skill & Inquiry')}
+              </span>
+              <span className="font-mono text-[10px] font-bold text-slate-700 bg-white px-1.5 py-0.5 border border-slate-300">Skill</span>
             </div>
+            <p className="text-slate-700">
+              {t(
+                'استخدام كاشف تباع الشمس والكواشف الطبيعية (الملفوف الأحمر) ومقياس الرقم الهيدروجيني pH الرقمي لتصنيف المواد الكيميائية بدقة.',
+                'Utilize litmus paper, natural red cabbage indicator, and digital pH meters to classify substances accurately.'
+              )}
+            </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-extrabold text-emerald-800 text-sm">
-                  <span className="num-en font-black text-base">03.</span> {t('النتاج القيمي والوجداني', 'Affective Outcome')}
-                </span>
-                <span className="num-en text-[11px] font-bold text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">Affective</span>
-              </div>
-              <p className="text-slate-600">
-                {t(
-                  'تقدير إعجاز الخالق في الاتزان الكيميائي داخل جسم الإنسان والبيئة، والالتزام بإجراءات السلامة العامة الصارمة في المختبر.',
-                  'Appreciate the divine balance in chemical systems and strictly comply with laboratory safety protocols.'
-                )}
-              </p>
+          <div className="p-4 bg-slate-50 border border-slate-300 space-y-2">
+            <div className="flex items-center justify-between mb-1">
+              <span className="font-black text-emerald-950 text-sm">
+                <span className="num-en font-black text-base">03.</span> {t('النتاج الوجداني والقيمي', 'Affective & Values')}
+              </span>
+              <span className="font-mono text-[10px] font-bold text-slate-700 bg-white px-1.5 py-0.5 border border-slate-300">Affective</span>
             </div>
+            <p className="text-slate-700">
+              {t(
+                'تقدير عظمة الخالق وإعجاز الاتزان الكيميائي في جسم الإنسان والكون استناداً للآية الكريمة: (وَكُلُّ شَيْءٍ عِندَهُ بِمِقْدَارٍ).',
+                'Appreciate chemical equilibrium in biology connecting to the Quranic verse: (Everything with Him is by due measure).'
+              )}
+            </p>
           </div>
 
         </div>
       </section>
 
-      {/* 10-Minute Timeline Breakdown */}
-      <section className="space-y-6">
-        <div className="space-y-1 text-right">
-          <h2 className="text-xl sm:text-2xl font-black text-slate-950">
-            {t('التوزيع الزمني الدقيق لأركان الحصة (', 'Precise Step-by-Step Lesson Timeline (')}
-            <span className="num-en text-emerald-700">10</span> {t('دقائق)', 'Minutes)')}
-          </h2>
-          <p className="text-xs text-slate-500">
-            {t(
-              'خطة تنفيذية مضبوطة بالثواني تضمن إشراك اللجنة وتحقيق التعلم النشط بالكامل.',
-              'Calibrated minute-by-minute execution plan to engage the committee and maximize active learning.'
-            )}
-          </p>
+      {/* Detailed Stepper Phases */}
+      <section className="bg-white border-2 border-slate-900 p-6 sm:p-8 space-y-6">
+        <div className="flex items-center justify-between border-b-2 border-slate-900 pb-4">
+          <div className="space-y-0.5">
+            <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase bg-emerald-100 px-2 py-0.5 border border-emerald-300">
+              Execution Stepper
+            </span>
+            <h2 className="text-xl font-black text-slate-950">
+              سير الحصة المبرمج تفصيلياً (التنفيذ خطوة بخطوة)
+            </h2>
+          </div>
         </div>
 
         <div className="space-y-4">
           
           {/* Phase 1 */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-2xs border-r-4 border-r-emerald-600 space-y-3">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded-md bg-slate-950 text-emerald-400 text-xs font-bold font-mono">
-                  <span className="num-en">00:00 - 02:00</span>
-                </span>
-                <h3 className="font-extrabold text-slate-900 text-sm sm:text-base">
-                  {t('التهيئة الحافزة والربط العقدي الحياتي', 'Engaging Hook & Real-World Curiosity')}
-                </h3>
-              </div>
-              <span className="text-xs text-slate-400 font-medium">
-                {t('استراتيجية: إثارة الفضول والاستمطار الفكري', 'Strategy: Inquiry & Curiosity Hook')}
+          <div className="border border-slate-300 p-5 space-y-2 bg-slate-50">
+            <div className="flex items-center justify-between">
+              <span className="px-2.5 py-0.5 bg-slate-950 text-emerald-400 font-mono text-xs font-bold">
+                00:00 - 02:00 (دقيقتان)
               </span>
+              <span className="text-xs font-bold text-slate-500">المرحلة 1: التهيئة الحافزة وإثارة الدافعية (Engage)</span>
             </div>
-
-            <div className="text-xs text-slate-600 space-y-1.5 leading-relaxed">
-              <p>
-                <strong>{t('إجراءات المعلمة:', 'Teacher Action:')}</strong>{' '}
-                {t(
-                  'عرض لغز بصري سريع: لماذا نشعر بالحموضة عند تذوق الليمون بينما يمتلك الصابون ملمساً زلقاً وطعماً مراً؟',
-                  'Presents an everyday mystery: Why do lemons taste sour while soap feels slippery and tastes bitter?'
-                )}
-              </p>
-              <p>
-                <strong>{t('الربط القيمي:', 'Values Connection:')}</strong>{' '}
-                {t(
-                  'الاستشهاد بالآية الكريمة: (وَكُلُّ شَيْءٍ عِندَهُ بِمِقْدَارٍ) [الرعد: 8] لبيان حكمة الخالق في ضبط حموضة الدم والمعدة بدقة متناهية.',
-                  'Reflecting on the verse (And everything with Him is by due measure) for biological homeostasis.'
-                )}
-              </p>
-            </div>
+            <h3 className="font-black text-sm text-slate-950">إثارة الفضول والتساؤل العلمي</h3>
+            <p className="text-xs text-slate-700 leading-relaxed">
+              عرض عينة من الليمون وعينة من الصابون، وسؤال الطالبات: ما السر الكيميائي وراء الطعم الحامضي لليمون والملمس الصابوني الزلق؟ وتوضيح خطورة تذوق المواد الكيميائية غير المعروفة في المختبر.
+            </p>
           </div>
 
           {/* Phase 2 */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-2xs border-r-4 border-r-emerald-700 space-y-3">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded-md bg-slate-950 text-emerald-400 text-xs font-bold font-mono">
-                  <span className="num-en">02:00 - 05:00</span>
-                </span>
-                <h3 className="font-extrabold text-slate-900 text-sm sm:text-base">
-                  {t('بناء المفاهيم الكيميائية واستعراض الكواشف', 'Concept Building & Chemical Indicators')}
-                </h3>
-              </div>
-              <span className="text-xs text-slate-400 font-medium">
-                {t('استراتيجية: فكر - زاوج - شارك (Think-Pair-Share)', 'Strategy: Think-Pair-Share')}
+          <div className="border border-slate-300 p-5 space-y-2 bg-slate-50">
+            <div className="flex items-center justify-between">
+              <span className="px-2.5 py-0.5 bg-slate-950 text-emerald-400 font-mono text-xs font-bold">
+                02:00 - 05:00 (3 دقائق)
               </span>
+              <span className="text-xs font-bold text-slate-500">المرحلة 2: استكشاف المفاهيم والكواشف (Explore & Explain)</span>
             </div>
-
-            <div className="text-xs text-slate-600 space-y-1.5 leading-relaxed">
-              <p>
-                <strong>{t('المحتوى العلمي:', 'Scientific Core:')}</strong>{' '}
-                {t(
-                  'توضيح مفهوم تأين الحموض لإنتاج أيون الهيدروجين (H⁺ / H₃O⁺) وتأين القواعد لإنتاج أيون الهيدروكسيد (OH⁻).',
-                  'Explaining acid ionization into H⁺/H₃O⁺ and base ionization into OH⁻ ions.'
-                )}
-              </p>
-              <p>
-                <strong>{t('النشاط التفاعلي:', 'Interactive Activity:')}</strong>{' '}
-                {t(
-                  'عرض كاشف الملفوف الأحمر الطبيعي وكاشف تباع الشمس، وطرح تساؤل على الحضور لتوقع اللون الناتج.',
-                  'Demonstrating red cabbage broth color-shifting and litmus paper reactions.'
-                )}
-              </p>
-            </div>
+            <h3 className="font-black text-sm text-slate-950">بناء مفهوم التأين وإنتاج أيونات H⁺ و OH⁻</h3>
+            <p className="text-xs text-slate-700 leading-relaxed">
+              شرح معادلة تأين الحمض في الماء: HCl → H⁺ + Cl⁻ ومعادلة تأين القاعدة: NaOH → Na⁺ + OH⁻. استعراض كاشف الملفوف الأحمر الطبيعي وكاشف تباع الشمس، ورصد تدرج تدريج الرقم الهيدروجيني pH من 0 إلى 14.
+            </p>
           </div>
 
           {/* Phase 3 */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-2xs border-r-4 border-r-emerald-800 space-y-3">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded-md bg-slate-950 text-emerald-400 text-xs font-bold font-mono">
-                  <span className="num-en">05:00 - 08:00</span>
-                </span>
-                <h3 className="font-extrabold text-slate-900 text-sm sm:text-base">
-                  {t('المختبر الافتراضي ومحاكاة المعايرة الرقمية', 'Virtual Lab Simulation & Digital Titration')}
-                </h3>
-              </div>
-              <span className="text-xs text-slate-400 font-medium">
-                {t('استراتيجية: التعلم بالاستقصاء والنمذجة الرقمية', 'Strategy: Digital Modeling')}
+          <div className="border border-slate-300 p-5 space-y-2 bg-slate-50">
+            <div className="flex items-center justify-between">
+              <span className="px-2.5 py-0.5 bg-slate-950 text-emerald-400 font-mono text-xs font-bold">
+                05:00 - 08:00 (3 دقائق)
               </span>
+              <span className="text-xs font-bold text-slate-500">المرحلة 3: التطبيق بالمختبر الافتراضي والمعايرة (Elaborate)</span>
             </div>
-
-            <div className="text-xs text-slate-600 space-y-1.5 leading-relaxed">
-              <p>
-                <strong>{t('التطبيق العملي:', 'Practical Simulation:')}</strong>{' '}
-                {t(
-                  'فتح صفحة المختبر الافتراضي من شاشة العرض، غمس قطب مقياس pH في محاليل مجهولة وتدريج الرقم الهيدروجيني من 0 إلى 14.',
-                  'Dipping digital pH probe into test beakers across 0 to 14 spectrum.'
-                )}
-              </p>
-              <p>
-                <strong>{t('تفاعل التعادل:', 'Neutralization Reaction:')}</strong>{' '}
-                {t(
-                  'إجراء معايرة سريعة بإضافة قطرات من NaOH إلى حمض HCl حتى نقطة التكافؤ (اللون الوردي الخفيف مع الفينولفثالين).',
-                  'Titrating NaOH drops into HCl with phenolphthalein reaching permanent faint pink equivalence point.'
-                )}
-              </p>
-            </div>
+            <h3 className="font-black text-sm text-slate-950">المحاكاة التفاعلية وتفاعل التعادل</h3>
+            <p className="text-xs text-slate-700 leading-relaxed">
+              إشراك الطالبات في تجربة المعايرة الافتراضية عبر إضافة قطرات NaOH إلى كأس HCl مع كاشف الفينولفثالين حتى ظهور اللون الوردي الفاتح عند نقطة التعادل التام (pH = 7).
+            </p>
           </div>
 
           {/* Phase 4 */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-2xs border-r-4 border-r-emerald-950 space-y-3">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded-md bg-slate-950 text-emerald-400 text-xs font-bold font-mono">
-                  <span className="num-en">08:00 - 10:00</span>
-                </span>
-                <h3 className="font-extrabold text-slate-900 text-sm sm:text-base">
-                  {t('التقويم التكويني والختام المهاري', 'Formative Assessment & Wrap-up')}
-                </h3>
-              </div>
-              <span className="text-xs text-slate-400 font-medium">
-                {t('استراتيجية: بطاقات الخروج والتغذية الراجعة', 'Strategy: Exit Tickets & Instant Feedback')}
+          <div className="border border-slate-300 p-5 space-y-2 bg-slate-50">
+            <div className="flex items-center justify-between">
+              <span className="px-2.5 py-0.5 bg-slate-950 text-emerald-400 font-mono text-xs font-bold">
+                08:00 - 10:00 (دقيقتان)
               </span>
+              <span className="text-xs font-bold text-slate-500">المرحلة 4: التقويم التكويني والختام القيمي (Evaluate)</span>
             </div>
-
-            <div className="text-xs text-slate-600 space-y-1.5 leading-relaxed">
-              <p>
-                <strong>{t('التقييم السريع:', 'Live Quiz:')}</strong>{' '}
-                {t(
-                  'إطلاق اختبار التقويم التكويني الرقمي (3 أسئلة فورية) للتأكد من رسوخ المفاهيم لدى المتعلمين.',
-                  'Launching live interactive 3-question formative assessment.'
-                )}
-              </p>
-            </div>
+            <h3 className="font-black text-sm text-slate-950">التحدي التشخيصي السريع وبطاقة الخروج</h3>
+            <p className="text-xs text-slate-700 leading-relaxed">
+              طرح سؤالين سريعين للتقويم التكويني، وربط دقة اتزان حموضة دم الإنسان (pH 7.35 - 7.45) بقدرة الخالق وعظمته، وتوجيه الطالبات للواجب البيتي الاستقصائي.
+            </p>
           </div>
 
         </div>
       </section>
 
-      {/* Safety Notice */}
-      <div className="bg-amber-50/80 border border-amber-200 rounded-2xl p-5 flex items-start gap-4 text-xs">
-        <AlertTriangle className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
-        <div className="space-y-1">
-          <h4 className="font-bold text-amber-950">{t('إرشادات السلامة العامة في المختبر الكيميائي', 'Laboratory Safety Protocols')}</h4>
-          <p className="text-amber-900 leading-relaxed">
-            {t(
-              'يُحظر قطعياً تذوق أو لمس الحموض والقواعد الصناعية المركزة (مثل HCl و NaOH) نظراً لخاصيتها الكاوية الحارقة للأنسجة، مع وجوب ارتداء معطف المختبر والقفازات الواقية.',
-              'Never touch or taste concentrated mineral acids or strong bases (HCl, NaOH). Always wear PPE, lab coats, and safety goggles.'
-            )}
-          </p>
+      {/* Safety Directive */}
+      <div className="p-5 bg-amber-50 border-2 border-amber-400 text-xs text-amber-950 space-y-2">
+        <div className="flex items-center gap-2 font-black text-sm text-amber-900">
+          <AlertTriangle className="w-5 h-5 text-amber-700" />
+          <span>إرشادات السلامة العامة في مختبر الكيمياء (كتاب كولينز ص 47):</span>
         </div>
-      </div>
-
-      {/* Action CTA */}
-      <div className="text-center pt-2">
-        <Link
-          href="/virtual-lab"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-950 hover:bg-slate-900 text-emerald-400 font-bold text-xs shadow-xs transition"
-        >
-          <span>{t('الانتقال لتطبيق التجربة في المختبر الافتراضي الآن', 'Launch Interactive Virtual Lab Simulator')}</span>
-          <Arrow className="w-4 h-4" />
-        </Link>
+        <p className="leading-relaxed">
+          الحموض والقواعد الصناعية مثل HCl و NaOH مواد حارقة وكاوية ومسببة للتآكل الشديد؛ يُحظر قطعياً تذوق أو لمس أو استنشاق أبخرة أي مادة كيميائية في المختبر، مع الالتزام التام بارتداء المعطف المخبري، والقفازات، والنظارات الواقية.
+        </p>
       </div>
 
     </div>

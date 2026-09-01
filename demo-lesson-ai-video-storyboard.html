@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>خطة وسيناريو فيديو الذكاء الاصطناعي | أ. فرح نشأت - المدارس الإسلامية الحديثة</title>
+  
+  <!-- Google Fonts: Cairo + Tajawal + Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Outfit:wght@400;600;700;800&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            cairo: ['Cairo', 'sans-serif'],
+            tajawal: ['Tajawal', 'sans-serif'],
+            outfit: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+              950: '#052e16',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+    }
+    .num-en {
+      font-family: 'Outfit', sans-serif;
+      direction: ltr;
+      display: inline-block;
+    }
+    .gradient-header {
+      background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%);
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+    }
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      body {
+        background: #ffffff;
+      }
+      .page-break {
+        page-break-before: always;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-white">
+
+  <!-- TOP APP BAR -->
+  <header class="gradient-header text-white sticky top-0 z-50 border-b border-emerald-900/30 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center text-xl shadow-inner">
+          🧪
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs bg-emerald-400 text-emerald-950 font-black px-2 py-0.5 rounded">حصة نموذجية 10 دقائق</span>
+            <span class="text-xs text-emerald-100 font-medium">المدارس الإسلامية الحديثة - إربد (حكما)</span>
+          </div>
+          <h1 class="text-base sm:text-lg font-black tracking-tight text-white">
+            سيناريو فيديو الذكاء الاصطناعي التفاعلي | الأستاذة فرح نشأت
+          </h1>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2.5 no-print">
+        <button onclick="window.print()" class="px-3.5 py-1.5 bg-white/10 hover:bg-white/20 border border-white/25 rounded-lg text-xs font-bold transition flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          طباعة الملف (PDF)
+        </button>
+        <button onclick="playVoiceoverDemo()" id="playAllBtn" class="px-4 py-1.5 bg-emerald-400 hover:bg-emerald-300 text-emerald-950 rounded-lg text-xs font-black transition flex items-center gap-1.5 shadow-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span id="playBtnText">تشغيل الصوت تجريبياً 🔊</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO DOSSIER INFO -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4 w-full">
+    <div class="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-sm space-y-6">
+      
+      <!-- Meta Badges -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+        <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-100">
+          <span class="text-slate-400 block mb-0.5 font-bold">المقابلة والجهة</span>
+          <span class="font-extrabold text-slate-900">المدرسة الإسلامية الحديثة (إربد)</span>
+        </div>
+        <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-100">
+          <span class="text-slate-400 block mb-0.5 font-bold">الموعد والتاريخ</span>
+          <span class="font-extrabold text-emerald-800 font-mono">الأربعاء 02/09/2026 - 08:00 ص</span>
+        </div>
+        <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-100">
+          <span class="text-slate-400 block mb-0.5 font-bold">الموضوع والمنهاج</span>
+          <span class="font-extrabold text-slate-900">الحموض والقواعد (كولينز ص 43-55)</span>
+        </div>
+        <div class="p-3.5 bg-emerald-50/70 rounded-2xl border border-emerald-200/80">
+          <span class="text-emerald-700 block mb-0.5 font-bold">مدة الفيديو الموصى بها</span>
+          <span class="font-black text-emerald-950 font-mono text-sm">⏱️ 50 ثانية فقط (من أصل 10 دقائق)</span>
+        </div>
+      </div>
+
+      <!-- Quick Strategy Box -->
+      <div class="bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-950 text-white rounded-2xl p-5 sm:p-6 shadow-inner space-y-3">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">🎯</span>
+          <h2 class="text-base sm:text-lg font-black">الهدف الاستراتيجي من فيديو الذكاء الاصطناعي في المقابلة:</h2>
+        </div>
+        <p class="text-xs sm:text-sm text-emerald-100/90 leading-relaxed">
+          استخدام الفيديو كـ <strong>"مثير ومحفز بصري ذكي" (Visual Hook & Inquiry Trigger)</strong> في بداية الحصة لمدة <strong><span class="num-en">50</span> ثانية فقط</strong>، يعرض المفاهيم المجردة (أيونات <span class="num-en">H⁺</span> و <span class="num-en">OH⁻</span> وتغير ألوان الكواشف) بتقنية سينمائية <span class="num-en">3D</span> مع ربط قيمي قرآني رفيع، ثم تسليم الراية مباشرة للأستاذة فرح لتنطلق باستراتيجيات التعلم النشط وتطبيق المختبر الافتراضي.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full space-y-12 flex-1">
+
+    <!-- ========================================== -->
+    <!-- SECTION 1: MASTER SCENE-BY-SCENE STORYBOARD -->
+    <!-- ========================================== -->
+    <section class="space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-3">
+        <div>
+          <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">السيناريو التفصيلي بالثواني</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">
+            🎬 لوحة القصة والمشاهد (Master Storyboard & Script)
+          </h2>
+        </div>
+        <div class="text-xs text-slate-500 font-bold bg-white px-3 py-1.5 rounded-xl border border-slate-200">
+          الزمن الإجمالي: <span class="num-en font-black text-emerald-700">00:50</span> ثانية
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6">
+
+        <!-- SCENE 1 -->
+        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md transition">
+          <div class="bg-slate-950 text-white px-6 py-3.5 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800">
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-1 bg-emerald-500 text-slate-950 font-black text-xs font-mono rounded-md">المشهد 01</span>
+              <span class="text-xs sm:text-sm font-bold text-emerald-300">الافتتاحية والترحيب الذكي</span>
+            </div>
+            <div class="text-xs text-slate-400 font-mono font-bold">
+              ⏱️ <span class="num-en">00:00 - 00:08</span> (8 ثوانٍ)
+            </div>
+          </div>
+
+          <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Info -->
+            <div class="lg:col-span-4 space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200/60">
+              <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">التكوين البصري (Visual Concept)</div>
+              <div class="w-full h-36 rounded-xl bg-gradient-to-br from-emerald-800 to-slate-900 flex flex-col items-center justify-center text-white p-3 text-center text-xs shadow-inner">
+                <span class="text-3xl mb-1">🤖🔬</span>
+                <span class="font-bold">مختبر كيمياء مستقبلي فخم</span>
+                <span class="text-[11px] text-emerald-200 mt-1">أفاتار / روبوت ذكي يرتدي معطف المختبر ويبتسم</span>
+              </div>
+              <div class="text-xs text-slate-600 space-y-1">
+                <div><strong>المؤثر الصوتي:</strong> نغمة ترحيبية تقنية خفيفة (Futuristic Chime).</div>
+                <div><strong>حركة الكاميرا:</strong> زووم انسيابي سلس على وجه المساعد الذكي.</div>
+              </div>
+            </div>
+
+            <!-- Right Script & Prompt -->
+            <div class="lg:col-span-8 space-y-4">
+              <div class="bg-emerald-50/60 border border-emerald-200 rounded-2xl p-4">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-extrabold text-emerald-900 flex items-center gap-1.5">
+                    <span>🎙️</span> النص المنطوق (Voiceover Script):
+                  </span>
+                  <button onclick="speakText('السلام عليكم ورحمة الله وبركاته! أهلاً بكن في مختبر المستقبل للكيمياء مع الأستاذة فرح نشأت.. يا ترى، هل تساءلتن يوماً ماذا يختبئ داخل طعامنا وأجسامنا؟')" class="text-xs bg-white text-emerald-800 border border-emerald-300 hover:bg-emerald-100 px-2 py-0.5 rounded font-bold transition">
+                    🔊 استماع
+                  </button>
+                </div>
+                <p class="text-sm sm:text-base font-bold text-slate-900 leading-relaxed">
+                  "السَّلامُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُه! أَهْلاً بِكُنَّ فِي مُخْتَبَرِ المُسْتَقْبَلِ لِلْكِيمْيَاءِ مَعَ الأُسْتَاذَةِ فَرَح نَشْأَت.. يَا تَرَى، هَلْ تَسَاءَلْتُنَّ يَوْماً مَاذَا يَخْتَبِئُ دَاخِلَ طَعَامِنَا وَأَجْسَامِنَا؟"
+                </p>
+              </div>
+
+              <!-- AI Prompt Box -->
+              <div class="bg-slate-900 text-slate-200 rounded-2xl p-4 text-xs font-mono space-y-2">
+                <div class="flex items-center justify-between text-slate-400">
+                  <span class="font-bold text-emerald-400">Midjourney / Runway Gen-3 Prompt:</span>
+                  <button onclick="copyPrompt(this, 'Cinematic 3D animation, friendly cute Pixar-style robot science assistant wearing lab goggles and white lab coat, standing in modern high school chemistry lab, smiling warmly at camera, bright ambient lighting, high octane render, 8k, photorealistic --ar 16:9')" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded border border-slate-700 transition">
+                    نسخ البرومبت 📋
+                  </button>
+                </div>
+                <div class="text-slate-300 leading-relaxed select-all">
+                  Cinematic 3D animation, friendly cute Pixar-style robot science assistant wearing lab goggles and white lab coat, standing in modern high school chemistry lab, smiling warmly at camera, bright ambient lighting, high octane render, 8k, photorealistic --ar 16:9
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCENE 2 -->
+        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md transition">
+          <div class="bg-slate-950 text-white px-6 py-3.5 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800">
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-1 bg-amber-500 text-slate-950 font-black text-xs font-mono rounded-md">المشهد 02</span>
+              <span class="text-xs sm:text-sm font-bold text-amber-300">الغوص الميكروسكوبي في عالم الحموض (أيونات H⁺)</span>
+            </div>
+            <div class="text-xs text-slate-400 font-mono font-bold">
+              ⏱️ <span class="num-en">00:08 - 00:20</span> (12 ثانية)
+            </div>
+          </div>
+
+          <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Info -->
+            <div class="lg:col-span-4 space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200/60">
+              <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">التكوين البصري (Visual Concept)</div>
+              <div class="w-full h-36 rounded-xl bg-gradient-to-br from-amber-700 to-red-950 flex flex-col items-center justify-center text-white p-3 text-center text-xs shadow-inner">
+                <span class="text-3xl mb-1">🍋✨🔴</span>
+                <span class="font-bold">شريحة ليمون تتفكك جزيئياً</span>
+                <span class="text-[11px] text-amber-200 mt-1">كرات ضوئية حمراء مشعة تمثل أيونات H⁺ تتطاير بطاقة عالية</span>
+              </div>
+              <div class="text-xs text-slate-600 space-y-1">
+                <div><strong>المؤثر الصوتي:</strong> صوت قطرات ماء + تفريغ طاقة بلوري (Sparkle Energy).</div>
+                <div><strong>حركة الكاميرا:</strong> Hyper-zoom سريع داخل قطرة عصير الليمون.</div>
+              </div>
+            </div>
+
+            <!-- Right Script & Prompt -->
+            <div class="lg:col-span-8 space-y-4">
+              <div class="bg-amber-50/60 border border-amber-200 rounded-2xl p-4">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-extrabold text-amber-950 flex items-center gap-1.5">
+                    <span>🎙️</span> النص المنطوق (Voiceover Script):
+                  </span>
+                  <button onclick="speakText('عندما نتذوق الليمون الحامض أو نرى حمض الهيدروكلوريك في معدتنا.. تتحرر ملايين أيونات الهيدروجين إتش بلس، مانحة إياها طاقة التأين والتأثير القوي!')" class="text-xs bg-white text-amber-900 border border-amber-300 hover:bg-amber-100 px-2 py-0.5 rounded font-bold transition">
+                    🔊 استماع
+                  </button>
+                </div>
+                <p class="text-sm sm:text-base font-bold text-slate-900 leading-relaxed">
+                  "عِنْدَمَا نَتَذَوَّقُ اللَّيْمُونَ الحَامِضَ، أَوْ نَرَى حَمْضَ الهَيْدْرُوكْلُورِيكِ فِي مَعِدَتِنَا.. تَتَحَرَّرُ مَلَايِينُ أَيُونَاتِ الهَيْدْرُوجِينِ <span class="num-en text-red-600">H⁺</span>، مَانِحَةً إِيَّاهَا طَاقَةَ التَّأَيُّنِ وَالتَّأْثِيرَ القَوِيّ!"
+                </p>
+              </div>
+
+              <!-- AI Prompt Box -->
+              <div class="bg-slate-900 text-slate-200 rounded-2xl p-4 text-xs font-mono space-y-2">
+                <div class="flex items-center justify-between text-slate-400">
+                  <span class="font-bold text-amber-400">Midjourney / Runway Prompt:</span>
+                  <button onclick="copyPrompt(this, 'Extreme close up cinematic 3D macro shot inside fresh lemon slice liquid dissolving into glowing molecular water, radiant red hydrogen ions H+ dispersing with sparkling glowing particle trails, high visual fidelity, unreal engine 5 --ar 16:9')" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded border border-slate-700 transition">
+                    نسخ البرومبت 📋
+                  </button>
+                </div>
+                <div class="text-slate-300 leading-relaxed select-all">
+                  Extreme close up cinematic 3D macro shot inside fresh lemon slice liquid dissolving into glowing molecular water, radiant red hydrogen ions H+ dispersing with sparkling glowing particle trails, high visual fidelity, unreal engine 5 --ar 16:9
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCENE 3 -->
+        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md transition">
+          <div class="bg-slate-950 text-white px-6 py-3.5 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800">
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-1 bg-blue-500 text-slate-950 font-black text-xs font-mono rounded-md">المشهد 03</span>
+              <span class="text-xs sm:text-sm font-bold text-blue-300">عالم القواعد وسحر الكواشف الطبيعية (أيونات OH⁻ والملفوف)</span>
+            </div>
+            <div class="text-xs text-slate-400 font-mono font-bold">
+              ⏱️ <span class="num-en">00:20 - 00:32</span> (12 ثانية)
+            </div>
+          </div>
+
+          <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Info -->
+            <div class="lg:col-span-4 space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200/60">
+              <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">التكوين البصري (Visual Concept)</div>
+              <div class="w-full h-36 rounded-xl bg-gradient-to-br from-blue-700 via-indigo-900 to-purple-950 flex flex-col items-center justify-center text-white p-3 text-center text-xs shadow-inner">
+                <span class="text-3xl mb-1">🧼🔵🟣🥬</span>
+                <span class="font-bold">أنابيب اختبار بألوان سحرية</span>
+                <span class="text-[11px] text-blue-200 mt-1">كاشف الملفوف الأحمر يتحول بين الوردي والأخضر والأزرق فورياً</span>
+              </div>
+              <div class="text-xs text-slate-600 space-y-1">
+                <div><strong>المؤثر الصوتي:</strong> انتقال سحري سلس (Magical Swish & Color Bloom).</div>
+                <div><strong>حركة الكاميرا:</strong> دوران بزاوية 360 درجة حول أنابيب الاختبار الزجاجية.</div>
+              </div>
+            </div>
+
+            <!-- Right Script & Prompt -->
+            <div class="lg:col-span-8 space-y-4">
+              <div class="bg-blue-50/60 border border-blue-200 rounded-2xl p-4">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-extrabold text-blue-950 flex items-center gap-1.5">
+                    <span>🎙️</span> النص المنطوق (Voiceover Script):
+                  </span>
+                  <button onclick="speakText('وفي المقابل.. تطلق القواعد مثل الصابون أيونات الهيدروكسيد أو إتش ماينس بملمسها الزلق.. وكواشف الطبيعة الذكية تكشف لنا أسرارها بتغير ألوانها البديع!')" class="text-xs bg-white text-blue-900 border border-blue-300 hover:bg-blue-100 px-2 py-0.5 rounded font-bold transition">
+                    🔊 استماع
+                  </button>
+                </div>
+                <p class="text-sm sm:text-base font-bold text-slate-900 leading-relaxed">
+                  "وَفِي المُقَابِلِ.. تُطْلِقُ القَوَاعِدُ مِثْلُ الصَّابُونِ أَيُونَاتِ الهَيْدْرُوكْسِيدِ <span class="num-en text-blue-600">OH⁻</span> بِمَلْمَسِهَا الزَّلِقِ.. وَكَوَاشِفُ الطَّبِيعَةِ الذَّكِيَّةُ تَكْشِفُ لَنَا أَسْرَارَهَا بِتَغَيُّرِ أَلْوَانِهَا البَدِيعِ!"
+                </p>
+              </div>
+
+              <!-- AI Prompt Box -->
+              <div class="bg-slate-900 text-slate-200 rounded-2xl p-4 text-xs font-mono space-y-2">
+                <div class="flex items-center justify-between text-slate-400">
+                  <span class="font-bold text-blue-400">Midjourney / Runway Prompt:</span>
+                  <button onclick="copyPrompt(this, 'Extreme close-up of clear chemical glass beakers with swirling glowing liquid dynamically changing color from purple red cabbage broth to vivid neon pink and deep emerald green, cinematic lighting, molecular blue OH- ions floating, 4k resolution --ar 16:9')" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded border border-slate-700 transition">
+                    نسخ البرومبت 📋
+                  </button>
+                </div>
+                <div class="text-slate-300 leading-relaxed select-all">
+                  Extreme close-up of clear chemical glass beakers with swirling glowing liquid dynamically changing color from purple red cabbage broth to vivid neon pink and deep emerald green, cinematic lighting, molecular blue OH- ions floating, 4k resolution --ar 16:9
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCENE 4 -->
+        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md transition">
+          <div class="bg-slate-950 text-white px-6 py-3.5 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800">
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-1 bg-emerald-400 text-slate-950 font-black text-xs font-mono rounded-md">المشهد 04</span>
+              <span class="text-xs sm:text-sm font-bold text-emerald-300">الربط القيمي الإيماني والاتزان الكيميائي في الجسم</span>
+            </div>
+            <div class="text-xs text-slate-400 font-mono font-bold">
+              ⏱️ <span class="num-en">00:32 - 00:42</span> (10 ثوانٍ)
+            </div>
+          </div>
+
+          <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Info -->
+            <div class="lg:col-span-4 space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200/60">
+              <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">التكوين البصري (Visual Concept)</div>
+              <div class="w-full h-36 rounded-xl bg-gradient-to-br from-emerald-900 to-teal-950 flex flex-col items-center justify-center text-white p-3 text-center text-xs shadow-inner">
+                <span class="text-3xl mb-1">⚖️🩸📖</span>
+                <span class="font-bold">ميزان حيوي لـ pH الدم (7.4)</span>
+                <span class="text-[11px] text-emerald-200 mt-1">نص الآية القرآنية يظهر بخط عربي ذهبي مشع ومهيب</span>
+              </div>
+              <div class="text-xs text-slate-600 space-y-1">
+                <div><strong>المؤثر الصوتي:</strong> نغمة دافئة ملهمة وروحانية هادئة.</div>
+                <div><strong>حركة الكاميرا:</strong> حركة رفع بطيئة ومبجلة تظهر الميزان والآية.</div>
+              </div>
+            </div>
+
+            <!-- Right Script & Prompt -->
+            <div class="lg:col-span-8 space-y-4">
+              <div class="bg-emerald-50/60 border border-emerald-200 rounded-2xl p-4">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-extrabold text-emerald-950 flex items-center gap-1.5">
+                    <span>🎙️</span> النص المنطوق (Voiceover Script):
+                  </span>
+                  <button onclick="speakText('إنها ليست مجرد معادلات، بل إعجاز خالق قدر كل شيء بميزان دقيق.. لحفظ حياتنا وصحة أبداننا!')" class="text-xs bg-white text-emerald-900 border border-emerald-300 hover:bg-emerald-100 px-2 py-0.5 rounded font-bold transition">
+                    🔊 استماع
+                  </button>
+                </div>
+                <p class="text-sm sm:text-base font-bold text-slate-900 leading-relaxed">
+                  "إِنَّهَا لَيْسَتْ مُجَرَّدَ مُعَادَلَاتٍ.. بَلْ إِعْجَازُ خَالِقٍ قَدَّرَ كُلَّ شَيْءٍ بِمِيزَانٍ دَقِيقٍ.. ﴿وَكُلُّ شَيْءٍ عِندَهُ بِمِقْدَارٍ﴾.. لِحِفْظِ حَيَاتِنَا وَصِحَّةِ أَبْدَانِنَا!"
+                </p>
+              </div>
+
+              <!-- AI Prompt Box -->
+              <div class="bg-slate-900 text-slate-200 rounded-2xl p-4 text-xs font-mono space-y-2">
+                <div class="flex items-center justify-between text-slate-400">
+                  <span class="font-bold text-emerald-400">Midjourney / Runway Prompt:</span>
+                  <button onclick="copyPrompt(this, 'Cinematic golden glowing balance scale representing perfect human blood pH equilibrium 7.4, floating in ethereal medical laboratory, Arabic calligraphy aesthetic background, divine sacred geometry light rays, hyper-detailed, 8k --ar 16:9')" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded border border-slate-700 transition">
+                    نسخ البرومبت 📋
+                  </button>
+                </div>
+                <div class="text-slate-300 leading-relaxed select-all">
+                  Cinematic golden glowing balance scale representing perfect human blood pH equilibrium 7.4, floating in ethereal medical laboratory, Arabic calligraphy aesthetic background, divine sacred geometry light rays, hyper-detailed, 8k --ar 16:9
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCENE 5 -->
+        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md transition">
+          <div class="bg-slate-950 text-white px-6 py-3.5 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800">
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-1 bg-purple-500 text-white font-black text-xs font-mono rounded-md">المشهد 05</span>
+              <span class="text-xs sm:text-sm font-bold text-purple-300">تسليم الراية التفاعلية للأستاذة فرح نشأت</span>
+            </div>
+            <div class="text-xs text-slate-400 font-mono font-bold">
+              ⏱️ <span class="num-en">00:42 - 00:50</span> (8 ثوانٍ)
+            </div>
+          </div>
+
+          <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Info -->
+            <div class="lg:col-span-4 space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200/60">
+              <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">التكوين البصري (Visual Concept)</div>
+              <div class="w-full h-36 rounded-xl bg-gradient-to-br from-purple-900 to-slate-950 flex flex-col items-center justify-center text-white p-3 text-center text-xs shadow-inner">
+                <span class="text-3xl mb-1">👩‍🏫💻✨</span>
+                <span class="font-bold">المساعد الذكي يشير للأستاذة فرح</span>
+                <span class="text-[11px] text-purple-200 mt-1">تظهر شاشة المختبر الافتراضي واسم الحصة واسم المعلمة</span>
+              </div>
+              <div class="text-xs text-slate-600 space-y-1">
+                <div><strong>المؤثر الصوتي:</strong> نغمة حماسية تصاعدية تسلم الحديث للمعلمة.</div>
+                <div><strong>حركة الكاميرا:</strong> رجوع واسع وتلاشي لطيف مع انتقال الشاشة للوضع التفاعلي.</div>
+              </div>
+            </div>
+
+            <!-- Right Script & Prompt -->
+            <div class="lg:col-span-8 space-y-4">
+              <div class="bg-purple-50/60 border border-purple-200 rounded-2xl p-4">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-extrabold text-purple-950 flex items-center gap-1.5">
+                    <span>🎙️</span> النص المنطوق (Voiceover Script):
+                  </span>
+                  <button onclick="speakText('والآن.. الكلمة والتجربة مع الأستاذة فرح لنكتشف عملياً أسرار هذا الاتزان في مختبرنا الافتراضي.. انطلقن!')" class="text-xs bg-white text-purple-900 border border-purple-300 hover:bg-purple-100 px-2 py-0.5 rounded font-bold transition">
+                    🔊 استماع
+                  </button>
+                </div>
+                <p class="text-sm sm:text-base font-bold text-slate-900 leading-relaxed">
+                  "وَالآن.. الكَلِمَةُ وَالتَّجْرِبَةُ مَعَ الأُسْتَاذَةِ فَرَح لِنَكْتَشِفَ عَمَلِيّاً أَسْرَارَ هَذَا الِاتِّزَانِ فِي مُخْتَبَرِنَا الِافْتِرَاضِيّ.. انْطَلِقْنَ!"
+                </p>
+              </div>
+
+              <!-- AI Prompt Box -->
+              <div class="bg-slate-900 text-slate-200 rounded-2xl p-4 text-xs font-mono space-y-2">
+                <div class="flex items-center justify-between text-slate-400">
+                  <span class="font-bold text-purple-400">Midjourney / Runway Prompt:</span>
+                  <button onclick="copyPrompt(this, 'Futuristic 3D robot assistant pointing cheerfully towards a virtual interactive chemistry laboratory holographic board with digital test tubes, inspiring classroom atmosphere, ultra high resolution 8k --ar 16:9')" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded border border-slate-700 transition">
+                    نسخ البرومبت 📋
+                  </button>
+                </div>
+                <div class="text-slate-300 leading-relaxed select-all">
+                  Futuristic 3D robot assistant pointing cheerfully towards a virtual interactive chemistry laboratory holographic board with digital test tubes, inspiring classroom atmosphere, ultra high resolution 8k --ar 16:9
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 2: 10-MINUTE INTEGRATION STRATEGY  -->
+    <!-- ========================================== -->
+    <section class="page-break space-y-6 pt-4">
+      <div class="border-b border-slate-200 pb-3">
+        <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">الخطة الزمنية المتكاملة</span>
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">
+          ⏱️ التوزيع الزمني الدقيق للحصة (10 دقائق) مع دمج الفيديو الذكي
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        
+        <!-- Step 1 -->
+        <div class="bg-white border-2 border-emerald-500 rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-3">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 bg-emerald-950 text-emerald-300 font-mono font-black text-xs rounded">00:00 - 02:00</span>
+              <span class="text-base">🎥</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm">التهيئة الحافزة وعرض الفيديو</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              • ترحيب باللجنة والطالبات (15 ثانية).<br>
+              • تشغيل فيديو الذكاء الاصطناعي (50 ثانية).<br>
+              • طرح سؤال الاستمطار الفكري: "ما السر وراء تغير لون الكاشف؟" (55 ثانية).
+            </p>
+          </div>
+          <div class="text-[11px] font-bold text-emerald-800 bg-emerald-50 p-2 rounded-lg border border-emerald-200">
+            استراتيجية: إثارة الفضول والـ Visual Hook
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-3">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 bg-slate-950 text-emerald-400 font-mono font-black text-xs rounded">02:00 - 05:00</span>
+              <span class="text-base">🧠</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm">بناء المفاهيم والكواشف الحية</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              • مفهوم تأين الحموض (H⁺) والقواعد (OH⁻).<br>
+              • عرض كاشف الملفوف وتباع الشمس الحقيقي.<br>
+              • نشاط فكر - زاوج - شارك مع أعضاء اللجنة.
+            </p>
+          </div>
+          <div class="text-[11px] font-bold text-slate-700 bg-slate-100 p-2 rounded-lg border border-slate-200">
+            استراتيجية: فكر - زاوج - شارك (Think-Pair-Share)
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-3">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 bg-slate-950 text-emerald-400 font-mono font-black text-xs rounded">05:00 - 08:00</span>
+              <span class="text-base">🧪</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm">المختبر الافتراضي 3D والمعايرة</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              • فتح شاشة المختبر الافتراضي من الموقع.<br>
+              • قياس pH المحاليل المجهولة بالقطب الرقمي.<br>
+              • معايرة سريعة (HCl + NaOH) لنقطة التكافؤ.
+            </p>
+          </div>
+          <div class="text-[11px] font-bold text-slate-700 bg-slate-100 p-2 rounded-lg border border-slate-200">
+            استراتيجية: التعلم بالاستقصاء والنمذجة الرقمية
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-3">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 bg-slate-950 text-emerald-400 font-mono font-black text-xs rounded">08:00 - 10:00</span>
+              <span class="text-base">📊</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm">التقويم التكويني وبطاقات الخروج</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              • إطلاق الكويز التفاعلي المباشر (3 أسئلة سريعة).<br>
+              • بطاقة خروج سريعة (Exit Ticket).<br>
+              • إغلاق ملهم يربط الكيمياء بعمارة الكون.
+            </p>
+          </div>
+          <div class="text-[11px] font-bold text-slate-700 bg-slate-100 p-2 rounded-lg border border-slate-200">
+            استراتيجية: بطاقات الخروج والتغذية الراجعة الفورية
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 3: AUDIO & PRODUCTION TOOLKIT      -->
+    <!-- ========================================== -->
+    <section class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+      <div class="border-b border-slate-100 pb-4">
+        <h2 class="text-lg sm:text-xl font-black text-slate-950 flex items-center gap-2">
+          <span>🛠️</span>
+          أدوات التوليد الفوري وطريقة التنفيذ
+        </h2>
+        <p class="text-xs text-slate-500 mt-1">
+          دليل الأدوات المجانية والسريعة لإنتاج الفيديو في أقل من 15 دقيقة:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+        
+        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+          <div class="font-extrabold text-emerald-800 text-sm flex items-center gap-1.5">
+            <span>🎙️</span> لتوليد الصوت العربي الفصيح:
+          </div>
+          <p class="text-slate-600 leading-relaxed">
+            استخدمي <strong>ElevenLabs</strong> أو <strong>Narakeet</strong>. اختاري الصوت العربي (Adam أو Tariq)، وانسخي النص المشكول بدقة الموجود في المشاهد أعلاه ليعطيكِ نبرة وثائقية حماسية واضحة جداً.
+          </p>
+        </div>
+
+        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+          <div class="font-extrabold text-emerald-800 text-sm flex items-center gap-1.5">
+            <span>🎥</span> لتوليد وتحريك المشاهد (Video Gen):
+          </div>
+          <p class="text-slate-600 leading-relaxed">
+            استخدمي <strong>Runway Gen-3 Alpha</strong> أو <strong>Luma Dream Machine</strong> أو <strong>Kling AI</strong> أو <strong>Hailuo AI</strong>، والصقي البرومبتات الإنجليزية الجاهزة لكل مشهد.
+          </p>
+        </div>
+
+        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+          <div class="font-extrabold text-emerald-800 text-sm flex items-center gap-1.5">
+            <span>✂️</span> للدمج السريع والمونتاج:
+          </div>
+          <p class="text-slate-600 leading-relaxed">
+            استخدمي تطبيق <strong>CapCut</strong> (على الهاتف أو الكمبيوتر) لدمج المقاطع الخمسة مع ملف الصوت، وإضافة مؤثر صوتي خفيف وانتقالات (Cross Dissolve).
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-6 text-center text-xs">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p class="font-bold text-slate-300">
+        ملف التحضير الإلكتروني للحصة النموذجية | المعلمة فرح نشأت © 2026
+      </p>
+      <p class="text-slate-400">
+        المدارس الإسلامية الحديثة - جمعية المركز الإسلامي الخيرية (إربد - حكما)
+      </p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT FOR SPEECH & COPY INTERACTIONS -->
+  <script>
+    // Copy prompt utility
+    function copyPrompt(button, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = button.innerHTML;
+        button.innerHTML = 'تم النسخ! ✅';
+        button.classList.add('bg-emerald-700', 'text-white');
+        setTimeout(() => {
+          button.innerHTML = originalText;
+          button.classList.remove('bg-emerald-700', 'text-white');
+        }, 2000);
+      });
+    }
+
+    // Web Speech API Voice synthesis for instant testing
+    let isSpeaking = false;
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ar-SA';
+        utterance.rate = 0.95;
+        utterance.pitch = 1.05;
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert('ميزة القراءة الصوتية غير مدعومة في متصفحك الحالي، يمكنك استخدام ElevenLabs لتوليد الملف الصوتي.');
+      }
+    }
+
+    function playVoiceoverDemo() {
+      const fullScript = "السلام عليكم ورحمة الله وبركاته! أهلاً بكن في مختبر المستقبل للكيمياء مع الأستاذة فرح نشأت.. يا ترى، هل تساءلتن يوماً ماذا يختبئ داخل طعامنا وأجسامنا؟ عندما نتذوق الليمون الحامض أو نرى حمض الهيدروكلوريك في معدتنا.. تتحرر ملايين أيونات الهيدروجين إتش بلس، مانحة إياها طاقة التأين والتأثير القوي! وفي المقابل.. تطلق القواعد مثل الصابون أيونات الهيدروكسيد أو إتش ماينس بملمسها الزلق.. وكواشف الطبيعة الذكية تكشف لنا أسرارها بتغير ألوانها البديع! إنها ليست مجرد معادلات، بل إعجاز خالق قدر كل شيء بميزان دقيق، وكل شيء عنده بمقدار، لحفظ حياتنا وصحة أبداننا! والآن.. الكلمة والتجربة مع الأستاذة فرح لنكتشف عملياً أسرار هذا الاتزان في مختبرنا الافتراضي.. انطلقن!";
+      
+      const btnText = document.getElementById('playBtnText');
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        isSpeaking = false;
+        btnText.innerText = 'تشغيل الصوت تجريبياً 🔊';
+      } else {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(fullScript);
+          utterance.lang = 'ar-SA';
+          utterance.rate = 0.95;
+          utterance.pitch = 1.05;
+          
+          utterance.onend = () => {
+            isSpeaking = false;
+            btnText.innerText = 'تشغيل الصوت تجريبياً 🔊';
+          };
+          
+          isSpeaking = true;
+          btnText.innerText = 'إيقاف الصوت ⏹️';
+          window.speechSynthesis.speak(utterance);
+        } else {
+          alert('ميزة القراءة الصوتية غير مدعومة في هذا المتصفح.');
+        }
+      }
+    }
+  </script>
+</body>
+</html>

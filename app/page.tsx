@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
   FlaskConical, 
   Sparkles, 
@@ -28,10 +29,14 @@ import {
   ShieldCheck,
   HeartHandshake,
   MessageSquare,
-  FileText
+  FileText,
+  Boxes,
+  Eye
 } from 'lucide-react';
 import { SUBSTANCES_DATA, ChemicalSubstance } from '@/lib/types';
 import { useLanguage } from '@/lib/LanguageContext';
+import { Molecule3DViewer } from '@/components/Molecule3DViewer';
+import { Ionization3DChamber } from '@/components/Ionization3DChamber';
 
 export default function HomePage() {
   const { t, dir } = useLanguage();
@@ -39,7 +44,6 @@ export default function HomePage() {
 
   // Mini Virtual Lab State on Homepage
   const [selectedSubstance, setSelectedSubstance] = useState<ChemicalSubstance>(SUBSTANCES_DATA[1]); // HCl default
-  const [probeActive, setProbeActive] = useState(true);
 
   // Live Mini Chat Assistant State on Homepage
   const [homeChatInput, setHomeChatInput] = useState('');
@@ -83,13 +87,13 @@ export default function HomePage() {
   return (
     <div className="space-y-16 pb-16">
       
-      {/* 1. HERO MASTER SECTION */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-slate-100 border-b border-slate-200/80 pt-10 pb-16">
+      {/* 1. HERO MASTER SECTION - SHARP ARCHITECTURAL AESTHETIC */}
+      <section className="relative overflow-hidden bg-white border-b-2 border-slate-900 pt-8 pb-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8">
           
           {/* Top Interview Logistics Pill */}
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-extrabold shadow-2xs">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 border border-emerald-400 text-emerald-950 text-xs font-bold">
               <Calendar className="w-3.5 h-3.5 text-emerald-700" />
               <span>
                 {t(
@@ -99,24 +103,24 @@ export default function HomePage() {
               </span>
             </div>
 
-            <div className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-2xs">
+            <div className="inline-flex items-center gap-2 text-xs font-bold text-slate-800 bg-slate-100 px-3 py-1 border border-slate-300">
               <MapPin className="w-3.5 h-3.5 text-emerald-700" />
               <span>{t('المدرسة الإسلامية الحديثة - إربد (حكما)', 'Modern Islamic School - Irbid (Hikma)')}</span>
             </div>
           </div>
 
           {/* Main Hero Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             {/* Left/Right Text Column */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="space-y-3">
-                <span className="text-xs font-black text-emerald-800 uppercase tracking-wider bg-emerald-100/60 px-2.5 py-1 rounded-md">
-                  {t('الملف التعليمي والتحضيري الشامل', 'Comprehensive Teaching Dossier')}
-                </span>
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 leading-[1.2] tracking-tight">
+              <div className="space-y-2">
+                <div className="inline-block bg-slate-950 text-emerald-400 text-[11px] font-mono font-bold px-2.5 py-1 tracking-wider uppercase">
+                  {t('ملف الترشح الوظيفي والحصة النموذجية', 'Official Teaching Candidate Dossier')}
+                </div>
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 leading-[1.15] tracking-tight">
                   {t('المعلمة فرح نشأت', 'Teacher Farah Nashat')} <br />
-                  <span className="text-emerald-700 underline decoration-emerald-300 underline-offset-8">
+                  <span className="text-emerald-700 underline decoration-emerald-400 underline-offset-8">
                     {t('كيمياء الصف التاسع الأساسي', 'Grade 9 Chemistry Specialist')}
                   </span>
                 </h1>
@@ -124,16 +128,16 @@ export default function HomePage() {
 
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed max-w-2xl font-normal">
                 {t(
-                  'أهلاً وسهلاً بلجنة المقابلة الكريمة وإدارة المدرسة الإسلامية الحديثة. يضم هذا الموقع تحضيري الكامل للحصة النموذجية (10 دقائق) لدرس "الحموض والقواعد والكواشف" من كتاب كولينز (ص 43 - 55)، شاملاً خطة الدرس المبرمجة بالثواني، المختبر الافتراضي التفاعلي، خارطة المفاهيم، والتقويم التكويني.',
-                  'Welcome to the official teaching dossier of Ms. Farah Nashat for the 10-minute demo lesson (Collins Grade 9 Chemistry, pp. 43-55) at Modern Islamic School - Irbid (Hikma), featuring a timed lesson plan, virtual laboratory, curriculum maps, and formative assessments.'
+                  'أهلاً وسهلاً بلجنة المقابلة الكريمة وإدارة المدرسة الإسلامية الحديثة. يضم هذا الموقع تحضيري الكامل للحصة النموذجية (10 دقائق) لدرس "الحموض والقواعد والكواشف" من كتاب كولينز (ص 43 - 55)، شاملاً خطة الدرس المبرمجة بالثواني، المختبر الافتراضي التفاعلي ثلاثي الأبعاد (3D)، وخارطة المنهاج، والتقويم التكويني.',
+                  'Welcome to the official teaching dossier of Ms. Farah Nashat for the 10-minute demo lesson (Collins Grade 9 Chemistry, pp. 43-55) at Modern Islamic School - Irbid (Hikma), featuring a timed lesson plan, interactive 3D virtual laboratory, curriculum maps, and formative assessments.'
                 )}
               </p>
 
-              {/* Quick Jump Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3 pt-1">
                 <Link
                   href="/lesson-plan"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm shadow-sm hover:shadow transition"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs border border-emerald-900 shadow-sm transition"
                 >
                   <BookOpen className="w-4 h-4" />
                   <span>{t('خطة الحصة النموذجية (10 دقائق)', 'View 10-Minute Lesson Plan')}</span>
@@ -142,98 +146,83 @@ export default function HomePage() {
 
                 <Link
                   href="/virtual-lab"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-400 font-bold text-sm shadow-2xs transition"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-slate-950 hover:bg-slate-900 text-emerald-400 font-bold text-xs border border-slate-900 shadow-sm transition"
                 >
                   <FlaskConical className="w-4 h-4 text-emerald-400" />
-                  <span>{t('المختبر الافتراضي (6 محطات)', 'Launch Virtual Lab (6 Stations)')}</span>
+                  <span>{t('المختبر الافتراضي ومحاكاة 3D', '3D Virtual Chemistry Lab')}</span>
                 </Link>
               </div>
 
               {/* Quick Highlights Metrics */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-200/80 text-xs">
-                <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-2xs">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-3 border-t border-slate-200 text-xs">
+                <div className="p-3 bg-slate-50 border border-slate-300">
                   <div className="font-bold text-slate-500">{t('الزمن الكلي', 'Duration')}</div>
                   <div className="font-black text-emerald-800 text-sm mt-0.5"><span className="num-en">10</span> {t('دقائق', 'Mins')}</div>
                 </div>
-                <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-2xs">
+                <div className="p-3 bg-slate-50 border border-slate-300">
                   <div className="font-bold text-slate-500">{t('مرجع الكتاب', 'Curriculum')}</div>
                   <div className="font-black text-slate-900 text-sm mt-0.5">{t('كولينز ص', 'pp.')} <span className="num-en">43-55</span></div>
                 </div>
-                <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-2xs">
+                <div className="p-3 bg-slate-50 border border-slate-300">
                   <div className="font-bold text-slate-500">{t('محطات المختبر', 'Lab Stations')}</div>
                   <div className="font-black text-emerald-800 text-sm mt-0.5"><span className="num-en">6</span> {t('محطات', 'Stations')}</div>
                 </div>
-                <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-2xs">
+                <div className="p-3 bg-slate-50 border border-slate-300">
                   <div className="font-bold text-slate-500">{t('المؤهل', 'Degree')}</div>
                   <div className="font-black text-slate-900 text-sm mt-0.5">{t('بكالوريوس كيمياء', 'B.Sc. Chem')}</div>
                 </div>
               </div>
             </div>
 
-            {/* Right/Left Interactive Mini Lab Card */}
-            <div className="lg:col-span-5">
-              <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-5">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <div className="flex items-center gap-2">
-                    <FlaskConical className="w-4 h-4 text-emerald-700" />
-                    <h3 className="font-extrabold text-slate-900 text-sm">
-                      {t('محطة الفحص السريع للمواد', 'Quick Substance pH Probe')}
-                    </h3>
-                  </div>
-                  <span className="text-[11px] bg-emerald-50 text-emerald-800 font-bold px-2 py-0.5 rounded border border-emerald-200">
-                    {selectedSubstance.curriculumPage}
+            {/* Right/Left Image & Live Lab Card */}
+            <div className="lg:col-span-5 space-y-4">
+              
+              {/* Generated Laboratory Hero Visual */}
+              <div className="border-2 border-slate-900 overflow-hidden relative group aspect-[16/10] bg-slate-900">
+                <Image
+                  src="/images/hero-chemistry-lab.png"
+                  alt="Farah Nashat Chemistry Lab Setup"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-103"
+                  priority
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-slate-950/90 text-white p-3 border-t border-slate-800 flex items-center justify-between text-xs">
+                  <span className="font-bold flex items-center gap-1.5">
+                    <FlaskConical className="w-4 h-4 text-emerald-400" />
+                    <span>تجارب درس الحموض والقواعد والكواشف</span>
+                  </span>
+                  <span className="text-[10px] font-mono text-emerald-300 bg-emerald-950 px-2 py-0.5 border border-emerald-800">
+                    كولينز ص 43 - 55
+                  </span>
+                </div>
+              </div>
+
+              {/* Substance pH Probe Tester */}
+              <div className="bg-slate-50 border border-slate-300 p-4 space-y-3">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                  <span className="text-xs font-bold text-slate-900">فحص المواد المباشر:</span>
+                  <span className="text-xs font-mono font-bold text-emerald-900 bg-emerald-100 px-2 py-0.5 border border-emerald-300">
+                    pH = {selectedSubstance.ph.toFixed(1)}
                   </span>
                 </div>
 
-                {/* Substance Selector */}
-                <div className="space-y-1.5">
-                  <label className="text-[11px] font-bold text-slate-500 block">اختر مادة للاختبار الفوري:</label>
-                  <div className="grid grid-cols-2 gap-1.5">
-                    {SUBSTANCES_DATA.slice(0, 4).map((sub) => (
-                      <button
-                        key={sub.id}
-                        onClick={() => setSelectedSubstance(sub)}
-                        className={`p-2.5 rounded-xl border text-xs font-bold text-right transition flex items-center justify-between ${
-                          selectedSubstance.id === sub.id 
-                            ? 'bg-emerald-50 border-emerald-400 text-emerald-950 ring-1 ring-emerald-300' 
-                            : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
-                        }`}
-                      >
-                        <span className="truncate">{sub.name.split('(')[0]}</span>
-                        <span 
-                          className="w-3 h-3 rounded-full shrink-0 ml-1.5"
-                          style={{ backgroundColor: sub.color }}
-                        />
-                      </button>
-                    ))}
-                  </div>
+                <div className="grid grid-cols-4 gap-1 text-xs">
+                  {SUBSTANCES_DATA.slice(0, 4).map((sub) => (
+                    <button
+                      key={sub.id}
+                      onClick={() => setSelectedSubstance(sub)}
+                      className={`p-1.5 border text-center font-bold text-[11px] transition ${
+                        selectedSubstance.id === sub.id 
+                          ? 'bg-slate-950 text-emerald-300 border-slate-950' 
+                          : 'bg-white border-slate-300 text-slate-700 hover:bg-slate-100'
+                      }`}
+                    >
+                      {sub.name.split('(')[0]}
+                    </button>
+                  ))}
                 </div>
-
-                {/* Mini Visual Beaker & Display */}
-                <div className="bg-slate-950 rounded-2xl p-4 text-white text-center space-y-2 relative overflow-hidden">
-                  <div className="text-[10px] text-slate-400 font-mono">Digital pH Readout</div>
-                  <div className="text-4xl font-mono font-black text-emerald-400">
-                    pH = {selectedSubstance.ph.toFixed(1)}
-                  </div>
-                  <div className="text-xs text-slate-300 font-medium">
-                    {selectedSubstance.typeName} • {selectedSubstance.formula}
-                  </div>
-                </div>
-
-                {/* Instant Chemistry Reaction Details */}
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1 text-right">
-                  <p><strong>ورق تباع الشمس:</strong> {selectedSubstance.litmusReaction}</p>
-                  <p><strong>الملفوف الأحمر:</strong> {selectedSubstance.cabbageReaction}</p>
-                </div>
-
-                <Link
-                  href="/virtual-lab"
-                  className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-2xs"
-                >
-                  <span>فتح المختبر الكامل (الموصلية، الفلزات، المعايرة)</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </Link>
               </div>
+
             </div>
 
           </div>
@@ -241,10 +230,61 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. PORTAL HUB CARDS - ALL PAGES ACCESSIBLE DIRECTLY */}
+      {/* 2. 3D INTERACTIVE MOLECULE & IONIZATION SHOWCASE (PHASE 2) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-slate-900 pb-4">
+          <div className="space-y-1">
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-emerald-100 text-emerald-900 font-mono text-xs font-bold border border-emerald-300">
+              <Boxes className="w-3.5 h-3.5" />
+              <span>Phase 2: 3D Visual Learning Engine</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-950">
+              المجسمات الجزيئية ثلاثية الأبعاد ومحاكاة حركة الأيونات (3D)
+            </h2>
+          </div>
+          <Link
+            href="/virtual-lab"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-950 text-emerald-400 font-bold text-xs border border-slate-900 hover:bg-slate-900 transition"
+          >
+            <span>دخول المختبر ثلاثي الأبعاد الكامل</span>
+            <ArrowUpRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        {/* 3D Visualizers Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          
+          {/* 3D Component 1: Molecule Viewer */}
+          <div className="border-2 border-slate-900 bg-slate-950">
+            <div className="p-3 bg-slate-900 text-white border-b border-slate-800 flex items-center justify-between text-xs font-bold">
+              <span className="flex items-center gap-2">
+                <Boxes className="w-4 h-4 text-emerald-400" />
+                <span>نمذجة الجزيئات ثلاثية الأبعاد (H₃O⁺, OH⁻, HCl, CH₃COOH, NH₃)</span>
+              </span>
+              <span className="font-mono text-[10px] text-slate-400">Three.js WebGL</span>
+            </div>
+            <Molecule3DViewer />
+          </div>
+
+          {/* 3D Component 2: Ionization Chamber */}
+          <div className="border-2 border-slate-900 bg-slate-950">
+            <div className="p-3 bg-slate-900 text-white border-b border-slate-800 flex items-center justify-between text-xs font-bold">
+              <span className="flex items-center gap-2">
+                <Zap className="w-4 h-4 text-amber-400" />
+                <span>محاكاة التأين والموصلية وإضاءة المصباح 3D</span>
+              </span>
+              <span className="font-mono text-[10px] text-slate-400">Ion Chamber</span>
+            </div>
+            <Ionization3DChamber />
+          </div>
+
+        </div>
+      </section>
+
+      {/* 3. PORTAL HUB CARDS - ALL PAGES ACCESSIBLE DIRECTLY (SHARP DESIGN) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-xs font-black text-emerald-800 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+          <span className="text-xs font-black text-emerald-900 uppercase tracking-widest bg-emerald-100 px-3 py-1 border border-emerald-300">
             {t('بوابات الملف التعليمي', 'Portfolio Navigation Hub')}
           </span>
           <h2 className="text-2xl sm:text-3xl font-black text-slate-950">
@@ -263,18 +303,18 @@ export default function HomePage() {
           {/* Card 1: Lesson Plan */}
           <Link
             href="/lesson-plan"
-            className="group bg-white border border-slate-200 hover:border-emerald-400 rounded-3xl p-6 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-4"
+            className="group bg-white border-2 border-slate-900 hover:border-emerald-600 p-6 shadow-xs transition-all flex flex-col justify-between space-y-4 relative"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+                <div className="w-10 h-10 bg-slate-950 text-emerald-400 flex items-center justify-center font-bold">
                   <BookOpen className="w-5 h-5" />
                 </div>
-                <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                  <span className="num-en">10</span> دقائق
+                <span className="text-[11px] font-mono font-bold text-slate-900 bg-slate-100 px-2.5 py-0.5 border border-slate-300">
+                  <span className="num-en">10</span> MINS
                 </span>
               </div>
-              <h3 className="font-extrabold text-slate-900 text-base group-hover:text-emerald-700 transition">
+              <h3 className="font-black text-slate-950 text-base group-hover:text-emerald-700 transition">
                 {t('خطة الحصة النموذجية المعيارية', '10-Minute Demo Lesson Blueprint')}
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -284,7 +324,7 @@ export default function HomePage() {
                 )}
               </p>
             </div>
-            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 pt-2 border-t border-slate-100">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 pt-3 border-t border-slate-200">
               <span>{t('عرض خطة الدرس التفصيلية', 'View Lesson Blueprint')}</span>
               <Arrow className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </div>
@@ -293,28 +333,28 @@ export default function HomePage() {
           {/* Card 2: Virtual Lab */}
           <Link
             href="/virtual-lab"
-            className="group bg-white border border-slate-200 hover:border-emerald-400 rounded-3xl p-6 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-4"
+            className="group bg-white border-2 border-slate-900 hover:border-emerald-600 p-6 shadow-xs transition-all flex flex-col justify-between space-y-4 relative"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-2xl bg-slate-900 text-emerald-400 flex items-center justify-center font-bold">
+                <div className="w-10 h-10 bg-emerald-700 text-white flex items-center justify-center font-bold">
                   <FlaskConical className="w-5 h-5" />
                 </div>
-                <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                  <span className="num-en">6</span> محطات تجريبية
+                <span className="text-[11px] font-mono font-bold text-emerald-950 bg-emerald-100 px-2.5 py-0.5 border border-emerald-300">
+                  <span className="num-en">6</span> STATIONS
                 </span>
               </div>
-              <h3 className="font-extrabold text-slate-900 text-base group-hover:text-emerald-700 transition">
-                {t('مختبر الكيمياء الافتراضي الاستقصائي', 'Virtual Chemistry Lab (6 Stations)')}
+              <h3 className="font-black text-slate-950 text-base group-hover:text-emerald-700 transition">
+                {t('مختبر الكيمياء الافتراضي (3D)', 'Virtual Chemistry Lab (3D)')}
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 {t(
-                  'محاكاة رقمية متقدمة: مقياس pH، إضاءة المصباح والموصلية، تفاعل الفلزات وتصاعد H₂، محطة الكواشف الخمسة، ومعالجة التربة بـ Ca(OH)₂.',
-                  'Interactive laboratory: digital pH probe, conductivity lamp, metal reactions with Pop Test, 5 indicators, and soil neutralization.'
+                  'محاكاة رقمية: مقياس pH، إضاءة المصباح والموصلية 3D، تفاعل الفلزات مع Pop Test، محطة الكواشف الخمسة، ومعالجة التربة.',
+                  'Interactive laboratory: digital pH probe, 3D conductivity lamp, metal reactions with Pop Test, 5 indicators, and soil neutralization.'
                 )}
               </p>
             </div>
-            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 pt-2 border-t border-slate-100">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 pt-3 border-t border-slate-200">
               <span>{t('دخول المختبر الافتراضي', 'Open Virtual Lab')}</span>
               <Arrow className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </div>
@@ -323,18 +363,18 @@ export default function HomePage() {
           {/* Card 3: Curriculum Map */}
           <Link
             href="/curriculum-map"
-            className="group bg-white border border-slate-200 hover:border-emerald-400 rounded-3xl p-6 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-4"
+            className="group bg-white border-2 border-slate-900 hover:border-emerald-600 p-6 shadow-xs transition-all flex flex-col justify-between space-y-4 relative"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+                <div className="w-10 h-10 bg-slate-950 text-emerald-400 flex items-center justify-center font-bold">
                   <Layers className="w-5 h-5" />
                 </div>
-                <span className="text-[11px] font-bold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-full">
-                  ص <span className="num-en">43 - 55</span>
+                <span className="text-[11px] font-mono font-bold text-slate-900 bg-slate-100 px-2.5 py-0.5 border border-slate-300">
+                  pp. <span className="num-en">43 - 55</span>
                 </span>
               </div>
-              <h3 className="font-extrabold text-slate-900 text-base group-hover:text-emerald-700 transition">
+              <h3 className="font-black text-slate-950 text-base group-hover:text-emerald-700 transition">
                 {t('خارطة منهاج كولينز وبنك أسئلة "أتحقق"', 'Collins Grade 9 Concept Map & Checkpoints')}
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -344,7 +384,7 @@ export default function HomePage() {
                 )}
               </p>
             </div>
-            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 pt-2 border-t border-slate-100">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 pt-3 border-t border-slate-200">
               <span>{t('استعراض خارطة المنهاج', 'Explore Concept Map')}</span>
               <Arrow className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </div>
@@ -353,18 +393,18 @@ export default function HomePage() {
           {/* Card 4: Quiz */}
           <Link
             href="/quiz"
-            className="group bg-white border border-slate-200 hover:border-emerald-400 rounded-3xl p-6 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-4"
+            className="group bg-white border-2 border-slate-900 hover:border-emerald-600 p-6 shadow-xs transition-all flex flex-col justify-between space-y-4 relative"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
+                <div className="w-10 h-10 bg-amber-600 text-white flex items-center justify-center font-bold">
                   <Award className="w-5 h-5" />
                 </div>
-                <span className="text-[11px] font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
-                  <span className="num-en">10</span> أسئلة معيارية
+                <span className="text-[11px] font-mono font-bold text-amber-950 bg-amber-100 px-2.5 py-0.5 border border-amber-300">
+                  <span className="num-en">10</span> Qs
                 </span>
               </div>
-              <h3 className="font-extrabold text-slate-900 text-base group-hover:text-emerald-700 transition">
+              <h3 className="font-black text-slate-950 text-base group-hover:text-emerald-700 transition">
                 {t('اختبار التقويم التكويني والختامي', 'Formative Assessment & Diagnostic Quiz')}
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -374,7 +414,7 @@ export default function HomePage() {
                 )}
               </p>
             </div>
-            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 pt-2 border-t border-slate-100">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 pt-3 border-t border-slate-200">
               <span>{t('بدء الاختبار التشخيصي', 'Take Diagnostic Quiz')}</span>
               <Arrow className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </div>
@@ -383,28 +423,28 @@ export default function HomePage() {
           {/* Card 5: Assistant */}
           <Link
             href="/assistant"
-            className="group bg-white border border-slate-200 hover:border-emerald-400 rounded-3xl p-6 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-4"
+            className="group bg-white border-2 border-slate-900 hover:border-emerald-600 p-6 shadow-xs transition-all flex flex-col justify-between space-y-4 relative"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+                <div className="w-10 h-10 bg-slate-950 text-emerald-400 flex items-center justify-center font-bold">
                   <MessageSquare className="w-5 h-5" />
                 </div>
-                <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                  مساعد فوري
+                <span className="text-[11px] font-mono font-bold text-emerald-950 bg-emerald-100 px-2.5 py-0.5 border border-emerald-300">
+                  GLM 5.3
                 </span>
               </div>
-              <h3 className="font-extrabold text-slate-900 text-base group-hover:text-emerald-700 transition">
+              <h3 className="font-black text-slate-950 text-base group-hover:text-emerald-700 transition">
                 {t('المساعد التعليمي لمراجعة المنهاج', 'Chemistry Study & Concept Assistant')}
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 {t(
-                  'محرك استرجاع وإجابة فورية عن أي سؤال في كتاب كيمياء التاسع، مبرمج وفق نموذج GLM 5.3 Flash.',
+                  'محرك استرجاع وإجابة فورية عن أي سؤال في كتاب كيمياء التاسع، مبرمج وفق نموذج cf/zai-org/glm-5.3-flash.',
                   'Interactive concept assistant powered by cf/zai-org/glm-5.3-flash model answering syllabus queries instantly.'
                 )}
               </p>
             </div>
-            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 pt-2 border-t border-slate-100">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 pt-3 border-t border-slate-200">
               <span>{t('محادثة المساعد التعليمي', 'Open Study Assistant')}</span>
               <Arrow className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </div>
@@ -413,18 +453,18 @@ export default function HomePage() {
           {/* Card 6: About Teacher */}
           <Link
             href="/about"
-            className="group bg-white border border-slate-200 hover:border-emerald-400 rounded-3xl p-6 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-4"
+            className="group bg-white border-2 border-slate-900 hover:border-emerald-600 p-6 shadow-xs transition-all flex flex-col justify-between space-y-4 relative"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold">
+                <div className="w-10 h-10 bg-emerald-700 text-white flex items-center justify-center font-bold">
                   <GraduationCap className="w-5 h-5" />
                 </div>
-                <span className="text-[11px] font-bold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-full">
-                  السيرة والمؤهلات
+                <span className="text-[11px] font-mono font-bold text-slate-900 bg-slate-100 px-2.5 py-0.5 border border-slate-300">
+                  BIO
                 </span>
               </div>
-              <h3 className="font-extrabold text-slate-900 text-base group-hover:text-emerald-700 transition">
+              <h3 className="font-black text-slate-950 text-base group-hover:text-emerald-700 transition">
                 {t('عن المعلمة والرؤية التربوية', 'Teacher Bio & Educational Vision')}
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -434,7 +474,7 @@ export default function HomePage() {
                 )}
               </p>
             </div>
-            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 pt-2 border-t border-slate-100">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 pt-3 border-t border-slate-200">
               <span>{t('قراءة السيرة الذاتية والرؤية', 'Read Bio & Credentials')}</span>
               <Arrow className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </div>
@@ -443,12 +483,93 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. TIMED 10-MINUTE LESSON PLAN STEPPER */}
+      {/* 4. VISUAL GALLERY OF EXPERIMENTS & PEDAGOGY (PHASE 3 ASSETS) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-slate-900 pb-3">
+          <div className="space-y-0.5">
+            <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase tracking-widest bg-emerald-100 px-2 py-0.5 border border-emerald-300">
+              Phase 3: Visual Laboratory Showcase
+            </span>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-950">
+              معرض التجارب المعملية والربط بالواقع (كولينز ص 43 - 55)
+            </h2>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          {/* Visual 1: Classroom Active Learning */}
+          <div className="border-2 border-slate-900 bg-white overflow-hidden group space-y-3">
+            <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
+              <Image
+                src="/images/demo-lesson-classroom.png"
+                alt="Active Learning Classroom"
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-103"
+              />
+            </div>
+            <div className="p-4 space-y-1 text-right">
+              <span className="text-[10px] font-mono text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 border border-emerald-300">
+                استراتيجيات التعلم النشط
+              </span>
+              <h3 className="font-extrabold text-sm text-slate-900">التعلم القائم على الاستقصاء والتفكير الثنائي</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                مشاركة الطالبات في صياغة الفرضيات وفحص المحاليل بمستخلص الملفوف في بيئة صفية آمنة.
+              </p>
+            </div>
+          </div>
+
+          {/* Visual 2: Indicators Setup */}
+          <div className="border-2 border-slate-900 bg-white overflow-hidden group space-y-3">
+            <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
+              <Image
+                src="/images/indicators-lab-setup.png"
+                alt="Chemical Indicators Setup"
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-103"
+              />
+            </div>
+            <div className="p-4 space-y-1 text-right">
+              <span className="text-[10px] font-mono text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 border border-emerald-300">
+                الكواشف وتدريج pH (ص 54-55)
+              </span>
+              <h3 className="font-extrabold text-sm text-slate-900">طيف الألوان في الأوساط الحمضية والقاعدية</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                تباع الشمس، الفينولفثالين، أزرق البروموثيمول، والكاشف العام من الأحمر إلى الأزرق.
+              </p>
+            </div>
+          </div>
+
+          {/* Visual 3: Agriculture Soil Remediation */}
+          <div className="border-2 border-slate-900 bg-white overflow-hidden group space-y-3">
+            <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
+              <Image
+                src="/images/soil-agriculture-lab.png"
+                alt="Agricultural Soil Remediation"
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-103"
+              />
+            </div>
+            <div className="p-4 space-y-1 text-right">
+              <span className="text-[10px] font-mono text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 border border-emerald-300">
+                الربط بالزراعة (كولينز ص 55)
+              </span>
+              <h3 className="font-extrabold text-sm text-slate-900">معالجة حموضة التربة بـ Ca(OH)₂</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                إضافة الجير المطفأ لرفع pH التربة إلى المدى المثالي (6.0 - 7.0) لنمو المحاصيل.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 5. TIMED 10-MINUTE LESSON PLAN STEPPER (SHARP DESIGN) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-8">
-          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5">
+        <div className="bg-white border-2 border-slate-900 p-6 sm:p-10 space-y-8">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-slate-900 pb-5">
             <div className="space-y-1">
-              <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+              <span className="text-xs font-bold text-emerald-950 bg-emerald-100 px-2.5 py-1 border border-emerald-300">
                 التخطيط التنفيذي للحصة المصغرة
               </span>
               <h2 className="text-xl sm:text-2xl font-black text-slate-950">
@@ -457,62 +578,62 @@ export default function HomePage() {
             </div>
             <Link
               href="/lesson-plan"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-400 font-bold text-xs transition"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-950 text-emerald-400 font-bold text-xs border border-slate-900 hover:bg-slate-900 transition"
             >
               <BookOpen className="w-3.5 h-3.5" />
-              <span>عرض وثيقة التحضير الكاملة</span>
+              <span>وثيقة التحضير الكاملة</span>
             </Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+            <div className="p-5 bg-slate-50 border border-slate-300 space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="px-2 py-0.5 bg-slate-900 text-emerald-400 font-mono text-[11px] font-bold rounded">
+                <span className="px-2 py-0.5 bg-slate-950 text-emerald-400 font-mono text-[11px] font-bold">
                   00:00 - 02:00
                 </span>
-                <span className="text-[10px] font-bold text-slate-400">المرحلة 1</span>
+                <span className="text-[10px] font-bold text-slate-500 font-mono">PHASE 1</span>
               </div>
-              <h3 className="font-extrabold text-sm text-slate-900">التهيئة وإثارة الفضول</h3>
+              <h3 className="font-extrabold text-sm text-slate-950">التهيئة وإثارة الفضول</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 لغز طعم الليمون الحامض مقابل ملمس الصابون الزلق وطعمه المر، وربطه بالاتزان الإلهي.
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+            <div className="p-5 bg-slate-50 border border-slate-300 space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="px-2 py-0.5 bg-slate-900 text-emerald-400 font-mono text-[11px] font-bold rounded">
+                <span className="px-2 py-0.5 bg-slate-950 text-emerald-400 font-mono text-[11px] font-bold">
                   02:00 - 05:00
                 </span>
-                <span className="text-[10px] font-bold text-slate-400">المرحلة 2</span>
+                <span className="text-[10px] font-bold text-slate-500 font-mono">PHASE 2</span>
               </div>
-              <h3 className="font-extrabold text-sm text-slate-900">بناء المفاهيم والكواشف</h3>
+              <h3 className="font-extrabold text-sm text-slate-950">بناء المفاهيم والكواشف</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 تأين الحمض لإنتاج H⁺ وتأين القاعدة لإنتاج OH⁻، واستعراض كاشف الملفوف وتباع الشمس.
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+            <div className="p-5 bg-slate-50 border border-slate-300 space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="px-2 py-0.5 bg-slate-900 text-emerald-400 font-mono text-[11px] font-bold rounded">
+                <span className="px-2 py-0.5 bg-slate-950 text-emerald-400 font-mono text-[11px] font-bold">
                   05:00 - 08:00
                 </span>
-                <span className="text-[10px] font-bold text-slate-400">المرحلة 3</span>
+                <span className="text-[10px] font-bold text-slate-500 font-mono">PHASE 3</span>
               </div>
-              <h3 className="font-extrabold text-sm text-slate-900">المختبر الافتراضي والمعايرة</h3>
+              <h3 className="font-extrabold text-sm text-slate-950">المختبر الافتراضي والمعايرة</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 غمس قطب مقياس pH في المحاليل ومعايرة قطرات NaOH مع HCl للوصول لنقطة التعادل الوردي.
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+            <div className="p-5 bg-slate-50 border border-slate-300 space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="px-2 py-0.5 bg-slate-900 text-emerald-400 font-mono text-[11px] font-bold rounded">
+                <span className="px-2 py-0.5 bg-slate-950 text-emerald-400 font-mono text-[11px] font-bold">
                   08:00 - 10:00
                 </span>
-                <span className="text-[10px] font-bold text-slate-400">المرحلة 4</span>
+                <span className="text-[10px] font-bold text-slate-500 font-mono">PHASE 4</span>
               </div>
-              <h3 className="font-extrabold text-sm text-slate-900">التقويم التكويني والختام</h3>
+              <h3 className="font-extrabold text-sm text-slate-950">التقويم التكويني والختام</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 تحدي تشخيصي سريع بأسئلة تفاعلية فورية للتأكد من تحقق نتاجات التعلم لدى جميع الطالبات.
               </p>
@@ -522,14 +643,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. LIVE INTERACTIVE AI STUDY ASSISTANT ON HOMEPAGE */}
+      {/* 6. LIVE INTERACTIVE AI STUDY ASSISTANT ON HOMEPAGE */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-md space-y-6">
+        <div className="bg-slate-950 text-white border-2 border-slate-900 p-6 sm:p-10 space-y-6">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 text-emerald-400 text-xs font-bold border border-emerald-800">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-950 text-emerald-400 text-xs font-mono font-bold border border-emerald-800">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>المساعد التعليمي الذكي (cf/zai-org/glm-5.3-flash)</span>
+                <span>AI Tutor Engine: cf/zai-org/glm-5.3-flash</span>
               </div>
               <h2 className="text-xl sm:text-2xl font-black text-slate-100">
                 اسأل المساعد التعليمي مباشرة من الصفحة الرئيسية
@@ -537,9 +658,9 @@ export default function HomePage() {
             </div>
             <Link
               href="/assistant"
-              className="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1"
+              className="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 border border-emerald-800 px-3 py-1 bg-slate-900"
             >
-              <span>فتح صفحة المحادثة الكاملة</span>
+              <span>فتح المحادثة الكاملة</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -555,7 +676,7 @@ export default function HomePage() {
               <button
                 key={idx}
                 onClick={() => handleHomeChatSend(chip)}
-                className="text-[11px] font-bold bg-slate-800 hover:bg-emerald-950 text-slate-300 hover:text-emerald-300 px-3 py-1.5 rounded-xl border border-slate-700 transition text-right"
+                className="text-[11px] font-bold bg-slate-900 hover:bg-emerald-950 text-slate-300 hover:text-emerald-300 px-3 py-1.5 border border-slate-700 transition text-right"
               >
                 💡 {chip}
               </button>
@@ -563,18 +684,18 @@ export default function HomePage() {
           </div>
 
           {/* Chat Message Box */}
-          <div className="bg-slate-950 rounded-2xl p-4 sm:p-6 border border-slate-800 max-h-[300px] overflow-y-auto space-y-3">
+          <div className="bg-slate-900 p-4 sm:p-6 border border-slate-800 max-h-[300px] overflow-y-auto space-y-3">
             {homeChatMessages.map((msg, idx) => (
               <div
                 key={idx}
-                className={`p-3.5 rounded-2xl text-xs leading-relaxed max-w-[85%] ${
+                className={`p-3.5 text-xs leading-relaxed max-w-[85%] border ${
                   msg.sender === 'user'
-                    ? 'mr-auto bg-emerald-950 border border-emerald-800 text-emerald-100 text-left'
-                    : 'ml-auto bg-slate-900 border border-slate-800 text-slate-200 text-right'
+                    ? 'mr-auto bg-emerald-950 border-emerald-800 text-emerald-100 text-left'
+                    : 'ml-auto bg-slate-950 border-slate-800 text-slate-200 text-right'
                 }`}
               >
-                <div className="font-bold mb-1 text-[10px] text-slate-400">
-                  {msg.sender === 'user' ? 'سؤالك:' : 'المساعد التعليمي:'}
+                <div className="font-bold mb-1 text-[10px] text-slate-400 font-mono">
+                  {msg.sender === 'user' ? 'سؤالك:' : 'المساعد التعليمي (GLM 5.3):'}
                 </div>
                 <div className="whitespace-pre-line">{msg.text}</div>
               </div>
@@ -582,8 +703,8 @@ export default function HomePage() {
 
             {homeChatLoading && (
               <div className="text-xs text-slate-400 flex items-center gap-2 p-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                <span>جاري معالجة الإجابة العلمية وفق المنهاج...</span>
+                <span className="w-2 h-2 bg-emerald-500 animate-ping"></span>
+                <span>جاري معالجة الإجابة العلمية عبر cf/zai-org/glm-5.3-flash...</span>
               </div>
             )}
           </div>
@@ -596,12 +717,12 @@ export default function HomePage() {
               onChange={(e) => setHomeChatInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleHomeChatSend()}
               placeholder="اكتب سؤالك الكيميائي هنا واضغط إرسال..."
-              className="flex-1 px-4 py-3 rounded-xl border border-slate-700 bg-slate-800 text-white placeholder-slate-400 text-xs outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+              className="flex-1 px-4 py-3 border border-slate-700 bg-slate-900 text-white placeholder-slate-400 text-xs outline-none focus:border-emerald-500"
             />
             <button
               onClick={() => handleHomeChatSend()}
               disabled={!homeChatInput.trim() || homeChatLoading}
-              className="px-5 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-800 text-white font-bold rounded-xl text-xs transition flex items-center gap-1.5 shadow-xs"
+              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-800 text-white font-bold text-xs transition flex items-center gap-1.5 border border-emerald-700"
             >
               <span>إرسال</span>
               <Send className="w-3.5 h-3.5 rotate-180" />
@@ -610,13 +731,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. INTERVIEW & VENUE CARD */}
+      {/* 7. INTERVIEW & VENUE CARD (SHARP DESIGN) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 text-white rounded-3xl p-6 sm:p-10 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="bg-slate-950 text-white p-6 sm:p-10 border-2 border-emerald-600 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-right">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-              <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
+              <span className="w-2.5 h-2.5 bg-emerald-400"></span>
+              <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
                 جاهزية تامة للمقابلة الشخصية
               </span>
             </div>
@@ -631,13 +752,13 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center gap-3 shrink-0">
             <Link
               href="/whatsapp-connect"
-              className="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition shadow-xs"
+              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition border border-emerald-500"
             >
               تواصل عبر واتساب
             </Link>
             <Link
               href="/about"
-              className="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs transition"
+              className="px-6 py-3 bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 font-bold text-xs transition"
             >
               عرض السيرة الذاتية
             </Link>

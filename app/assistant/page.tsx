@@ -87,23 +87,23 @@ export default function AssistantPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
       
-      {/* Header */}
-      <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
+      {/* Header - Sharp Precision Style */}
+      <div className="bg-white border-2 border-slate-900 p-6 sm:p-8 space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-slate-900 pb-4">
           <div className="space-y-1">
-            <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-              {t('مراجعة المنهاج التفاعلية', 'Interactive Study Assistant')}
+            <span className="text-xs font-mono font-bold text-emerald-950 bg-emerald-100 px-2.5 py-1 border border-emerald-300">
+              {t('محرك المراجعة التفاعلي (cf/zai-org/glm-5.3-flash)', 'Interactive Study Assistant')}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-950">
               {t('المساعد التعليمي لدرس الكيمياء', 'Chemistry Study & Concept Assistant')}
             </h1>
           </div>
-          <div className="text-xs text-slate-600 font-bold bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl">
+          <div className="text-xs font-mono text-slate-800 font-bold bg-slate-100 border border-slate-300 px-3 py-1.5">
             {t('منهاج كولينز - الصف التاسع (ص 43 - 55)', 'Collins Grade 9 (pp. 43-55)')}
           </div>
         </div>
 
-        <p className="text-xs text-slate-600 mt-3 leading-relaxed">
+        <p className="text-xs text-slate-700 leading-relaxed">
           {t(
             'اطرح أي استفسار علمي حول مفاهيم وتجارب درس الحموض والقواعد والكواشف، معادلات التأين، وتطبيقات المنهاج الحياتية والصناعية.',
             'Ask any question regarding acid-base concepts, ionization equations, indicators, or curriculum applications.'
@@ -113,13 +113,13 @@ export default function AssistantPage() {
 
       {/* Suggested Quick Question Chips */}
       <div className="space-y-1.5">
-        <span className="text-xs font-bold text-slate-500 block px-1">أسئلة شائعة من المنهاج للمراجعة السريعة:</span>
+        <span className="text-xs font-mono font-bold text-slate-500 block px-1">أسئلة شائعة من المنهاج للمراجعة السريعة:</span>
         <div className="flex flex-wrap gap-2">
           {SAMPLE_QUESTIONS.map((q, idx) => (
             <button
               key={idx}
               onClick={() => handleSend(q)}
-              className="text-xs font-bold bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-900 px-3 py-2 rounded-xl border border-slate-200 transition text-right"
+              className="text-xs font-bold bg-white hover:bg-slate-100 text-slate-800 px-3 py-2 border border-slate-300 transition text-right"
             >
               💡 {q}
             </button>
@@ -128,7 +128,7 @@ export default function AssistantPage() {
       </div>
 
       {/* Chat Window Container */}
-      <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs flex flex-col h-[520px]">
+      <div className="bg-white border-2 border-slate-900 p-6 flex flex-col h-[520px]">
         
         {/* Message Thread */}
         <div className="flex-1 overflow-y-auto space-y-4 pr-1 pl-1">
@@ -140,26 +140,26 @@ export default function AssistantPage() {
                 className={`flex items-start gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
               >
                 <div
-                  className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 ${
+                  className={`w-8 h-8 flex items-center justify-center text-xs font-bold shrink-0 border ${
                     isUser
-                      ? 'bg-slate-800 text-white'
-                      : 'bg-emerald-700 text-white shadow-xs'
+                      ? 'bg-slate-900 text-white border-slate-900'
+                      : 'bg-emerald-700 text-white border-emerald-900'
                   }`}
                 >
                   {isUser ? <User className="w-4 h-4" /> : <BookOpen className="w-4 h-4" />}
                 </div>
 
                 <div
-                  className={`p-4 rounded-2xl max-w-[80%] text-xs leading-relaxed ${
+                  className={`p-4 max-w-[80%] text-xs leading-relaxed border ${
                     isUser
-                      ? 'bg-slate-900 text-white rounded-tl-none font-medium'
-                      : 'bg-slate-50 border border-slate-200 text-slate-800 rounded-tr-none'
+                      ? 'bg-slate-950 text-white border-slate-950 font-medium'
+                      : 'bg-slate-50 border-slate-300 text-slate-900'
                   }`}
                 >
                   <p className="whitespace-pre-line">{msg.text}</p>
                   <span
                     className={`block text-[10px] mt-2 font-mono ${
-                      isUser ? 'text-slate-400 text-left' : 'text-slate-400 text-right'
+                      isUser ? 'text-slate-400 text-left' : 'text-slate-500 text-right'
                     }`}
                   >
                     {msg.timestamp}
@@ -170,27 +170,27 @@ export default function AssistantPage() {
           })}
 
           {loading && (
-            <div className="flex items-center gap-2 text-xs text-slate-500 p-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-600 animate-ping"></span>
-              <span>جاري استرجاع الإجابة من مفاهيم المنهاج...</span>
+            <div className="flex items-center gap-2 text-xs text-slate-600 p-2 font-mono">
+              <span className="w-2 h-2 bg-emerald-600 animate-ping"></span>
+              <span>جاري استرجاع الإجابة عبر نموذج cf/zai-org/glm-5.3-flash...</span>
             </div>
           )}
         </div>
 
         {/* Input Bar */}
-        <div className="pt-4 border-t border-slate-100 flex items-center gap-2">
+        <div className="pt-4 border-t-2 border-slate-900 flex items-center gap-2">
           <input
             type="text"
             value={inputVal}
             onChange={(e) => setInputVal(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             placeholder="اكتب سؤالك الكيميائي هنا..."
-            className="flex-1 px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white text-xs outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100 transition"
+            className="flex-1 px-4 py-3 border-2 border-slate-900 bg-slate-50 focus:bg-white text-xs outline-none focus:border-emerald-700 transition"
           />
           <button
             onClick={() => handleSend()}
             disabled={!inputVal.trim() || loading}
-            className="p-3 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-200 text-white font-bold rounded-xl transition shadow-xs"
+            className="px-6 py-3 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-300 text-white font-bold text-xs border border-emerald-900 transition"
           >
             <Send className="w-4 h-4 rotate-180" />
           </button>
