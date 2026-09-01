@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { sendWhatsAppNotification } from '@/lib/evolution';
-import { generateChemistryAnswer } from '@/lib/ai-tutor';
+import { generateChemistryAnswer, UserContext } from '@/lib/ai-tutor';
 
 export async function POST(req: Request) {
   try {
@@ -30,6 +30,21 @@ export async function POST(req: Request) {
       return NextResponse.json({ status: 'ignored', reason: 'Broadcast message' });
     }
 
+    // Extract WhatsApp profile display name (pushName)
+    const whatsappName = (
+      msgItem?.pushName ||
+      rawData?.pushName ||
+      payload?.pushName ||
+      payload?.data?.pushName ||
+      msgItem?.verifiedName ||
+      payload?.senderName ||
+      ''
+    ).trim();
+
+    // Extract clean phone number
+    const cleanPhone = remoteJid.replace(/@.*$/, '').replace(/\D/g, '');
+    const localPhone = cleanPhone.startsWith('962') ? '0' + cleanPhone.slice(3) : cleanPhone;
+
     // Extract message text across different Evolution API message structures
     const messageObj = msgItem?.message || {};
     const incomingText = (
@@ -51,8 +66,14 @@ export async function POST(req: Request) {
     const isEnglish = /[a-zA-Z]/.test(query) && !/[\u0600-\u06FF]/.test(query);
     const lang = isEnglish ? 'en' : 'ar';
 
+    // Prepare user context with WhatsApp profile name and linked phone
+    const userContext: UserContext = {
+      whatsappName: whatsappName || undefined,
+      phoneNumber: localPhone || cleanPhone
+    };
+
     // Generate response using System Prompt & cf/zai-org/glm-5.3-flash
-    const aiResult = await generateChemistryAnswer(query, lang);
+    const aiResult = await generateChemistryAnswer(query, lang, userContext);
 
     // Format message nicely for WhatsApp
     const formattedReply = `✨ *المساعد الكيميائي الذكي (أ. فرح نشأت):*\n` +
@@ -69,6 +90,8 @@ export async function POST(req: Request) {
       status: 'success',
       action: 'replied',
       recipient: remoteJid,
+      senderName: whatsappName || undefined,
+      phone: localPhone,
       query,
       source: aiResult.source
     });

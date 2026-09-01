@@ -30,7 +30,7 @@ import { Molecule3DViewer } from '@/components/Molecule3DViewer';
 import { Ionization3DChamber } from '@/components/Ionization3DChamber';
 
 export default function HomePage() {
-  const { t, dir } = useLanguage();
+  const { lang, t, dir } = useLanguage();
   const Arrow = dir === 'rtl' ? ArrowLeft : ArrowRight;
 
   const threeDSectionRef = useRef<HTMLDivElement>(null);
@@ -103,10 +103,22 @@ export default function HomePage() {
     setHomeChatLoading(true);
 
     try {
+      let loggedUser: any = null;
+      try {
+        const saved = localStorage.getItem('farah_chem_user');
+        if (saved) loggedUser = JSON.parse(saved);
+      } catch (e) {}
+
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: query })
+        body: JSON.stringify({ 
+          message: query,
+          userName: loggedUser?.name || undefined,
+          registeredName: loggedUser?.name || undefined,
+          phoneNumber: loggedUser?.phone || undefined,
+          lang
+        })
       });
       const data = await res.json();
       const reply = data.reply || 'تم استرجاع الإجابة العلمية بنجاح.';

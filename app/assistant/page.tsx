@@ -85,10 +85,22 @@ export default function AssistantPage() {
     setLoading(true);
 
     try {
+      let loggedUser: any = null;
+      try {
+        const saved = localStorage.getItem('farah_chem_user');
+        if (saved) loggedUser = JSON.parse(saved);
+      } catch (e) {}
+
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
+        body: JSON.stringify({ 
+          message: text,
+          userName: loggedUser?.name || undefined,
+          registeredName: loggedUser?.name || undefined,
+          phoneNumber: loggedUser?.phone || undefined,
+          lang: 'ar'
+        })
       });
       const data = await res.json();
       const fullReply = data.reply || 'تمت معالجة السؤال واسترجاع الإجابة العلمية.';
